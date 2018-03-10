@@ -1,0 +1,4 @@
+# Tell Bochs to use the boot sector code (performing and endless jump) as
+# thought it were a floppy disk inserted into a computer at boot time.
+floppya: 1_44=os-image, status=inserted
+boot: a
