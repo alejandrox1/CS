@@ -14,11 +14,12 @@ mov sp, bp
 mov bx, MSG_REAL_MODE
 call print_string
 
-call load_kernel
+;call load_kernel
 
 mov bx, KERNEL_LOADED
 call print_string
 
+call load_kernel
 call switch_to_pm
 
 jmp $
