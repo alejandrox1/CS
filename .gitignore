@@ -1,0 +1,26 @@
+# containers proj
+containers/lxc
+containers/lxc_original
+
+# kernel proj
+kernel/linux-2.4.22
+kernel/linux-2.6.18
+kernel/linux-2.6.26
+kernel/linux-2.6.32.27
+kernel/linux-2.6.39
+kernel/linux-2.6.8.1
+kernel/linux-4.16
+
+# Networking
+networking/unix_networkprog_src/
+
+# crypto
+*.key
+*.pem
+
+# some compiling going on
+*.o
+
+# backups
+*.swp
+
