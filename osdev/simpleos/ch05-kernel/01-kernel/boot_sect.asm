@@ -14,12 +14,11 @@ mov sp, bp
 mov bx, MSG_REAL_MODE
 call print_string
 
-;call load_kernel
 
-mov bx, KERNEL_LOADED
+mov bx, KERNEL_LOADING
 call print_string
 
-call load_kernel
+call load_kernel         ; Kernel is loaded unto es:bx.
 call switch_to_pm
 
 jmp $
@@ -62,7 +61,7 @@ BEGIN_PM:
 ;
 BOOT_DRIVE      db 0
 MSG_REAL_MODE   db "Starting 16-bit real mode...", 0
-KERNEL_LOADED   db "Read kernel...", 0
+KERNEL_LOADING   db "Reading kernel...", 0
 MSG_PROT_MODE   db "Starting 32-bit protected mode...", 0
 MSG_LOAD_KERNEL db "Loading kernel into memory...", 0
 
