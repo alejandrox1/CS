@@ -6,19 +6,20 @@
 /*
  * Private functions.
  */
-
 int get_screen_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
-int get_cursor_offset();
-void set_cursor_offset(int offset);
 int handle_scrolling(int offset);
 int print_char(char character, int col, int row, char attribute_byte);
+/* port io */
+int get_cursor_offset();                                                        
+void set_cursor_offset(int offset);
 
 
-/************************************
- * 		Publick Kernel API			*
- ************************************/
+
+/*****************************************************************************
+ *                            Publick Kernel API                             *
+ *****************************************************************************/
 /*
  * clear_screen
  */
@@ -64,7 +65,7 @@ void print_at(char *message, int col, int row)
 }
 
 /*
- * print
+ * print prints message at current screen cursos position.
  */
 void print(char *message)
 {
@@ -72,9 +73,9 @@ void print(char *message)
 }
 
 
-/************************************
- * 		Private Kernel methods 		*
- ************************************/
+/*****************************************************************************
+ *                           Private Kernel methods                          *
+ *****************************************************************************/
 /*                                                                              
  * print_char prints a char on screen given a column and a row or a cursor      
  * position directly accessing the video memory.                                
@@ -131,7 +132,8 @@ int print_char(char character, int col, int row, char attribute_byte)
 
 
 /*
- * get_screen_offset  
+ * get_screen_offset return the offset along the screen address space given the 
+ * current column and row.
  */
 int get_screen_offset(int col, int row)
 {
@@ -147,7 +149,7 @@ int get_offset_row(int offset)
 }
 
 /*
- *
+ * get_offset_col 
  */
 int get_offset_col(int offset)
 {
@@ -160,16 +162,26 @@ int get_offset_col(int offset)
  * 2. Ask for low byte (data 15)
  */
 int get_cursor_offset()
-{	
+{
+	/* 
+	 * Query port REG_SCREEN_CTRL with value 14, to request the cursor position
+	 * in high byte, then the same port with 15 for the low byte.
+	 * When REG_SCREEN_CTRL is queried, it saves the result in REG_SCREEN_DATA.
+	 */
 	port_byte_out(REG_SCREEN_CTRL, 14);
 	int offset = port_byte_in(REG_SCREEN_DATA) << 8;
 	port_byte_out(REG_SCREEN_CTRL, 15);
 	offset += port_byte_in(REG_SCREEN_DATA);
+	/* 
+	 * Character cells consist of ASCII char code and attribute byte, thus
+	 * multiply by 2.
+	 */
 	return offset * 2;
 }
 
 /*
- * set_cursor_offset
+ * set_cursor_offset set the offset by using ports (see get_cursor_offset() for
+ * more details on hw this works).
  */
 void set_cursor_offset(int offset)
 {
@@ -181,7 +193,7 @@ void set_cursor_offset(int offset)
 }
 
 /*
- * handle_scrolling
+ * handle_scrolling will move each char cell up one row and clear the last one.
  */
 int handle_scrolling(int offset)
 {
