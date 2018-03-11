@@ -1,3 +1,6 @@
+#include "util.h"
+
+
 /*
  * memory_copy copies nbytes of source to dest.
  */
@@ -7,6 +10,18 @@ void memory_copy(char *source, char *dest, int nbytes)
 	for (i=0; i<nbytes; i++)
 		*(dest+i) = *(source+i);
 }
+
+/*
+ * memory_set sets len bytes of dest with val.
+ */
+void memory_set(u8 *dest, u8 val, u32 len)
+{
+	u8 *tmp = (u8 *)dest;
+
+	for ( ; len != 0; len--)
+		*temp++ = val;
+}
+
 
 /*
  * int_to_ascii
