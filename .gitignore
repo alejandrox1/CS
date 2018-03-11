@@ -27,3 +27,5 @@ posix-threads/programming_with_posix_threads_src
 # backups
 *.swp
 
+# Images
+**/floppy.img
