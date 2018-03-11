@@ -1,7 +1,7 @@
-SOURCES=boot.o
+SOURCES=boot.o main.o
 
-CFLAGS=
-LDFLAGS=-Tlink.ld
+CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
+LDFLAGS=-m elf_i386 -Tlink.ld
 ASFLAGS=-felf
 
 all: $(SOURCES) link
@@ -13,4 +13,4 @@ link:
 	nasm $(ASFLAGS) $<
 
 clean:
-	rm *.o kernel
+	rm -f *.o kernel
