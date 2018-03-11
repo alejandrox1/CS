@@ -2,6 +2,8 @@
 
 set -e
 
+make -C src/ 
+
 if [ -f src/kernel ]; then
 	mkdir -p mnt/ && cp src/kernel mnt/kernel; 
 fi
