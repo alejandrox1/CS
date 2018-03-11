@@ -41,3 +41,24 @@ gs             0x10	16
 ## Running on Bochs
 
 Some useful [commands](http://bochs.sourceforge.net/doc/docbook/user/internal-debugger.html)
+
+For more configuration options: [here](http://bochs.sourceforge.net/doc/docbook/user/bochsrc.html)
+
+```
+
+``t t=0
+(0) [0x0000fffffff0] f000:fff0 (unk. ctxt): jmpf 0xf000:e05b          ; ea5be000f0
+<bochs:1> c
+^CNext at t=2040658227
+(0) [0x000000100027] 0008:0000000000100027 (unk. ctxt): jmp .-2 (0x00100027)      ; ebfe
+<bochs:2> r
+rax: 00000000_deadbaba rcx: 00000000_0001edd0
+rdx: 00000000_00000001 rbx: 00000000_0002d000
+rsp: 00000000_00067ec8 rbp: 00000000_00067ee0
+rsi: 00000000_00053c8e rdi: 00000000_00053c8f
+r8 : 00000000_00000000 r9 : 00000000_00000000
+r10: 00000000_00000000 r11: 00000000_00000000
+r12: 00000000_00000000 r13: 00000000_00000000
+r14: 00000000_00000000 r15: 00000000_00000000
+rip: 00000000_00100027
+eflags 0x00000002: id vip vif ac vm rf nt IOPL=0 of df if tf sf zf af pf cf`
