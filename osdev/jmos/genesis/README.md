@@ -1,6 +1,6 @@
 # Boot with a Minimal Kernel
 
-## Running
+## Running on Qemu
 ```
 qemu-system-i386 -fda floppy.img
 ```
@@ -37,3 +37,7 @@ es             0x10	16
 fs             0x10	16
 gs             0x10	16
 ```
+
+## Running on Bochs
+
+Some useful [commands](http://bochs.sourceforge.net/doc/docbook/user/internal-debugger.html)
