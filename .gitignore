@@ -29,3 +29,6 @@ posix-threads/programming_with_posix_threads_src
 
 # Images
 **/floppy.img
+
+# Logs
+**/bochsout.txt
