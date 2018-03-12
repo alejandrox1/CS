@@ -14,6 +14,9 @@ kernel/linux-4.16
 # Networking
 networking/unix_networkprog_src/
 
+# OS Dev
+osdev/jmos/jamesm-tutorials
+
 # Posix threads
 posix-threads/programming_with_posix_threads_src
 
