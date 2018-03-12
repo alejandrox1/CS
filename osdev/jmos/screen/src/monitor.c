@@ -1,14 +1,14 @@
 #include "monitor.h"
 
 // VGA framebuffer starts at 0xB8000
-u16int_t *video_memory = (u16int *)0xB8000;
+u16int_t *video_memory = (u16int_t *)0xB8000;
 // Cursor position.
 u8int_t cursor_x = 0;
 u8int_t cursor_y = 0;
 
 
 // move_cursor updates the hardware cursor.
-static void move_curosr();
+static void move_cursor();
 // scroll scrolls the text on screen up by one line.
 static void scroll();
 
@@ -50,10 +50,10 @@ void monitor_put(char c)
 		cursor_y++;
 	}
 	// Handle any other char.
-	else if (char >= ' ')
+	else if (c >= ' ')
 	{
 		location = video_memory + (cursor_y * 80 + cursor_x);
-		*location = c | attrbute;
+		*location = c | attribute;
 		cursor_x++;
 	}
 	
