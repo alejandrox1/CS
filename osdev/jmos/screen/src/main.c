@@ -7,11 +7,11 @@
 #include "monitor.h"
 
 
-int main(struct multiboot *mboot_ptr)
+int main()//struct multiboot *mboot_ptr)
 {
 	monitor_clear();
 	monitor_write("Hello, world!");
 
-	// Alll initialization calls go in here.
-	return 0xDEADBABA;
+	// All initialization calls go in here.
+	return 0x12345678;
 }
