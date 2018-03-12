@@ -21,9 +21,9 @@ typedef          char  s8int_t;
 // outb writes a byte to port.
 void outb(u16int_t port, u8int_t value);
 // inb reads a byte from port.
-u8int inb(u16int_t port);
+u8int_t inb(u16int_t port);
 // inw reads a word from port.
-u16int inw(u16int_t port);
+u16int_t inw(u16int_t port);
 
 
 #endif
