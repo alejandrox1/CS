@@ -10,17 +10,20 @@
  * typedefs to standardize sizes across platforms.
  * Writfen for 32-bit x86.
  */
-typedef unsigned int   u32int;
-typedef          int   s32int;
-typedef unsigned short u16int;
-typedef          short s16int;
-typedef unsigned char  u8int;
-typedef          char  s8int;
+typedef unsigned int   u32int_t;
+typedef          int   s32int_t;
+typedef unsigned short u16int_t;
+typedef          short s16int_t;
+typedef unsigned char  u8int_t;
+typedef          char  s8int_t;
 
 
-void outb(u16int port, u8int value);
-u8int inb(u16int port);
-u16int inw(u16int port);
+// outb writes a byte to port.
+void outb(u16int_t port, u8int_t value);
+// inb reads a byte from port.
+u8int inb(u16int_t port);
+// inw reads a word from port.
+u16int inw(u16int_t port);
 
 
 #endif
