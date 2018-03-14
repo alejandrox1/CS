@@ -101,6 +101,62 @@ void monitor_write(char *c)
 }
 
 
+/*
+ * monitor_write_dec writes a number, base 10, to screen.
+ */
+void monitor_write_dec(u32int_t n)
+{
+	if (n == 0)
+	{
+		monitor_put('0');
+		return;
+	}
+
+	u32int_t acc = n;
+	char c[32];
+	int i = 0;
+	while (acc > 0)
+	{
+		c[i++] = '0' + acc % 10;
+		acc /= 10;
+	}
+	c[i] = 0;
+
+	char c2[32];
+	int j = 0;
+	c2[i--] = 0;
+	while (i >= 0)
+		c2[i--] = c[j++];
+
+	monitor_write(c2);
+}
+
+/*
+ * monitor_write_hex write a number, base 16, to screen.
+ */
+void monitor_write_hex(u32int_t n)
+{
+	int tmp;
+	char noZeros = 1;
+
+	monitor_write("0x");
+
+	int i;
+	for (i = 28; i >= 0; i -= 4)
+	{
+		tmp = (n >> i) & 0xF;
+		if (tmp == 0 && noZeros !=0 && i != 0)
+			continue;
+
+		noZeros = 0;
+		if (tmp >= 0xA)
+			monitor_put(tmp - 0xA + 'A');
+		else
+		{
+			monitor_put(tmp + '0');
+		}
+	}
+}
 
 /******************************************************************************
  *                              Private API                                   *
