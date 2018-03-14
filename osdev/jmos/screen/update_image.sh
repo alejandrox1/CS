@@ -1,11 +1,12 @@
 #!/bin/bash
 
+set -x
 set -e
 
 make  
 
 if [ -f kernel ]; then
-	mkdir -p mnt/ && cp kernel mnt/kernel; 
+	mkdir -p mnt/ #&& cp kernel mnt/kernel; 
 fi
 
  
