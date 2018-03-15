@@ -19,7 +19,7 @@ typedef struct idt_entry_struct
 	uint8_t  always0;    // Must always be zero.
 	uint8_t  flags;      
 	uint16_t base_hi;    // Upper 16 bits of address to jmp to.
-} __attribute__((packed)) idt_entry_s;
+} __attribute__((packed)) idt_entry_t;
 
 
 /*

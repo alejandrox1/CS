@@ -4,7 +4,6 @@
  * Implementation of the IDT.
  * Taken from JamesM's kernel development tutorial.
  */
-#include "common.h"
 #include "idt.h"
 #include "monitor.h"
 
@@ -27,10 +26,10 @@ static void idt_set_gate(uint8_t, uint32_t, uint16_t, uint8_t);
 /*
  * init_idt initializes the IDT and zeroes out all the ISRs.
  */
-void init_idt ()                                                                
+void init_idt()                                                                
 {
 	// Zero all interrupt handlers initially. 
-	memset(&interrupt_handlers, 0, sizeof(interrupt_handler_t)*256); 
+	memset((uint8_t *)&interrupt_handlers, 0, sizeof(interrupt_handler_t)*256); 
 	
 	// Limit is set to the last valid byte in the IDT, after adding in the 
 	// start position (i.e. size-1).                          
@@ -38,7 +37,7 @@ void init_idt ()
 	idt_ptr.base  = (uint32_t)&idt_entries; 
 	
 	// Zero the IDT to start with.
-	memset(&idt_entries, 0, sizeof(idt_entry_t)*255);
+	memset((uint8_t *)&idt_entries, 0, sizeof(idt_entry_t)*255);
 	
 	/* 
 	 * Set each gate in the IDT that we care about:
@@ -119,7 +118,7 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
 void idt_handler(registers_t *regs)
 {
 	if (interrupt_handlers[regs->int_no])
-		interrupt_handlers[regs->into_no] (regs);
+		interrupt_handlers[regs->int_no] (regs);
 	else
 	{
 		monitor_write("unhandled interrupt: ");
