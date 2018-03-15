@@ -1,16 +1,16 @@
-CSOURCES=$(shell find -name *.c)
+CSOURCES=$(shell find src/ -name *.c)
 COBJECTS=$(patsubst %.c, %.o, $(CSOURCES))
-SSOURCES=$(shell find -name *.s)
+SSOURCES=$(shell find src/ -name *.s)
 SOBJECTS=$(patsubst %.s, %.o, $(SSOURCES))
 
 cc=gcc
 LD=ld
-CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
+CFLAGS=-Wall -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
 LDFLAGS=-m elf_i386 -T link.ld
 ASFLAGS=-f elf
 
 
-all: $(SOBJECTS) $(COBJECTS) link
+all: $(COBJECTS) $(SOBJECTS) link
 
 link:
 	@echo Linking
