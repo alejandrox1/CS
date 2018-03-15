@@ -29,7 +29,7 @@ static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t acc
 /*
  * init_gdt initializes the GDT.
  */
-static void init_gdt()
+void init_gdt()
 {
 	/* 
 	 * We have 6 (ENTRIES) entries in the GDT - 2 for kernel mode, 2 for user 

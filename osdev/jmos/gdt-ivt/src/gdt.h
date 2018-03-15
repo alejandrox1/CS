@@ -7,7 +7,7 @@
 #ifndef GDT_H
 #define GDT_H
 
-#include "common.c"
+#include "common.h"
 
 /*
  * gdt_entry_struct represents a GDT entry.
