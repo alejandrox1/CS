@@ -32,3 +32,12 @@ uint16_t inw(uint16_t port)
 	asm volatile("inw %1, %0" : "=a" (ret) : "dN" (port));
 	return ret;
 }
+
+/*
+ * memset write len copies of val into dest.
+ */
+void memset(uint8_t *dest, uint8_t val, uint32_t len)
+{
+	for ( ; len != 0; len--)
+		*dest++ = val;
+}
