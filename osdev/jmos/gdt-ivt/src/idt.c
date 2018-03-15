@@ -109,6 +109,10 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
 	idt_entries[num].flags   = flags /* | 0x60 */;
 }
 
+
+/******************************************************************************
+ *                            idt.s helper methods                            *
+ *****************************************************************************/
 /*
  * idt_handler
  */
