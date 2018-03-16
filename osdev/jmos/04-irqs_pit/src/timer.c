@@ -14,7 +14,7 @@
 uint32_t tick = 0;
 
 // timer_callback
-timer_callback(registers_t *regs);
+static void timer_callback(registers_t *regs);
 
 /******************************************************************************
  *                                  Public API                                *
@@ -34,7 +34,7 @@ void init_timer(uint32_t frequency)
      */
     uint32_t divisor = CLOCKF / frequency;
 
-    // Send cmd byte.
+    // Send cmd byte (repeating mode).
     outb(0x43, 0x36);
 
     // Divisor must be sent byte-wise (upper/lower).
@@ -54,7 +54,10 @@ void init_timer(uint32_t frequency)
 static void timer_callback(registers_t *regs)
 {
     tick++;
-    monitor_write("Tick: ");
-    monitor_write_dec(tick);
-    monitor_write("\n");
+    if (tick%100 == 0)
+    {
+        monitor_write("Tick: ");
+        monitor_write_dec(tick);
+        monitor_write("\n");
+    }
 }
