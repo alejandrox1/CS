@@ -83,7 +83,8 @@ void init_idt()
 
 
 /*
- * register_interrupt_hanlder
+ * register_interrupt_handler registers a function pointer as an interrupt
+ * hanlder.
  */
 void register_interrupt_handler(uint8_t n, interrupt_handler_t h)
 {
@@ -113,12 +114,12 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
  *                            idt.s helper methods                            *
  *****************************************************************************/
 /*
- * idt_handler
+ * idt_handler 
  */
 void idt_handler(registers_t *regs)
 {
 	if (interrupt_handlers[regs->int_no])
-		interrupt_handlers[regs->int_no] (regs);
+		interrupt_handlers[regs->int_no](regs);
 	else
 	{
 		monitor_write("unhandled interrupt: ");
