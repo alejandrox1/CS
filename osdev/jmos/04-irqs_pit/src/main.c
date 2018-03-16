@@ -6,6 +6,7 @@
  */
 #include "gdt.h"
 #include "idt.h"
+#include "timer.h"
 #include "monitor.h"
 
 static void int_3_handler(registers_t *regs)
@@ -54,6 +55,15 @@ int main()//struct multiboot *mboot_ptr)
 
 	asm volatile("int $0x3");
 	asm volatile("int $0x4");
+
+    /*
+     * Test PIT api
+     */
+    init_timer(1); // 1 Hz
+    
+    asm volatile("sti");
+
+    for (;;);
 
 
 	// All initialization calls go in here.
