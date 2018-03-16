@@ -9,6 +9,10 @@
 
 #include "common.h"
 
+#define ISR3 3
+#define IRQ0 32
+
+
 /*
  * idt_entry_struct describes an interrupt gate.
  */
