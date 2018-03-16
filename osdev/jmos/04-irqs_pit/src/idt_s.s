@@ -40,7 +40,6 @@ idt_flush:
 ; Macro creates a stub for an IRQ.
 ; The first parameter is the IRQ number, the second is the ISR number it is 
 ; remapped to.
-'
 %macro IRQ 2
     global irq%1
     irq%1:
