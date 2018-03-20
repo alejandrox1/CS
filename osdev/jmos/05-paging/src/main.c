@@ -7,6 +7,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "timer.h"
+#include "paging.h"
 #include "monitor.h"
 
 static void int_3_handler(registers_t *regs)
@@ -63,8 +64,16 @@ int main()//struct multiboot *mboot_ptr)
     
     asm volatile("sti");
 
-    for (;;);
+    int i = 0;
+    for (; i<5 ; i++);
 
+    /*
+     * Paging
+     */
+    initialise_paging();
+
+    uint32_t *ptr = (uint32_t *)0xA0000000;
+    uint32_t do_page_fault = *ptr;
 
 	// All initialization calls go in here.
 	return 0x12345677;
