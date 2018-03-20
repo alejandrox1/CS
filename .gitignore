@@ -11,6 +11,10 @@ kernel/linux-2.6.39
 kernel/linux-2.6.8.1
 kernel/linux-4.16
 
+# libc
+libc/glibc
+
+
 # Networking
 networking/unix_networkprog_src/
 
