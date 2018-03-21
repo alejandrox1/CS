@@ -16,7 +16,7 @@ void monitor_put(char c);
 void monitor_clear();
 
 // monitor_write writes a null-terminated ASCII string to screen.
-void monitor_write(char *c);
+void monitor_write(const char *c);
 
 // monitor_write_dec write a decimal number to screen.
 void monitor_write_dec(uint32_t n);

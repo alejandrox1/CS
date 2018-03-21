@@ -93,7 +93,7 @@ void monitor_clear()
 /*
  * monitor_write writes a string to screen.
  */
-void monitor_write(char *c)
+void monitor_write(const char *c)
 {
 	int i = 0;
 	while (c[i])
