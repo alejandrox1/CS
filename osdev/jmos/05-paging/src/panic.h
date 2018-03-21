@@ -1,6 +1,6 @@
 #ifndef PANIC_H
 #define PANIC_H
 
-void panic(char *msg);
+void panic(const char *msg);
 
 #endif
