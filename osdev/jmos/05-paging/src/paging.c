@@ -1,4 +1,5 @@
 #include "common.h"
+#include "common-io.h"
 #include "paging.h"
 #include "memalloc.h"
 #include "monitor.h"
@@ -237,7 +238,8 @@ void page_fault(registers_t *regs)
     monitor_write_hex(cr2); 
     monitor_write("\nError code: ");
     monitor_write_hex(regs->err_code); 
-    panic("\n"); 
 
+    monitor_trace("\nTrace");
+    panic(" ");
     for (;;) ;                                                                    
 } 
