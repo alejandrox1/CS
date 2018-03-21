@@ -20,103 +20,22 @@ uint32_t placement_address = 0x0E00000;
 
 void page_fault(registers_t *regs);
 
-/*
- * set_frame sets a bit in the frames bitset.
- */
-static void set_frame(uint32_t frame_addr)
-{
-    uint32_t frame = frame_addr / 0x1000;
-    uint32_t idx = INDEX_FROM_BIT(frame);
-    uint32_t off = OFFSET_FROM_BIT(frame);
-    frames[idx] |= (0x1 << off);
-}
+// set_frame sets a bit in the frames bitset.
+static void set_frame(uint32_t frame_addr);
+// clear_frame clears a bit from the frames bitset.
+static void clear_frame(uint32_t frame_addr);
+// test_frame tests if a bit is set in the frames bitset.
+static uint32_t test_frame(uint32_t frame_addr);
+// first_frame finds the first free frame.
+static uint32_t first_frame();
+// alloc_frame allocates a frame.
+void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable);
+// free_frame deallocates frame.
+void free_frame(page_t *page);
 
-/*
- * clear_frame clears a bit from the frames bitset.
- */
-static void clear_frame(uint32_t frame_addr)
-{
-    uint32_t frame = frame_addr / 0x1000;
-    uint32_t idx = INDEX_FROM_BIT(frame);
-    uint32_t off = OFFSET_FROM_BIT(frame);
-    frames[idx] &= ~(0x1 << off);
-}
-
-/*
- * test_frame tests if a bit is set in the frames bitset.
- */
-//static uint32_t test_frame(uint32_t frame_addr)
-//{
-//    uint32_t frame = frame_addr / 0x1000;
-//    uint32_t idx = INDEX_FROM_BIT(frame);
-//    uint32_t off = OFFSET_FROM_BIT(frame);
-//    return (frames[idx] & (0x1 << off));
-//}
-
-/*
- * first_frame finds the first free frame.
- */
-static uint32_t first_frame()
-{
-    uint32_t i, j;
-    for (i = 0; i < INDEX_FROM_BIT(nframes); i++)
-    {
-        if (frames[i] != 0xFFFFFFFF) // Nothing free, exit early.
-        {
-            // At least one bit is set free here.
-            for (j = 0; j < 32; j++)
-            {
-                uint32_t toTest = 0x1 << j;
-                if ( !(frames[i] & toTest) )
-                    return i * 4 * 8 + j;
-            }
-        }
-    }
-    return (uint32_t)-1;
-}
-
-
-
-
-
-/*
- * alloc_frame allocates a frame.
- */
-void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
-{
-    if (page->frame != 0)
-        return; // Frame was already allocated, return right away.
-    else
-    {
-        uint32_t idx = first_frame();
-        if (idx == (uint32_t)-1)
-            panic("No free frames!");
-        
-        // This page is ours.
-        set_frame(idx * 0x1000);
-        page->present = 1;       
-        page->rw      = (is_writeable)?1:0;
-        page->user    = (is_kernel)?0:1;
-        page->frame   = idx;
-    }
-}
-
-/*
- * free_frame deallocates frame.
- */
-void free_frame(page_t *page)
-{
-    uint32_t frame;
-    if (!(frame = page->frame))
-        return; // The given page doesn't actually have an allocated frame.
-    else
-    {
-        clear_frame(frame);
-        page->frame = 0x0;
-    }
-}
-
-
+/****************************************************************************** 
+ *                                Public API                                  *
+ ******************************************************************************/
 /*
  * initialise_paging.
  * Create the frames bitset and initialises it to 0.
@@ -243,3 +162,99 @@ void page_fault(registers_t *regs)
     panic(" ");
     for (;;) ;                                                                    
 } 
+
+/******************************************************************************
+ *                                Private API                                 *
+ ******************************************************************************/
+/*
+ * set_frame sets a bit in the frames bitset.
+ */
+static void set_frame(uint32_t frame_addr)
+{
+    uint32_t frame = frame_addr / 0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
+    frames[idx] |= (0x1 << off);
+}
+
+/*
+ * clear_frame clears a bit from the frames bitset.
+ */
+static void clear_frame(uint32_t frame_addr)
+{
+    uint32_t frame = frame_addr / 0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
+    frames[idx] &= ~(0x1 << off);
+}
+
+/*
+ * test_frame tests if a bit is set in the frames bitset.
+ */
+static uint32_t test_frame(uint32_t frame_addr)
+{
+    uint32_t frame = frame_addr / 0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
+    return (frames[idx] & (0x1 << off));
+}
+
+/*
+ * first_frame finds the first free frame.
+ */
+static uint32_t first_frame()
+{
+    uint32_t i, j;
+    for (i = 0; i < INDEX_FROM_BIT(nframes); i++)
+    {
+        if (frames[i] != 0xFFFFFFFF) // Nothing free, exit early.
+        {
+            // At least one bit is set free here.
+            for (j = 0; j < 32; j++)
+            {
+                uint32_t toTest = 0x1 << j;
+                if ( !(frames[i] & toTest) )
+                    return i * 4 * 8 + j;
+            }
+        }
+    }
+    return (uint32_t)-1;
+}
+
+
+/*
+ * alloc_frame allocates a frame.
+ */
+void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
+{
+    if (page->frame != 0)
+        return; // Frame was already allocated, return right away.
+    else
+    {
+        uint32_t idx = first_frame();
+        if (idx == (uint32_t)-1)
+            panic("No free frames!");
+        
+        // This page is ours.
+        set_frame(idx * 0x1000);
+        page->present = 1;       
+        page->rw      = (is_writeable)?1:0;
+        page->user    = (is_kernel)?0:1;
+        page->frame   = idx;
+    }
+}
+
+/*
+ * free_frame deallocates frame.
+ */
+void free_frame(page_t *page)
+{
+    uint32_t frame;
+    if (!(frame = page->frame))
+        return; // The given page doesn't actually have an allocated frame.
+    else
+    {
+        clear_frame(frame);
+        page->frame = 0x0;
+    }
+}
