@@ -11,7 +11,7 @@
 #include "kheap.h"
 #include "paging.h"
 #include "monitor.h"
-#include "common-io.h"
+#include "kassert.h"
 
 static void int_3_handler(registers_t *regs)
 {
