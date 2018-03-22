@@ -1,5 +1,5 @@
-#ifndef COMMONIO_H
-#define COMMONIO_H
+#ifndef KASSERT_H
+#define KASSERT_H
 
 #include "common.h"
 #include "monitor.h"
@@ -19,4 +19,4 @@ static void _monitor_trace(const char *file,  int32_t line, const char *msg)
 #define ERRMSG "Error occurred -"                                               
 #define ASSERT(expr) if (!(expr)) monitor_trace(ERRMSG)
 
-#endif
+#endif // KASSERT_H
