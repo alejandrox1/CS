@@ -60,3 +60,10 @@ uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys)
     uint32_t tmp = kmalloc(sz);
     return tmp;
 }
+
+uint32_t kfree(uint32_t sz)
+{
+    uint32_t tmp = placement_address;
+    placement_address -= sz;
+    return tmp;
+}

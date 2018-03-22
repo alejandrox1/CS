@@ -19,11 +19,11 @@ int8_t standard_lessthan_predicate(type_t a, type_t b)
 /*
  * create_ordered_array using kmalloc.
  */
-ordered_array_t create_ordered_array(uint32_t max_size, lessthan_predicate less_than)
+ordered_array_t create_ordered_array(uint32_t max_size, lessthan_predicate_t less_than)
 {
     ordered_array_t ret;
     ret.array = (void *)kmalloc(max_size*sizeof(type_t));
-    memset(ret.array, 0, max_size*sizeof(type_t));
+    memset((uint8_t *)ret.array, 0, max_size*sizeof(type_t));
     ret.size      = 0;
     ret.max_size  = max_size;
     ret.less_than = less_than;
@@ -37,7 +37,7 @@ ordered_array_t place_ordered_array(void *addr, uint32_t max_size, lessthan_pred
 {
     ordered_array_t ret;
     ret.array = (type_t *)addr;
-    memset(ret.array, 0 , max_size*sizeof(type_t));
+    memset((uint8_t *)ret.array, 0 , max_size*sizeof(type_t));
     ret.size      = 0;
     ret.max_size  = max_size;
     ret.less_than = less_than;
@@ -47,10 +47,10 @@ ordered_array_t place_ordered_array(void *addr, uint32_t max_size, lessthan_pred
 /*
  * destroy_ordered_array.
  */
-void destroy_ordered_array(ordered_array_t *arr);
-{
-    //kfree(array->array);
-}
+//void destroy_ordered_array(ordered_array_t *arr);
+//{
+//    kfree(array->array);
+//}
 
 /*
  * insert_ordered_arrays inserts items into an ordered array.
@@ -96,7 +96,7 @@ void remove_ordered_array(uint32_t i, ordered_array_t *array)
 {
     while (i < array->size)
     {
-        array->arra[i] = array->array[i+1];
+        array->array[i] = array->array[i+1];
         array++;
     }
     array->size--;

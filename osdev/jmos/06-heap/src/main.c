@@ -7,8 +7,11 @@
 #include "gdt.h"
 #include "idt.h"
 #include "timer.h"
+#include "memalloc.h"
+#include "kheap.h"
 #include "paging.h"
 #include "monitor.h"
+#include "common-io.h"
 
 static void int_3_handler(registers_t *regs)
 {
@@ -70,10 +73,25 @@ int main()//struct multiboot *mboot_ptr)
     /*
      * Paging
      */
+    uint32_t a = kmalloc(8);
+    monitor_trace("initializsing paging");
     initialise_paging();
+    monitor_trace("back in main");
+    uint32_t b = kmalloc(8);
+    uint32_t c = kmalloc(8);
+    monitor_write("a: ");
+    monitor_write_hex(a);
+    monitor_write(", b: ");
+    monitor_write_hex(b);
+    monitor_write("\nc: ");
+    monitor_write_hex(c);
 
-    uint32_t *ptr = (uint32_t *)0xA0000000;
-    uint32_t do_page_fault = *ptr;
+    //kfree(c);
+    //kfree(b);
+    uint32_t d = kmalloc(12);
+    monitor_write(", d: ");
+    monitor_write_hex(d);
+
 
 	// All initialization calls go in here.
 	return 0x12345677;

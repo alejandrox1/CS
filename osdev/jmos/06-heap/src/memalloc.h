@@ -12,4 +12,5 @@ uint32_t kmalloc_p(uint32_t sz, uint32_t *phys);
 // kmalloc_ap page aligned and returns the physical address.
 uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys);
 
+uint32_t kfree(uint32_t sz);
 #endif
