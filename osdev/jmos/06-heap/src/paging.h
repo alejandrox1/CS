@@ -16,7 +16,7 @@ typedef struct page
     uint32_t dirty    :  1;    // Has page been written to since last refresh?
     uint32_t unused   :  7;    // Amalgamation of unused and reserve bits.
     uint32_t frame    : 20;    // Frame address (shifted right 12 bits).
-} page_t;
+} __attribute__((packed)) page_t;
 
 
 /*
@@ -25,7 +25,7 @@ typedef struct page
 typedef struct page_table
 {
     page_t pages[1024];
-} page_table_t;
+} __attribute__((packed)) page_table_t;
 
 
 /*
@@ -44,7 +44,7 @@ typedef struct page_directory
     // tables. This will be useful when we get out kernel heap allocated and
     // the directory may be in a different location in virtual memory.
     uint32_t physicalAddr;
-} page_directory_t;
+} __attribute__((packed)) page_directory_t;
 
 
 
@@ -68,4 +68,9 @@ void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable);
 // free_frame deallocates frame.                                                                                                                                                                            
 void free_frame(page_t *page);
 
-#endif
+void page_fault(registers_t *regs);
+
+page_directory_t *clone_directory(page_directory_t *src);
+
+
+#endif // PAGING_H
