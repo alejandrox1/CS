@@ -6,7 +6,7 @@
 #include "kheap.h"
 #include "paging.h"
 #include "memalloc.h"
-#include "common-io.h"
+#include "kassert.h"
 
 // exertern
 heap_t *kheap;
