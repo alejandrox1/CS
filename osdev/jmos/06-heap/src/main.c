@@ -61,20 +61,20 @@ int main()//struct multiboot *mboot_ptr)
 
     /*
      * Test PIT api
-     */
+     *
     init_timer(1); // 1 Hz
     
     asm volatile("sti");
 
     int i = 0;
     for (; i<5 ; i++);
-
+    */
     /*
      * Paging
      */
     uint32_t a = kmalloc(8);
     monitor_trace("initializsing paging");
-    initialise_paging();
+    initialize_paging();
     monitor_trace("back in main");
     uint32_t b = kmalloc(8);
     uint32_t c = kmalloc(8);
