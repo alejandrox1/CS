@@ -1,6 +1,7 @@
 #include "common.h"
 #include "paging.h"
 #include "kheap.h"
+#include "free_space_indexer.h"
 #include "monitor.h"
 #include "panic.h"
 #include "kassert.h"
@@ -50,7 +51,7 @@ void free_frame(page_t *page);
 static uint32_t pager_get_page_impl(pager_t *pager, uint32_t address, int32_t make);
 static void pager_alloc_frame_impl(pager_t *pager, uint32_t page);
 static void pager_free_frame_impl(pager_t *pager, uint32_t page);
-static uint32_t pager_build+physical_address_impl(pager_t *pager, uint32_t page, uint32_t address);
+static uint32_t pager_build_physical_address_impl(pager_t *pager, uint32_t page, uint32_t address);
 static void pager_impl_export(pager_t *pager, page_directory_t *dir, int32_t supervisor, int32_t readonly);
 
 static page_table_t *clone_table(page_table_t *src, uint32_t *physAddr);
@@ -236,7 +237,7 @@ page_directory_t *clone_directory(page_directory_t *src)
   
     uint32_t phys ; // physical address of the new page directory   
     page_directory_t *dir = (page_directory_t*)kmalloc_ap(sizeof(page_directory_t), &phys);
-    memset((u8int*)dir, 0, sizeof(page_directory_t));  
+    memset((uint8_t *)dir, 0, sizeof(page_directory_t));  
   
     // Get the physical address of tablesPhysical    
     uint32_t offset = ((uint32_t)dir->tablesPhysical)-((uint32_t)dir); 
@@ -377,8 +378,8 @@ void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
  */
 void free_frame(page_t *page)
 {
-    uint32_t frame;
-    if (!(frame = page->frame))
+    uint32_t frame = page->frame;
+    if (frame == 0)
         return; // The given page doesn't actually have an allocated frame.
     else
     {
@@ -399,7 +400,7 @@ static uint32_t pager_get_page_impl(pager_t *pager, uint32_t address, int32_t ma
 /*
  * pager_alloc_frame_impl
  */
-static void pager_alloc_frame_alloc(pager_t *pager, uint32_t page)
+static void pager_alloc_frame_impl(pager_t *pager, uint32_t page)
 {
     int32_t is_kernel    = pager->supervisor?1:0;
     int32_t is_writeable = pager->readonly?1:0;
@@ -409,7 +410,7 @@ static void pager_alloc_frame_alloc(pager_t *pager, uint32_t page)
 /*
  * page_free_frame_impl
  */
-static voic page_free_frame_impl(page_t *pager, uint32_t page)
+static void pager_free_frame_impl(pager_t *pager, uint32_t page)
 {
     return free_frame((page_t *)page);
 }
@@ -426,7 +427,7 @@ static uint32_t pager_build_physical_address_impl(pager_t *pager, uint32_t page,
 /*
  * pager_impl_export
  */
-static void pager_impl_export(pager_t *pager, page_diectory_t *dir, int32_t supervisor, int32_t readonly)
+static void pager_impl_export(pager_t *pager, page_directory_t *dir, int32_t supervisor, int32_t readonly)
 {
     pager->page_directory         = (uint32_t)dir;                               
     pager->supervisor             = supervisor;                                  
