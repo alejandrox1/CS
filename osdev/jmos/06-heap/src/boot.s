@@ -39,7 +39,8 @@ mboot:
 [EXTERN main]             ; Entrypoint for C code.
 
 start:
-	push ebx              ; Load multiboot header lcoation.
+	push esp
+    push ebx              ; Load multiboot header lcoation.
 
 	; Execute the kernel
 	cli                   ; Disable interrupts.
