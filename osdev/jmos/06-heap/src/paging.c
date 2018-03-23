@@ -28,11 +28,10 @@ void copy_page_data(uint32_t src, uint32_t dst); // copy_page_data.s
 
 // Globals
 // Bit set of frames.
-uint32_t *frames;
-uint32_t nframes;
-static page_directory_t *current_directory = 0;
+static uint32_t *frames;
+static uint32_t nframes;
 static page_directory_t *kernel_directory = 0;
-
+page_directory_t *current_directory = 0;
 
 
 // set_frame sets a bit in the frames bitset.
@@ -60,20 +59,20 @@ static page_table_t *clone_table(page_table_t *src, uint32_t *physAddr);
  *                                Public API                                  *
  ******************************************************************************/
 /*
- * initialise_paging.
+ * initialize_paging.
  * Create the frames bitset and initialises it to 0.
  * It allocates page-aligned space for a page_directory_t.
  * It allocates frames such that any page access will map will map to the frame
  * with the same linear address - identity mapping.
  * Register an interrupt handler for page faults and then enables paging.
  */
-void initialise_paging()
+void initialize_paging()
 {
     // For the moment, we assume the physical memory is is (0x1000000) 16MB big.
     uint32_t mem_end_page = 0x8000000;
 
     nframes = mem_end_page / 0x1000;
-    frames = (uint32_t*)kmalloc(4*INDEX_FROM_BIT(nframes));
+    frames = (uint32_t *)kmalloc(4*INDEX_FROM_BIT(nframes));
     memset((uint8_t *)frames, 0, 4*INDEX_FROM_BIT(nframes));
 
     // This should be framed when we use it.
@@ -83,7 +82,6 @@ void initialise_paging()
     kernel_directory = (page_directory_t *)kmalloc_a(sizeof(page_directory_t));
     memset((uint8_t *)kernel_directory, 0, sizeof(page_directory_t));
     kernel_directory->physicalAddr = ((uint32_t)kernel_directory->tablesPhysical);
-    current_directory = kernel_directory;
 
     /*
      * Map some pages in the kernel heap area.
@@ -92,9 +90,13 @@ void initialise_paging()
      * to be indentity mapped (see below), and we can't increase the placement
      * address between identity mapping and enabling he heap.
      */
-    int32_t i = 0;
-    for (i = HEAP_SPEC_START_ADDRESS; i < HEAP_SPEC_END_ADDRESS; i += 0x1000)
-        get_page(i, 1, kernel_directory);
+    uint32_t fa = HEAP_SPEC_START_ADDRESS;
+    uint32_t re = HEAP_SPEC_END_ADDRESS; 
+    while ( re>fa ) 
+    { 
+        (void) get_page (fa, 1, kernel_directory); 
+        fa += 0x1000 ;
+    }
     
     /*
      * We need to identity map (phys addr == virt addr) from 0x0 to the end of
@@ -104,29 +106,31 @@ void initialise_paging()
      * kmalloc(). A while loop causes this to be computed on-the-fly rather
      * than once at start.
      */
-    i = 0;
-    while (i < (placement_address + 0x1000)) 
-    {
-        // Kernel code is readable but not writeable from user-mode.
-        alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
-        i += 0x1000;
+    fa = 0;
+    while ( placement_address + 0x1000 > fa ) 
+    {  
+        // Kernel code is readable but not writeable from user space. 
+        // --> get_page (address , make , page_directory )   
+        page_t * page = get_page (fa, 1, kernel_directory ); 
+        // --> alloc_page (page , is_kernel , is_writeable ) 
+        alloc_frame ( page, 0, 0 );  
+        // Increase fa to the next page address.
+        fa += 0x1000; 
     }
 
     // Now allocate those pages we mapped earlier.
-    for (i = HEAP_SPEC_START_ADDRESS; i < HEAP_SPEC_END_ADDRESS; i += 0x1000)
-        alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
+    re = HEAP_SPEC_END_ADDRESS; 
+    for ( fa = HEAP_SPEC_START_ADDRESS; re > fa; fa+=0x1000 ) 
+    {
+        page_t * page = get_page( fa, 1, kernel_directory );
+        alloc_frame(page, 0, 0);
+    }
 
     // Before enabling paging, we must register a page fault handler.
     register_interrupt_handler(14, page_fault);
 
-    monitor_trace("switching page dir...");
     // Enable paging.
     switch_page_directory(kernel_directory);
-    monitor_trace("creating heap...");
-
-    // Initialise the kernel heap.
-    //kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
-    //monitor_trace("done creating heap.");
 
     // Switch heaps' impl's operations.
     heap_params->heap_start_address = HEAP_SPEC_START_ADDRESS;
@@ -147,7 +151,7 @@ void initialise_paging()
 void switch_page_directory(page_directory_t *dir)
 {
     current_directory = dir;
-    asm volatile("mov %0, %%cr3":: "r"(&dir->physicalAddr));
+    asm volatile("mov %0, %%cr3" : : "r" (dir->physicalAddr));
     uint32_t cr0;
     asm volatile("mov %%cr0, %0": "=r"(cr0));
     
@@ -170,17 +174,17 @@ page_t *get_page(uint32_t address, int32_t make, page_directory_t *dir)
 
     // Find page table containing this address.
     uint32_t table_idx = address / 1024;
-    uint32_t page_idx = address % 1024;
     if (dir->tables[table_idx] != 0) // If table is already assigned.
-        return &dir->tables[table_idx]->pages[page_idx];
-    else if (make != 0)
+        return &dir->tables[table_idx]->pages[address % 1024];
+    
+    if (make != 0)
     {
         uint32_t tmp;
         dir->tables[table_idx] = (page_table_t *)kmalloc_ap(sizeof(page_table_t), &tmp);
         ASSERT((0xFFF&tmp) == 0);
         memset((uint8_t *)dir->tables[table_idx], 0, 0x1000);
         dir->tablesPhysical[table_idx] = tmp | 0x7;    // present, rw, us.
-        return &dir->tables[table_idx]->pages[page_idx];
+        return &dir->tables[table_idx]->pages[address % 1024];
     }
     return 0;
 }
@@ -333,15 +337,14 @@ uint32_t test_frame(uint32_t frame_addr)
 static uint32_t first_frame()
 {
     uint32_t i, j;
-    for (i = 0; i < INDEX_FROM_BIT(nframes); i++)
+    for (i = 0; i < INDEX_FROM_BIT(nframes); ++i)
     {
         if (frames[i] != 0xFFFFFFFF) // Nothing free, exit early.
         {
             // At least one bit is set free here.
-            for (j = 0; j < 32; j++)
+            for (j = 0; j < 32; ++j)
             {
-                uint32_t toTest = 0x1 << j;
-                if ( !(frames[i] & toTest) )
+                if ( (frames[i] & (0x1 << j)) == 0)
                     return i * 4 * 8 + j;
             }
         }
@@ -358,19 +361,17 @@ void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
     ASSERT(page->frame == 0);
     if (page->frame != 0)
         return; // Frame was already allocated, return right away.
-    else
-    {
-        uint32_t idx = first_frame();
-        if (idx == (uint32_t)-1)
-            panic("alloc_frame(): No free frames!");
-        
-        // This page is ours.
-        set_frame(idx * 0x1000);
-        page->present = 1;       
-        page->rw      = (is_writeable)?1:0;
-        page->user    = (is_kernel)?0:1;
-        page->frame   = idx;
-    }
+    
+    uint32_t idx = first_frame();
+    if ( idx == ((uint32_t)-1) )
+        panic("alloc_frame(): No free frames!");
+
+    // This page is ours.     
+    set_frame(idx * 0x1000); 
+    page->present = 1;   
+    page->rw      = (is_writeable?1:0);
+    page->user    = (is_kernel?0:1);
+    page->frame   = idx; 
 }
 
 /*
@@ -381,11 +382,9 @@ void free_frame(page_t *page)
     uint32_t frame = page->frame;
     if (frame == 0)
         return; // The given page doesn't actually have an allocated frame.
-    else
-    {
-        clear_frame(frame);
-        page->frame = 0x0;
-    }
+
+    clear_frame(frame);
+    page->frame = 0x0;
 }
 
 /*
@@ -403,7 +402,7 @@ static uint32_t pager_get_page_impl(pager_t *pager, uint32_t address, int32_t ma
 static void pager_alloc_frame_impl(pager_t *pager, uint32_t page)
 {
     int32_t is_kernel    = pager->supervisor?1:0;
-    int32_t is_writeable = pager->readonly?1:0;
+    int32_t is_writeable = pager->readonly?0:1;
     alloc_frame((page_t *)page, is_kernel, is_writeable);
 }
 
