@@ -7,7 +7,6 @@
 #include "gdt.h"
 #include "idt.h"
 #include "timer.h"
-#include "memalloc.h"
 #include "kheap.h"
 #include "paging.h"
 #include "monitor.h"
@@ -86,8 +85,8 @@ int main()//struct multiboot *mboot_ptr)
     monitor_write("\nc: ");
     monitor_write_hex(c);
 
-    //kfree(c);
-    //kfree(b);
+    kfree(c);
+    kfree(b);
     uint32_t d = kmalloc(12);
     monitor_write(", d: ");
     monitor_write_hex(d);
