@@ -7,7 +7,6 @@
 #define KHEAP_H
 
 #include "common.h"
-#include "ord_array.h"
 #include "kinterfaces.h"
 
 
@@ -51,7 +50,7 @@ typedef struct
  */
 typedef struct
 {
-    ordered_array_t index;
+    //ordered_array_t index;
     uint32_t start_address;
     uint32_t end_address;    // May be expanded up to max_address.
     uint32_t max_address;
@@ -66,10 +65,10 @@ void create_heap(heap_params_t *heap_params);
 
 // alloc allocates a contiguous region of memory size. If page_align==1, it
 // creates a block on a page boundary.
-void *alloc(uint32_t size, uint8_t page_align, heap_t *heap);
+//void *alloc(uint32_t size, uint8_t page_align, heap_t *heap);
 
 // free releases a block allocated with alloc.
-void free(void *p, heap_t *heap);
+//void free(void *p, heap_t *heap);
 
 
 uint32_t kmalloc_int(uint32_t sz, int32_t align, uint32_t *phys);
