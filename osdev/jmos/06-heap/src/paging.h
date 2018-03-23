@@ -50,18 +50,18 @@ typedef struct page_directory
 
 
 
-// initialise_paging sets up the environment, page directories, etc. It also
+// initialize_paging sets up the environment, page directories, etc. It also
 // enables paging.
-void initialise_paging();
+void initialize_paging();
 
 // switch_page_directory causes the specified page directory to be loaded into
 // the CR3 register.
-void switch_page_directory(page_directory_t *new);
+void switch_page_directory(page_directory_t *dir);
 
 // get_page retrieves a pointer to the page required.
 // If make == 1, if the page-table in which this page should reside is not 
 // created, then create it.
-page_t *get_page(uint32_t address, int make, page_directory_t *dir);
+page_t *get_page(uint32_t address, int32_t make, page_directory_t *dir);
 
 // alloc_frame allocates a frame.                                               
 void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable);
