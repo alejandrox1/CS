@@ -8,7 +8,7 @@ typedef struct pager_struct pager_t;
 
 typedef uint32_t (*pager_get_page)               (pager_t *pager, uint32_t address, int32_t make);
 typedef void     (*pager_alloc_frame)            (pager_t *pager, uint32_t page);
-typedef void     (*page_free_frame)              (pager_t *pager, uint32_t page);
+typedef void     (*pager_free_frame)              (pager_t *pager, uint32_t page);
 typedef uint32_t (*pager_build_physical_address) (pager_t *pager, uint32_t page, uint32_t address);
 
 struct pager_struct
