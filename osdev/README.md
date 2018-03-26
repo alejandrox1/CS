@@ -6,7 +6,7 @@ related to os dev.
 * [simpleos](simpleos/) shows the entire source code for the various sections of 
   [Writing a simple operating system - from scratch](http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf).
 
-* [jmos](jmos/) Kernel development [tutorial series](https://web.archive.org/web/20160404151103/http://www.jamesmolloy.co.uk/tutorial_html/index.html).
+* [jmos](jmos/) Kernel development [tutorial series](http://www.jamesmolloy.co.uk/tutorial_html/).
 
 
 The goal of this project is to serve as a full guide, as such, more detailed
