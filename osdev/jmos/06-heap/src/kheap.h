@@ -65,7 +65,7 @@ void free(void *p, heap_t *heap);
 // kmalloc_int allocates a chunk of memory of size sz. If align == 1, the chunk
 // will be page aligned. If phys != 0, the physical location of the allocated
 // chunk will be stored in phys.
-uint32_t kmalloc_int(uint32_t sz, int8_t align, uint32_t *phys);
+uint32_t kmalloc_int(uint32_t sz, uint8_t align, uint32_t *phys);
 
 // kmalloc is a general purpose memory allocation function.
 uint32_t kmalloc(uint32_t sz);
