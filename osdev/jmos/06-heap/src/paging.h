@@ -7,7 +7,7 @@
 /*
  * page_t
  */
-typedef struct page
+typedef struct 
 {
     uint32_t present  :  1;    // Page present in memory.
     uint32_t rw       :  1;    // Read-only if clear, readwrite is set.
@@ -22,7 +22,7 @@ typedef struct page
 /*
  * page_table_t
  */
-typedef struct page_table
+typedef struct 
 {
     page_t pages[1024];
 } page_table_t;
@@ -31,7 +31,7 @@ typedef struct page_table
 /*
  * page_directory_t
  */
-typedef struct page_directory
+typedef struct 
 {
     // Array of pointers to page tables.
     page_table_t *tables[1024];
@@ -62,6 +62,12 @@ void switch_page_directory(page_directory_t *new);
 // If make == 1, if the page-table in which this page should reside is not 
 // created, then create it.
 page_t *get_page(uint32_t address, int make, page_directory_t *dir);
+
+void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable);
+void free_frame(page_t *page);
+    
+// page_fault is a handler for page faults.
+void page_fault(registers_t *regs);
 
 
 #endif

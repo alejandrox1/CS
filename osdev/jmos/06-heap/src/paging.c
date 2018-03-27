@@ -1,7 +1,7 @@
 #include "common.h"
 #include "common-io.h"
 #include "paging.h"
-#include "memalloc.h"
+#include "kheap.h"
 #include "monitor.h"
 #include "panic.h"
 
@@ -9,16 +9,18 @@
 #define INDEX_FROM_BIT(a) (a/(8*4))
 #define OFFSET_FROM_BIT(a) (a%(8*4))
 
+// Extern
+extern uint32_t placement_address; // kheap.c
+extern heap_t *kheap;
 
+// Global
 // Bit set of frames.
 uint32_t *frames;
 uint32_t nframes;
-page_directory_t *current_directory, *kernel_directory;
+page_directory_t *kernel_directory = 0;
+page_directory_t *current_directory = 0;
 
-// Defined in kheap.c
-uint32_t placement_address = 0x0E00000;
 
-void page_fault(registers_t *regs);
 
 /*
  * set_frame sets a bit in the frames bitset.
