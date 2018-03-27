@@ -11,6 +11,7 @@
 #include "paging.h"
 #include "kheap.h"
 #include "monitor.h"
+#include "kassert.h"
 
 static void int_3_handler(registers_t *regs)
 {
@@ -62,13 +63,14 @@ int main()//struct multiboot *mboot_ptr)
     /*
      * Test PIT api
      */
+    /*
     init_timer(1); // 1 Hz
     
     asm volatile("sti");
 
     int i = 0;
     for (; i<5 ; i++);
-
+    */
     /*
      * Paging
      */
