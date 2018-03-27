@@ -22,65 +22,15 @@ page_directory_t *current_directory = 0;
 
 
 
-/*
- * set_frame sets a bit in the frames bitset.
- */
-static void set_frame(uint32_t frame_addr)
-{
-    uint32_t frame = frame_addr / 0x1000;
-    uint32_t idx = INDEX_FROM_BIT(frame);
-    uint32_t off = OFFSET_FROM_BIT(frame);
-    frames[idx] |= (0x1 << off);
-}
 
-/*
- * clear_frame clears a bit from the frames bitset.
- */
-static void clear_frame(uint32_t frame_addr)
-{
-    uint32_t frame = frame_addr / 0x1000;
-    uint32_t idx = INDEX_FROM_BIT(frame);
-    uint32_t off = OFFSET_FROM_BIT(frame);
-    frames[idx] &= ~(0x1 << off);
-}
+static void set_frame(uint32_t frame_addr);
+static void clear_frame(uint32_t frame_addr);
+//static uint32_t test_frame(uint32_t frame_addr);
+static uint32_t first_frame();
 
-/*
- * test_frame tests if a bit is set in the frames bitset.
- */
-//static uint32_t test_frame(uint32_t frame_addr)
-//{
-//    uint32_t frame = frame_addr / 0x1000;
-//    uint32_t idx = INDEX_FROM_BIT(frame);
-//    uint32_t off = OFFSET_FROM_BIT(frame);
-//    return (frames[idx] & (0x1 << off));
-//}
-
-/*
- * first_frame finds the first free frame.
- */
-static uint32_t first_frame()
-{
-    uint32_t i, j;
-    for (i = 0; i < INDEX_FROM_BIT(nframes); i++)
-    {
-        if (frames[i] != 0xFFFFFFFF) // Nothing free, exit early.
-        {
-            // At least one bit is set free here.
-            for (j = 0; j < 32; j++)
-            {
-                uint32_t toTest = 0x1 << j;
-                if ( !(frames[i] & toTest) )
-                    return i * 4 * 8 + j;
-            }
-        }
-    }
-    return (uint32_t)-1;
-}
-
-
-
-
-
+/******************************************************************************
+ *                                 Public API                                 *
+ *****************************************************************************/
 /*
  * alloc_frame allocates a frame.
  */
@@ -142,6 +92,18 @@ void initialise_paging()
     current_directory = kernel_directory;
 
     /*
+     * Map some pages in the kernel area. 
+     * By calling get_page() without alloc(), we willcause page_directory_t to
+     * be created where necessary. 
+     * We will be able to allocate frame after these are identiy mapped (see
+     * below). We can't increase placement_address between identity mapping and
+     * enabling the heap.
+     */
+    uint32_t i = 0;
+    for (i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000)      
+        get_page(i, 1, kernel_directory);
+
+    /*
      * We need to identify map (phys addr == virt addr) from 0x0 to the end of
      * used memory, in order to transparently access it - as if paging wasn't
      * enabled.
@@ -149,18 +111,26 @@ void initialise_paging()
      * kmalloc(). A while loop causes this to be computed on-the-fly rather
      * than once at start.
      */
-    uint32_t i = 0;
-    while (i < placement_address)
+    i = 0;
+    while (i < placement_address+0x1000)
     {
         // Kernel code is readable but not writeable from user-mode.
         alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
         i += 0x1000;
     }
+
+    // Now allocate those pages we mapped earlier.                              
+    for (i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000) 
+        alloc_frame( get_page(i, 1, kernel_directory), 0, 0);
+
     // Before enabling paging, we must register a page fault handler.
     register_interrupt_handler(14, page_fault);
 
     // Enable paging.
     switch_page_directory(kernel_directory);
+
+    // Initialise the kernel heap.  
+    kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 
 /*
@@ -245,3 +215,62 @@ void page_fault(registers_t *regs)
     panic(" ");
     for (;;) ;                                                                    
 } 
+
+
+/******************************************************************************
+ *                                  Private API                               *
+ *****************************************************************************/
+/*
+ * set_frame sets a bit in the frames bitset.
+ */
+static void set_frame(uint32_t frame_addr)
+{
+    uint32_t frame = frame_addr / 0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
+    frames[idx] |= (0x1 << off);
+}
+
+/*
+ * clear_frame clears a bit from the frames bitset.
+ */
+static void clear_frame(uint32_t frame_addr)
+{
+    uint32_t frame = frame_addr / 0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
+    frames[idx] &= ~(0x1 << off);
+}
+
+/*
+ * test_frame tests if a bit is set in the frames bitset.
+ */
+//static uint32_t test_frame(uint32_t frame_addr)
+//{
+//    uint32_t frame = frame_addr / 0x1000;
+//    uint32_t idx = INDEX_FROM_BIT(frame);
+//    uint32_t off = OFFSET_FROM_BIT(frame);
+//    return (frames[idx] & (0x1 << off));
+//}
+
+/*
+ * first_frame finds the first free frame.
+ */
+static uint32_t first_frame()
+{
+    uint32_t i, j;
+    for (i = 0; i < INDEX_FROM_BIT(nframes); i++)
+    {
+        if (frames[i] != 0xFFFFFFFF) // Nothing free, exit early.
+        {
+            // At least one bit is set free here.
+            for (j = 0; j < 32; j++)
+            {
+                uint32_t toTest = 0x1 << j;
+                if ( !(frames[i] & toTest) )
+                    return i * 4 * 8 + j;
+            }
+        }
+    }
+    return (uint32_t)-1;
+}
