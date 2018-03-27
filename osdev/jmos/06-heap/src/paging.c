@@ -1,9 +1,9 @@
 #include "common.h"
-#include "common-io.h"
 #include "paging.h"
 #include "kheap.h"
 #include "monitor.h"
 #include "panic.h"
+#include "kassert.h"
 
 
 #define INDEX_FROM_BIT(a) (a/(8*4))
@@ -47,8 +47,8 @@ void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
         // This page is ours.
         set_frame(idx * 0x1000);
         page->present = 1;       
-        page->rw      = (is_writeable)?1:0;
-        page->user    = (is_kernel)?0:1;
+        page->rw      = (is_writeable)?1:0;                                          
+        page->user    = (is_kernel)?0:1; 
         page->frame   = idx;
     }
 }
@@ -204,7 +204,7 @@ void page_fault(registers_t *regs)
     monitor_write_hex(cr2);
     monitor_write("\n");
     
-    monitor_write("Page fault at 0x");
+    monitor_write("Page fault at eip: ");
     monitor_write_hex(regs->eip);
     monitor_write(", faulting address 0x");
     monitor_write_hex(cr2); 
