@@ -6,6 +6,7 @@
  * Taken from JamesM's kernel development tutorials.
  */
 #include "ord_array.h"
+#include "kheap.h"
 #include "kassert.h"
 
 
@@ -53,8 +54,7 @@ ordered_array_t place_ordered_array(void *addr, uint32_t max_size, lessthan_pred
  */
 void destroy_ordered_array(ordered_array_t *array)
 {
-//    kfree(array->array);
-    return;
+    kfree(array->array);
 }
 
 /*
