@@ -80,7 +80,7 @@ uint32_t kmalloc_p(uint32_t sz, uint32_t *phys);
 uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys);
 
 // kfree is a general purpose memory deallocation function.
-void kfree(void *p);
+void kfree(uint32_t p);
 
 
 #endif // KHEAP_H

@@ -94,9 +94,9 @@ uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys)
 /*
  * kfree
  */
-void kfree(void *p)
+void kfree(uint32_t p)
 {
-    free(p, kheap);
+    free((void *)p, kheap);
 }
 
 /*
