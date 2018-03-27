@@ -1,0 +1,1 @@
+syntax keyword Type	footer_t gdt_entry_struct gdt_entry_t gdt_ptr_struct gdt_ptr_t header_t heap_t idt_entry_struct idt_entry_t idt_ptr_struct idt_ptr_t int16_t int32_t int8_t interrupt_handler_t lessthan_predicate_t ordered_array_t page_directory_t page_t page_table_t registers_struct registers_t type_t uint16_t uint32_t uint8_t 
