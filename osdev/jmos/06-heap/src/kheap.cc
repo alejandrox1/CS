@@ -258,7 +258,7 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap)
         hole_header->is_hole  = 1;
         hole_header->size     = orig_hole_pos - new_size;
 
-        footer_t *hole_footer = (footer_t *)((uint32_t)hole_header + orig_hole_pos - new_size - sizeof(footer_t));
+        footer_t *hole_footer = (footer_t *)((uint32_t)hole_header + orig_hole_size - new_size - sizeof(footer_t));
         if ((uint32_t)hole_footer < heap->end_address)
         {
             hole_footer->magic  = HEAP_MAGIC;
@@ -382,7 +382,7 @@ static int32_t find_smallest_hole(uint32_t size, uint8_t page_align, heap_t *hea
             
             int32_t hole_size = (int32_t)header->size - offset;
             // Hole is larger than requested size.
-            if (hole_size > (int32_t)size)
+            if (hole_size >= (int32_t)size)
                 break;
         }
         // Item at given position is larger than requested size.
@@ -443,7 +443,7 @@ static uint32_t contract(uint32_t new_size, heap_t *heap)
     if (new_size < HEAP_MIN_SIZE)
         new_size = HEAP_MIN_SIZE;
     uint32_t old_size = heap->end_address - heap->start_address;
-    uint32_t i = old_size;
+    uint32_t i = old_size - 0x1000;
     while (new_size < i)
     {
         free_frame(get_page(heap->start_address+i, 0, kernel_directory)); 
