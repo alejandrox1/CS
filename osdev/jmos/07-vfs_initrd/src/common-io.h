@@ -1,7 +1,7 @@
 #ifndef COMMONIO_H
 #define COMMONIO_H
 
-#include "common.h"
+#include "types.h"
 #include "monitor.h"
 
 void _monitor_trace(const char *file,  int32_t line, const char *msg)
