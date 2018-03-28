@@ -6,16 +6,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-/*
- * typedefs to standardize sizes across platforms.
- * Writfen for 32-bit x86.
- */
-typedef unsigned int   uint32_t;
-typedef          int   int32_t;
-typedef unsigned short uint16_t;
-typedef          short int16_t;
-typedef unsigned char  uint8_t;
-typedef          char  int8_t;
+#include "types.h"
+
 
 /*
  * Driver funcs.
@@ -31,9 +23,26 @@ uint16_t inw(uint16_t port);
 
 
 /*
- * MEM mng.
+ * Memory
  */
-// memset writen len copies of val into dest.
+// memset writes len copies of val into dest.
 void memset(uint8_t *dest, uint8_t val, uint32_t len);
+
+// memcpy copies len bytes from src to dest.
+void memcpy(uint8_t *dest, const uint8_t *src, uint32_t len);
+
+
+/*
+ * Strings
+ */
+// strlen
+int strlen(char *src);
+
+// strcmp
+int strcmp(const char *str1, const char *str2);
+
+// strcpy copies a NULL_termindated string from src into dest, and returns
+// dest.
+char *strcpy(char *dest, const char *src);
 
 #endif
