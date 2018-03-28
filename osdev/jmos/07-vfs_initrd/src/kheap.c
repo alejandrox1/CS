@@ -5,7 +5,7 @@
  *
  * Taken from JamesM's kernel development tutorial.
  */
-#include "common.h"
+#include "types.h"
 #include "paging.h"
 #include "kheap.h"
 #include "kassert.h"

@@ -4,7 +4,7 @@
  * Define the kernel entrypoint and calls initialization routines.
  * From James Molloy kernel dev tutorial.
  */
-#include "common.h"
+#include "types.h"
 #include "gdt.h"
 #include "idt.h"
 #include "timer.h"

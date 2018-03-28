@@ -4,6 +4,7 @@
  * Initialize PIT, handle clock updates.
  * Taken from JamesM' kernel development tutorials.
  */
+#include "types.h"
 #include "common.h"
 #include "timer.h"
 #include "idt.h"

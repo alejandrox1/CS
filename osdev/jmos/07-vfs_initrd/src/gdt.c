@@ -4,7 +4,7 @@
  * Initializae the GDT.
  * Taken from JamesM' kernel development tutorial.
  */
-#include "common.h"
+#include "types.h"
 #include "gdt.h"
 
 #define ENTRIES 6

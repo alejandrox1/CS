@@ -8,7 +8,7 @@
 #ifndef ORD_ARRAY_H
 #define ORD_ARRAY_H
 
-#include "common.h"
+#include "types.h"
 
 // Ordered arrays in this context will be insertion sorted - it should always
 // be ordered between calls.

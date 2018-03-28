@@ -1,7 +1,7 @@
 #ifndef KASSERT_H
 #define KASSERT_H
 
-#include "common.h"
+#include "types.h"
 #include "monitor.h"
 
 static void _monitor_trace(const char *file,  int32_t line, const char *msg)

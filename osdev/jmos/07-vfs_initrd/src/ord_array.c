@@ -5,6 +5,8 @@
  *
  * Taken from JamesM's kernel development tutorials.
  */
+#include "types.h"
+#include "common.h"
 #include "ord_array.h"
 #include "kheap.h"
 #include "kassert.h"

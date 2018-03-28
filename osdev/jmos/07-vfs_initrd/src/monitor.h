@@ -6,7 +6,7 @@
 #ifndef MONITOR_H
 #define MONITOR_H
 
-#include "common.h"
+#include "types.h"
 
 
 // monitor_put writes a character to screen.

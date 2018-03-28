@@ -1,7 +1,7 @@
 #ifndef PAGING_H
 #define PAGING_H
 
-#include "common.h"
+#include "types.h"
 #include "idt.h"
 
 /*

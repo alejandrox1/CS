@@ -5,6 +5,8 @@
  * Define default ISR and IRQ handlers.
  * Taken from JamesM's kernel development tutorial.
  */
+#include "types.h"
+#include "common.h"
 #include "idt.h"
 #include "monitor.h"
 

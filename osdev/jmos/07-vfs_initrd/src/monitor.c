@@ -1,3 +1,5 @@
+#include "types.h"
+#include "common.h"
 #include "monitor.h"
 
 // VGA framebuffer starts at 0xB8000

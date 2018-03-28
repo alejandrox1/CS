@@ -7,7 +7,7 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include "common.h"
+#include "types.h"
 
 #define ISR3 3
 #define IRQ0 32
