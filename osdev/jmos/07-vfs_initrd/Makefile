@@ -13,7 +13,7 @@ ASFLAGS=-f elf
 all: $(COBJECTS) $(SOBJECTS) link types
 
 link:
-	@echo Linking
+	@echo Linking $(SOBJECTS) $(COBJECTS)
 	@$(LD) $(LDFLAGS) -o kernel $(SOBJECTS) $(COBJECTS)
 
 .s.o:
