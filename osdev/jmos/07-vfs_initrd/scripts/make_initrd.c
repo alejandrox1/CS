@@ -1,3 +1,10 @@
+/*
+ * make_initrd.c
+ *
+ * Taken from JamesM's kernel development tutorials.
+ *
+ * ./make_initrd test.txt test.txt test2.txt test2.txt
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
