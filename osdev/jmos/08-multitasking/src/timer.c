@@ -4,15 +4,17 @@
  * Initialize PIT, handle clock updates.
  * Taken from JamesM' kernel development tutorials.
  */
+#include "timer.h"
 #include "types.h"
 #include "common.h"
-#include "timer.h"
 #include "idt.h"
-#include "monitor.h"
+#include "task.h"
+
 
 #define CLOCKF 1193180
 
 uint32_t tick = 0;
+
 
 // timer_callback
 static void timer_callback(registers_t *regs);
@@ -55,10 +57,5 @@ void init_timer(uint32_t frequency)
 static void timer_callback(registers_t *regs)
 {
     tick++;
-    if (tick%100 == 0)
-    {
-        monitor_write("Tick: ");
-        monitor_write_dec(tick);
-        monitor_write("\n");
-    }
+    switch_task();
 }
