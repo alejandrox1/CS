@@ -89,9 +89,10 @@ void initialise_paging()
     memset((uint8_t *)frames, 0, INDEX_FROM_BIT(nframes));
 
     // Make a page directory.
+    uint32_t phys;
     kernel_directory = (page_directory_t *)kmalloc_a(sizeof(page_directory_t));
     memset((uint8_t *)kernel_directory, 0, sizeof(page_directory_t));
-    current_directory = kernel_directory;
+    kernel_directory->physicalAddr = (uint32_t)kernel_directory->tablesPhysical;
 
     /*
      * Map some pages in the kernel area. 
@@ -101,7 +102,7 @@ void initialise_paging()
      * below). We can't increase placement_address between identity mapping and
      * enabling the heap.
      */
-    uint32_t i = 0;
+    int i = 0;
     for (i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000)      
         get_page(i, 1, kernel_directory);
 
@@ -133,6 +134,9 @@ void initialise_paging()
 
     // Initialise the kernel heap.  
     kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
+
+    current_directory = clone_directory(kernel_directory);
+    switch_page_directory(current_directory);
 }
 
 /*
@@ -141,7 +145,7 @@ void initialise_paging()
 void switch_page_directory(page_directory_t *dir)
 {
     current_directory = dir;
-    asm volatile("mov %0, %%cr3":: "r"(&dir->tablesPhysical));
+    asm volatile("mov %0, %%cr3":: "r"(dir->physicalAddr));
     uint32_t cr0;
     asm volatile("mov %%cr0, %0": "=r"(cr0));
     
