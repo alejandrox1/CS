@@ -46,6 +46,74 @@ void initialise_tasking()
 }
 
 /*
+ * switch_task
+ */
+void switch_task()
+{
+    // Make sure we already initialise_tasking()
+    if (!current_task)
+        return;
+
+    // We will need these...
+    uint32_t esp, ebp, eip;
+    asm volatile("mov %%esp, %0" : "=r" (esp));
+    asm volatile("mov %%ebp, %0" : "=r" (ebp));
+    
+    /*
+     * Read the intruction pointer and...
+     * One of two things coul've happened when read_eip() exits:
+     *  1. We called the function and it returned the EIP as requested.
+     *  2. We have just switched tasks, and because the saved EIP is the
+     *     instruction after read_eip(), it will seem as if it has just 
+     *     returned.
+     * In the second case we need to return inmediately.
+     * To detect this case, we place a dummy value in EAX further down at the
+     * end of this function (return value will be the dummy 0x12345).
+     */
+    eip = read_eip();
+    // Did we jus switch tasks?
+    if (eip == 0x12345)
+        return;
+
+    // We did NOt switch tasks: lets' save some stuff.
+    current_task->eip = eip;
+    current_task->esp = esp;
+    current_task->ebp = ebp;
+
+    // Get next task to run.
+    current_task = current_task->next;
+    // If current_task wen't NULL then go around.
+    if (!current_task) current_task = ready_queue;
+
+    eip = current_task->eip;
+    esp = current_task->esp;
+    ebp = current_task->ebp;
+
+    // Make sure the memory manager knows we changed page directory.
+    current_directory = current_task->page_directory;
+    /*
+     * - Temporarily put EIP in ECX.
+     * - Load stack and base pointer for new stack.
+     * - Change page directory.
+     * - Put dummy return value (0x12345) in EAX to recognize we just switched 
+     *   tasks.
+     * - Jump to next location in ECX (EIP is in there).
+     */
+    asm volatile("              \
+            cli;                \
+            mov %0, %%ecx;      \
+            mov %1, %%esp;      \
+            mov %2, %%ebp;      \
+            mov %3, %%cr3;      \
+            mov $0x12345, %eax; \
+            sti;                \
+            jmp *%%ecx          "
+            : : "r"(eip), "r"(esp), "r"(ebp), "r"(current_directory->physicalAddr));
+}
+
+
+
+/*
  * fork
  */
 int fork()
