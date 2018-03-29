@@ -1,3 +1,8 @@
+[GLOBAL read_eip]
+read_eip:
+    pop eax    ; When read_eip the current isntruction is pushed onto the stack.
+    jmp eax    ; Here, we pop the return value into EAX ourselves.
+
 [GLOBAL copy_page_physical]
 copy_page_physical:
     push ebx             ; Acording to __cdecl, we must preserve the content of EBX.
