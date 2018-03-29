@@ -3,5 +3,3 @@ floppya: 1_44=/dev/loop0, status=inserted
 boot: a
 log: bochsout.txt
 mouse: enabled=0
-clock: sync=slowdown
-cpu: ips=1000000
