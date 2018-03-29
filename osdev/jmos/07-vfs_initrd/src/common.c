@@ -92,15 +92,18 @@ int strlen(char *src)
  */
 int strcmp(const char *str1, const char *str2)
 {
-    while (str1 && (*str1 == *str2))
+    while (*str1 && (*str1 == *str2))
     {
         str1++;
         str2++;
     }
-    int res = *(const unsigned char *)str1 - *(const unsigned char *)str2;
-    if (res < 0)
+	int lt = (*str1 < *str2)?-1:0;
+	int gt = (*str1 > *str2)?1:0;
+    //int res = *(const unsigned char *)str1 - *(const unsigned char *)str2;
+    if (lt == -1)
         return -1;
-    else if (res > 0)
+    if (gt == 1)
         return 1;
     return 0;
 }
+
