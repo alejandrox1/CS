@@ -2,17 +2,8 @@
 #define KASSERT_H
 
 #include "types.h"
-#include "monitor.h"
 
-static void _monitor_trace(const char *file,  int32_t line, const char *msg)
-{
-    monitor_write(msg);
-    monitor_write(" ");
-    monitor_write(file);
-    monitor_write(":");
-    monitor_write_dec(line);
-    monitor_write("\n");
-}
+void _monitor_trace(const char *file,  int32_t line, const char *msg);
 
 #define monitor_trace(msg) _monitor_trace(__FILE__, __LINE__, (msg))
 
