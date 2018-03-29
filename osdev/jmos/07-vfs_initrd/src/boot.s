@@ -36,12 +36,12 @@ mboot:
 	dd start              ; Kernel entrypoint (initial EIP).
 
 [GLOBAL start]            ; Kernel entrypoint.
-[EXTERN main]             ; Entrypoint for C code.
+[EXTERN kmain]             ; Entrypoint for C code.
 
 start:
 	push ebx              ; Load multiboot header lcoation.
 
 	; Execute the kernel
 	cli                   ; Disable interrupts.
-	call main             ; Call our main() func.
+	call kmain             ; Call our kmain() func.
 	jmp $
