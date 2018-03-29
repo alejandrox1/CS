@@ -17,7 +17,7 @@ copy_page_physical:
 .loop:
     mov eax, [ebx]       ; Get word at source address.
     mov [ecx], eax       ; Store it at the destination address.
-    and ebx, 4           ; Source address += sizeof(word)
+    add ebx, 4           ; Source address += sizeof(word)
     add ecx, 4           ; Dest address += sizeof(word)
     dec edx              ; One less word to do.
     jnz .loop            
