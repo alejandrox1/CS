@@ -212,7 +212,6 @@ void page_fault(registers_t *regs)
     monitor_write("\nError code: ");
     monitor_write_hex(regs->err_code); 
 
-    monitor_trace("\nTrace");
     panic(" ");
     for (;;) ;                                                                    
 } 
