@@ -14,6 +14,8 @@
 extern uint32_t placement_address; // kheap.c
 extern heap_t *kheap;
 
+extern void copy_page_physical(uint32_t src, uint32_t dest);
+
 // Global
 // Bit set of frames.
 uint32_t *frames;
@@ -28,7 +30,7 @@ static void set_frame(uint32_t frame_addr);
 static void clear_frame(uint32_t frame_addr);
 //static uint32_t test_frame(uint32_t frame_addr);
 static uint32_t first_frame();
-static page_table_t *clone_table(page_table_t *src, u32int *physAddr);
+static page_table_t *clone_table(page_table_t *src, uint32_t *physAddr);
 
 /******************************************************************************
  *                                 Public API                                 *
@@ -89,7 +91,6 @@ void initialise_paging()
     memset((uint8_t *)frames, 0, INDEX_FROM_BIT(nframes));
 
     // Make a page directory.
-    uint32_t phys;
     kernel_directory = (page_directory_t *)kmalloc_a(sizeof(page_directory_t));
     memset((uint8_t *)kernel_directory, 0, sizeof(page_directory_t));
     kernel_directory->physicalAddr = (uint32_t)kernel_directory->tablesPhysical;
@@ -229,8 +230,8 @@ page_directory_t *clone_directory(page_directory_t *src)
 {
     uint32_t phys;
     // Make a new page directory and obtain its physical address.
-    page_directory_t *dir = (page_directory *)kmalloc_ap(sizeof(page_directory_t), &phys);
-    memset(dir, 0, sizeof(page_directory_t));
+    page_directory_t *dir = (page_directory_t *)kmalloc_ap(sizeof(page_directory_t), &phys);
+    memset((uint8_t *)dir, 0, sizeof(page_directory_t));
 
     // Get the offset of tablesPhysical from the start of the page_directory_t.
     uint32_t offset   = (uint32_t)dir->tablesPhysical - (uint32_t)dir;
@@ -325,7 +326,7 @@ static uint32_t first_frame()
 static page_table_t *clone_table(page_table_t *src, uint32_t *physAddr)
 {
     page_table_t *table = (page_table_t *)kmalloc_ap(sizeof(page_table_t), physAddr);
-    memset(table, 0, sizeof(page_table_t));
+    memset((uint8_t *)table, 0, sizeof(page_table_t));
 
     int i;
     for (i = 0; i < 1024; i++)
@@ -342,7 +343,7 @@ static page_table_t *clone_table(page_table_t *src, uint32_t *physAddr)
             if (src->pages[i].accessed) table->pages[i].accessed = 1;
             if (src->pages[i].dirty)    table->pages[i].dirty    = 1;
             // Physically copy the data (extern: process.s).
-            clone_page_physically(src->pages[i].frame*0x1000, table->pages[i].frame*0x1000);
+            copy_page_physical(src->pages[i].frame*0x1000, table->pages[i].frame*0x1000);
         }
     }
     return table;
