@@ -51,8 +51,8 @@ void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable)
         // This page is ours.
         set_frame(idx * 0x1000);
         page->present = 1;       
-        page->rw      = (is_writeable)?1:0;                                          
-        page->user    = (is_kernel)?0:1; 
+        page->rw      = (is_writeable==1)?1:0;                                          
+        page->user    = (is_kernel==1)?0:1; 
         page->frame   = idx;
     }
 }
