@@ -57,9 +57,5 @@ void init_timer(uint32_t frequency)
 static void timer_callback(registers_t *regs)
 {
     tick++;
-    if (tick==1000)
-    {
-        monitor_write("\n\t...tick...\n");
-        switch_task();
-    }
+    switch_task();
 }
