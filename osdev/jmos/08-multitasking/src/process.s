@@ -3,6 +3,18 @@ read_eip:
     pop eax    ; When read_eip the current isntruction is pushed onto the stack.
     jmp eax    ; Here, we pop the return value into EAX ourselves.
 
+[GLOBAL perform_task_switch]
+perform_task_switch:
+     cli;
+     mov ecx, [esp+4]   ; EIP
+     mov eax, [esp+8]   ; physical address of current directory
+     mov ebp, [esp+12]  ; EBP
+     mov esp, [esp+16]  ; ESP
+     mov cr3, eax       ; set the page directory
+     mov eax, 0x12345   ; magic number to detect a task switch
+     sti;
+     jmp ecx
+
 [GLOBAL copy_page_physical]
 copy_page_physical:
     push ebx             ; Acording to __cdecl, we must preserve the content of EBX.
