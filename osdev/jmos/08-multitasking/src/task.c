@@ -7,6 +7,8 @@
 #include "task.h"
 #include "common.h"
 #include "paging.h"
+#include "kheap.h"
+#include "monitor.h"
 
 extern page_directory_t *kernel_directory;
 extern page_directory_t *current_directory;
@@ -36,7 +38,7 @@ void initialise_tasking()
     current_task = ready_queue = (task_t *)kmalloc(sizeof(task_t));
     current_task->id             = next_pid++;
     current_task->esp            = 0;
-    current-Task->ebp            = 0;
+    current_task->ebp            = 0;
     current_task->eip            = 0;
     current_task->page_directory = current_directory;
     current_task->next           = 0;
@@ -71,6 +73,9 @@ void switch_task()
      * end of this function (return value will be the dummy 0x12345).
      */
     eip = read_eip();
+    monitor_write("\nswitch_task(): ");
+    monitor_write_hex(eip);
+    monitor_write("\n");
     // Did we jus switch tasks?
     if (eip == 0x12345)
         return;
@@ -89,8 +94,11 @@ void switch_task()
     esp = current_task->esp;
     ebp = current_task->ebp;
 
+    monitor_write("switching current_directory...\n");
     // Make sure the memory manager knows we changed page directory.
     current_directory = current_task->page_directory;
+    monitor_write("current_directory switched.\n");
+
     /*
      * - Temporarily put EIP in ECX.
      * - Load stack and base pointer for new stack.
@@ -99,16 +107,31 @@ void switch_task()
      *   tasks.
      * - Jump to next location in ECX (EIP is in there).
      */
+    /*
     asm volatile("              \
             cli;                \
             mov %0, %%ecx;      \
             mov %1, %%esp;      \
             mov %2, %%ebp;      \
             mov %3, %%cr3;      \
-            mov $0x12345, %eax; \
+            mov $0x12345, %%eax; \
             sti;                \
             jmp *%%ecx          "
             : : "r"(eip), "r"(esp), "r"(ebp), "r"(current_directory->physicalAddr));
+            */
+   asm volatile("cli;" : : );                                       
+    monitor_write("mov eip: ");
+    monitor_write_hex(eip);
+    monitor_write("\n");
+    asm volatile("mov %0, %%esp" : : "r"(esp));                                 
+    monitor_write("mov esp\n");                                                 
+    asm volatile("mov %0, %%ebp" : : "r"(ebp));                                 
+    monitor_write("mov ebp\n");                                                 
+    asm volatile("mov %0, %%cr3" : : "r"(current_directory->physicalAddr));     
+    monitor_write("mov cr3: ");     
+    monitor_write_hex(current_directory->physicalAddr);
+    monitor_write("\n");
+    asm volatile("mov %0, %%ecx; mov $0x12345, %%eax; sti; jmp *%%ecx" :: "r"(eip)); 
 }
 
 
@@ -128,7 +151,7 @@ int fork()
     page_directory_t *directory = clone_directory(current_directory);
 
     // Create a new process.
-    task_t new_task = (task_t *)kmalloc(sizeof(task_t));
+    task_t *new_task = (task_t *)kmalloc(sizeof(task_t));
     new_task->id             = next_pid++;
     new_task->esp            = 0;
     new_task->ebp            = 0;
@@ -173,7 +196,7 @@ void move_stack(void *new_stack_start, uint32_t size)
 {
     uint32_t i;
     // Allocate space for the new stack.
-    for ( i = (uint32_t)new_stack_start; i >= ((uint32_t)new_stack_start - size); i -= 0x1000)
+    for (i = (uint32_t)new_stack_start; i >= ((uint32_t)new_stack_start - size); i -= 0x1000)
     {
         // General-purpose stack is in user-mode.
         alloc_frame( get_page(i, 1, current_directory), 0 /* user-mode */, 1 /* writable */ );
@@ -223,7 +246,13 @@ void move_stack(void *new_stack_start, uint32_t size)
     asm volatile("mov %0, %%ebp" : : "r" (new_base_pointer));
 }
 
-
+/*
+ * getpid
+ */
+int getpid()
+{
+    return current_task->id;
+}
 /******************************************************************************
  *                               Private API                                  *
  *****************************************************************************/
