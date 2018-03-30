@@ -145,9 +145,6 @@ void initialise_paging()
  */
 void switch_page_directory(page_directory_t *dir)
 {
-    monitor_write("switch_page_dir: ");
-    monitor_write_hex(dir->physicalAddr);
-    monitor_write("\n"); 
     current_directory = dir;
     asm volatile("mov %0, %%cr3":: "r"(dir->physicalAddr));
     uint32_t cr0;
