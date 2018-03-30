@@ -3,6 +3,8 @@
 * [Containers](containers/) Building, running, securing, implementing
   with/on-top-off and pretty much anything container related.
 
+* [Cryptography](crypto/) All things cryptography or vaguely related.
+
 * [Kernel](kernel/) A guide into everything relaed to the Linux kernel.
 
 * [OS Dev](osdev/) How to build an entire unix-like os with nothing but vim and
