@@ -38,5 +38,9 @@ void move_stack(void *new_stack_start, uint32_t size);
 int getpid();
 
 
+/* User Mode */
+// switch_to_user_mode
+void switch_to_user_mode();
 
-#endif // _TASH_H
+
+#endif // _TASK_H

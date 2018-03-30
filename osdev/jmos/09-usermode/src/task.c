@@ -103,33 +103,6 @@ void switch_task()
      *   tasks.
      * - Jump to next location in ECX (EIP is in there).
      */
-    /*
-    asm volatile("              \
-            cli;                \
-            mov %0, %%ecx;      \
-            mov %1, %%esp;      \
-            mov %2, %%ebp;      \
-            mov %3, %%cr3;      \
-            mov $0x12345, %%eax; \
-            sti;                \
-            jmp *%%ecx          "
-            : : "r"(eip), "r"(esp), "r"(ebp), "r"(current_directory->physicalAddr));
-            */
-   /*
-    asm volatile("cli;" : : );                                       
-    monitor_write("mov eip: ");
-    monitor_write_hex(eip);
-    monitor_write("\n");
-    asm volatile("mov %0, %%esp" : : "r"(esp));                                 
-    monitor_write("mov esp\n");                                                 
-    asm volatile("mov %0, %%ebp" : : "r"(ebp));                                 
-    monitor_write("mov ebp\n");                                                 
-    asm volatile("mov %0, %%cr3" : : "r"(current_directory->physicalAddr));     
-    monitor_write("mov cr3: ");     
-    monitor_write_hex(current_directory->physicalAddr);
-    monitor_write("\n");
-    asm volatile("mov %0, %%ecx; mov $0x12345, %%eax; sti; jmp *%%ecx" :: "r"(eip)); 
-    */
     perform_task_switch(eip, current_directory->physicalAddr, ebp, esp);
 }
 
@@ -251,6 +224,38 @@ void move_stack(void *new_stack_start, uint32_t size)
 int getpid()
 {
     return current_task->id;
+}
+
+
+/*
+ * switch_to_user_mode
+ */
+void switch_to_user_mode()
+{
+    // Set up the kernel stack.
+    set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
+
+    // Set up the stack structure for switching to user mode.
+    asm volatile("          \
+            cli;            \
+            mov $0x23, %ax; \
+            mov %ax, %ds;   \
+            mov %ax, %es;   \
+            mov %ax, %fs;   \
+            mov %ax, %gs;   \
+                            \
+            mov %esp, %eax; \
+            pushl $0x23;    \
+            pushl %esp;     \
+            pushf;          \
+            pop %eax;       \
+            or %eax, $0x200;\
+            push %eax;      \
+            pushl $0x1B;    \
+            push $1f;       \
+            iret;           \
+        1:                  \
+            ");
 }
 /******************************************************************************
  *                               Private API                                  *
