@@ -9,7 +9,7 @@
 #include "common.h"
 #include "idt.h"
 #include "task.h"
-
+#include "monitor.h"
 
 #define CLOCKF 1193180
 
@@ -57,5 +57,9 @@ void init_timer(uint32_t frequency)
 static void timer_callback(registers_t *regs)
 {
     tick++;
-    switch_task();
+    if (tick==1000)
+    {
+        monitor_write("\n\t...tick...\n");
+        switch_task();
+    }
 }
