@@ -14,6 +14,7 @@ extern page_directory_t *kernel_directory;
 extern page_directory_t *current_directory;
 extern uint32_t          initial_esp;
 extern uint32_t          read_eip();
+extern void              perform_task_switch(uint32_t, uint32_t, uint32_t, uint32_t);
 
 volatile task_t *current_task;
 volatile task_t *ready_queue;   // Start or task linked list.
@@ -73,9 +74,6 @@ void switch_task()
      * end of this function (return value will be the dummy 0x12345).
      */
     eip = read_eip();
-    monitor_write("\nswitch_task(): ");
-    monitor_write_hex(eip);
-    monitor_write("\n");
     // Did we jus switch tasks?
     if (eip == 0x12345)
         return;
@@ -94,10 +92,8 @@ void switch_task()
     esp = current_task->esp;
     ebp = current_task->ebp;
 
-    monitor_write("switching current_directory...\n");
     // Make sure the memory manager knows we changed page directory.
     current_directory = current_task->page_directory;
-    monitor_write("current_directory switched.\n");
 
     /*
      * - Temporarily put EIP in ECX.
@@ -119,7 +115,8 @@ void switch_task()
             jmp *%%ecx          "
             : : "r"(eip), "r"(esp), "r"(ebp), "r"(current_directory->physicalAddr));
             */
-   asm volatile("cli;" : : );                                       
+   /*
+    asm volatile("cli;" : : );                                       
     monitor_write("mov eip: ");
     monitor_write_hex(eip);
     monitor_write("\n");
@@ -132,6 +129,8 @@ void switch_task()
     monitor_write_hex(current_directory->physicalAddr);
     monitor_write("\n");
     asm volatile("mov %0, %%ecx; mov $0x12345, %%eax; sti; jmp *%%ecx" :: "r"(eip)); 
+    */
+    perform_task_switch(eip, current_directory->physicalAddr, ebp, esp);
 }
 
 
