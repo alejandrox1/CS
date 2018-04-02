@@ -2,6 +2,9 @@
 containers/lxc
 containers/lxc_original
 
+# HPP
+HPP/src
+
 # kernel proj
 kernel/linux-2.4.22
 kernel/linux-2.6.18
