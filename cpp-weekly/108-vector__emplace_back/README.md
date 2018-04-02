@@ -11,4 +11,7 @@ objdump -d a.out
 
 
 Using `vecotr::emplace_back()` avoids the move (construction) operation by 
-directly calling the constructor in place (where it needs to live inside the vector), 
+directly calling the constructor in place (where it needs to live inside the vector).
+
+## Further Reading
+* [Rvalue references and move constructos](https://en.wikipedia.org/wiki/C%2B%2B11#Rvalue_references_and_move_constructors)
