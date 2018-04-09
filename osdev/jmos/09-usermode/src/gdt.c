@@ -5,25 +5,20 @@
  * Taken from JamesM' kernel development tutorial.
  */
 #include "types.h"
+#include "common.h"
 #include "gdt.h"
 
 #define ENTRIES 6
 
-// gdt_entries is the GDT.
 gdt_entry_t gdt_entries[ENTRIES];
-// gdt_ptr points to the GDT.
-gdt_ptr_t gdt_ptr;
+gdt_ptr_t   gdt_ptr;
+tss_entry_t tss_entry;
 
-
-// gdt_flush sets up the GDT. Call to load GDT must be done in assembly.
 extern void gdt_flush(uint32_t);
-// tss_flush
 extern void tss_flush();
 
-// gdt_set_gate
 static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
-// write_tss 
-static void wite_tss(int32_t num, uint16_t ss0, uint32_t esp0);
+static void write_tss(int32_t num, uint16_t ss0, uint32_t esp0);
 
 /******************************************************************************
  *                              Public API                                    *
@@ -97,7 +92,7 @@ static void write_tss(int32_t num, uint16_t ss0, uint32_t esp0)
     uint32_t limit = base + sizeof(tss_entry);
 
     // Add TSS descriptor's address into the GDT.
-    get_set_gate(num, base, limit, 0xE9, 0x00);
+    gdt_set_gate(num, base, limit, 0xE9, 0x00);
 
     // Ensure the descriptor is initially zero
     memset((uint8_t *)&tss_entry, 0, sizeof(tss_entry));
