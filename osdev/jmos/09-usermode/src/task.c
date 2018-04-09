@@ -6,6 +6,7 @@
  */
 #include "task.h"
 #include "common.h"
+#include "gdt.h"
 #include "paging.h"
 #include "kheap.h"
 #include "monitor.h"
@@ -248,9 +249,6 @@ void switch_to_user_mode()
             pushl $0x23;    \
             pushl %esp;     \
             pushf;          \
-            pop %eax;       \
-            or %eax, $0x200;\
-            push %eax;      \
             pushl $0x1B;    \
             push $1f;       \
             iret;           \
