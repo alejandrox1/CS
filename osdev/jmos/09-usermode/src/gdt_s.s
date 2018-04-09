@@ -22,3 +22,11 @@ gdt_flush:
 	jmp 0x08:.flush
 .flush:
     ret
+
+[GLOBAL tss_flush]
+tss_flush:
+    mov ax, 0x2B    ; Load index of our TSS structure - index is 0x2B, as it is
+                    ; the 5th selector and each is 8 bytes long, but we set the
+                    ; bottom 2 bits, making 0x2B.
+    ltr ax          ; Load index into the task state register.
+    ret
