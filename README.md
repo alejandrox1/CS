@@ -11,6 +11,8 @@
 
 * [Kernel](kernel/) A guide into everything relaed to the Linux kernel.
 
+* [LLVM](llvm/) LLVM and (tentatively) all compiler-related things.
+
 * [OS Dev](osdev/) How to build an entire unix-like os with nothing but vim and
   gcc.
 
