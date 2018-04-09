@@ -18,7 +18,7 @@ enum Token
 
     // Primary.
     tok_identifier = -4;
-    tok_number     = -5'
+    tok_number     = -5;
 };
 
 
