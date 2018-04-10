@@ -193,3 +193,37 @@ namespace
             std::unique_ptr<ExprAST> Body;
     };
 } // End of anonymous namespace.
+
+/******************************************************************************
+ *                                   Parser                                   *
+ *****************************************************************************/
+// CurTok is the current token the parser is looking at.
+static int CurTok;
+/*
+ * getNextToken reads another token from the lexer and updates CurTok with its
+ * result.
+ */
+static int getNextToken()
+{
+    return CurTok = gettok();
+}
+
+/*
+ * LogError helper function for error handling. Returns a null unique_ptr of
+ * ExprASTs.
+ */
+std::unique_ptr<ExprAST> LogError(const char *Str)
+{
+    fprintf(stderr, "LogError: %s\n", Str);
+    return nullptr;
+}
+
+/*
+ * LogErrorP helper function for error handling. Returns a null unique_ptr of
+ * PrototypeASTs.
+ */
+std::unique_ptr<PrototypeAST> LogErrorP(const char *Str)
+{
+    LogError(Str);
+    return nullptr;
+}
