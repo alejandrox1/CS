@@ -10,6 +10,7 @@
 #include "fs.h"
 #include "initrd.h"
 #include "task.h"
+#include "syscall.h"
 #include "kassert.h"
 
 extern uint32_t placement_address;
@@ -83,6 +84,14 @@ int kmain(struct multiboot *mboot_ptr, uint32_t initial_stack)
     monitor_write("\n");
 
     asm volatile("sti");
+
+    /*
+     * user mode and syscalls
+     */
+    initialise_syscalls();
+
+    switch_to_user_mode();
+    syscall_monitor_write("Hello, user world!\n");
 
     return 0;
 }
