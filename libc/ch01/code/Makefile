@@ -1,61 +1,25 @@
 CC=gcc
-CFLAGS=-fPIC -g -Wall -Werror
-LDFLAGS=-shared
+CFLAGS=-Wall -Werror
+IFLAGS=-I./../local/include
+LDFLAGS=-L./../local/lib -Wl,-rpath=./../local/lib
 
-INCDIR=include
-LIBDIR=lib
-TARGET=$(LIBDIR)/libc.so
-
-HEADERS=$(shell find $(INCDIR) -name "*.h")
-SOURCES=$(shell find . ! -name "main.c" -a ! -name "test_*" -a -name "*.c")
-OBJECTS=$(SOURCES:.c=.o)
-
-
-SRC=main.c
+SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
-EXEC=$(SRC:.o=)
+EXEC=$(OBJ:.o=)
 
-all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
-
-run: $(TARGET) $(EXEC)
+all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) -L$(LIBDIR) -Wl,-rpath=$(LIBDIR) -o $@ $(OBJ) -lc
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) -lmyc
 
 %.o: %.c
-	$(CC) -Wall -c -o $@ $<
+	$(CC) $(CFLASG) $(IFLAGS) -c -o $@ $<
 
-#EXEC=main
-#SRC=$(shell find . ! -name "test_*" -a -name "*.c")
-#OBJ=$(SRC:.c=.o)
-
-#TEST=""
-#TSRC="$(TEST)/test_$(TEST).c"
-#TOBJ=$(TSRC:.c=.o)
-#TEXEC=$(TSRC:.c=)
-
-
-#all: $(EXEC)
-
-#test: $(TEXEC)
-
-#$(EXEC): $(OBJ)
-#	$(CC) -o $@ $(OBJ)
-
-#$(TEXEC): $(TOBJ) $(TOBJ) $	(filter-out $(EXEC).o, $(OBJ))
-#	$(CC) -o $@ $(TOBJ) $(filter-out $(EXEC).o, $(OBJ))
-
-#%.o: %.c
-#	$(CC) $(CFLAGS) $(EXTRA_FLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJECTS)
 	rm -f $(OBJ)
 
 clean-all:
-	rm -f $(OBJECTS)
 	rm -f $(OBJ)
-	rm -f $(TARGET)
+	rm -f $(EXEC)
