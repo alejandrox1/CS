@@ -20,15 +20,13 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
-run: all $(EXEC)
+run: $(TARGET) $(EXEC)
 
-$(EXEC): $(SRC)
-	gcc -L$(LIBDIR) -Wl,-rpath=$(LIBDIR) -Wall -o $@ $^ -lc
+$(EXEC): $(OBJ)
+	$(CC) -L$(LIBDIR) -Wl,-rpath=$(LIBDIR) -o $@ $(OBJ) -lc
 
-#$(EXEC): $(OBJ)
-#	$(CC) -L$(LIBDIR) -Wl,-rpath=$(LIBDIR) -o $@ $(OBJ) -lc
-#%.o: %.c
-#	$(CC) -Wall -c -o $@ $<
+%.o: %.c
+	$(CC) -Wall -c -o $@ $<
 
 #EXEC=main
 #SRC=$(shell find . ! -name "test_*" -a -name "*.c")
@@ -55,7 +53,9 @@ $(EXEC): $(SRC)
 
 clean:
 	rm -f $(OBJECTS)
+	rm -f $(OBJ)
 
 clean-all:
 	rm -f $(OBJECTS)
+	rm -f $(OBJ)
 	rm -f $(TARGET)
