@@ -4,19 +4,20 @@ set -e
 GRE="\e[32m"                                                                    
 END="\e[0m"
 
+if [ ! -f lib/libmyc.so ]; then
+    make && make clean
+fi
+
 CFLAGS="-Wall -Werror -Wno-unused-variable"
-IFLAGS="-I./../include"
-LDFLAGS="-L./../lib -Wl,-rpath=./../lib"
+IFLAGS="-Iinclude"
+LDFLAGS="-Llib -Wl,-rpath=lib"
 
-tests=( "assert" )
-
-for t in "${tests[@]}"; do
-    EXEC="test_${t}"
-    SRC="test_${t}.c"
-
+tests=$(find . -name "test_*" -a -name "*.c")
+for t in ${tests}; do
+    EXEC="${t::-2}"
     echo -e "${GRE}Testing ${t}...${END}\n"
 
-    gcc ${CFLAGS} ${LDFLAGS} ${IFLAGS} -o ${EXEC} ${SRC} -lmyc && \
+    gcc ${CFLAGS} ${LDFLAGS} ${IFLAGS} -o ${EXEC} ${t} -lmyc && \
         ./${EXEC} && \
         rm ${EXEC}
 
