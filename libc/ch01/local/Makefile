@@ -24,6 +24,7 @@ include $(SOURCES:.c=.d)
 
 clean:
 	rm -f $(OBJECTS)
+	rm -f $(SOURCES:.c=.d)
 
 clean-all:
 	rm -f $(OBJECTS)
