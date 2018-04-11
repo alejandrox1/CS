@@ -7,7 +7,7 @@ LIBDIR=lib
 TARGET=$(LIBDIR)/libc.so
 
 HEADERS=$(shell find $(INCDIR) -name "*.h")
-SOURCES=$(shell find . ! -name "main.c" -a ! -name "test_*" -a -name "*.c")
+SOURCES=$(shell find . ! -name "test_*" -a -name "*.c")
 OBJECTS=$(SOURCES:.c=.o)
 
 
