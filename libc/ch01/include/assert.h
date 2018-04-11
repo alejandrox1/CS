@@ -1,6 +1,3 @@
-#ifndef _ASSERT_H
-#define _ASSERT_H
-
 #undef assert    /* Remove existing definition. */
 
 #ifdef NDEBUG
@@ -14,6 +11,4 @@
     /* Active form. */
     #define assert(test) ((test) ? (void)0  \
             : _Assert(__FILE__ ":" _STR(__LINE__) " " #test))
-#endif
-
 #endif
