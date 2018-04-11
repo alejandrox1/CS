@@ -11,7 +11,7 @@ all: $(EXEC)
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $(OBJ)
 
-%.o: %.c #$(HEADERS)
+%.o: %.c
 	$(CC) $(CFLAGS) $(EXTRA_FLAGS) -c -o $@ $<
 
 clean:
