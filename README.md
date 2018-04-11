@@ -11,7 +11,7 @@
 
 * [Kernel](kernel/) A guide into everything relaed to the Linux kernel.
 
-* [libc](libc/) Implementing the C library from scratch.
+* [LibC](libc/) Implementing the C library from scratch.
 
 * [LLVM](llvm/) LLVM and (tentatively) all compiler-related things.
 
