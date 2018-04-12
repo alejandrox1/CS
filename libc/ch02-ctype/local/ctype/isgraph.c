@@ -6,5 +6,5 @@
  */
 int (isgraph)(int c)
 {
-    return (_Ctype[c] & (_DI|_LO|_PUi|_UP|_XA));
+    return (_Ctype[c] & (_DI|_LO|_PU|_UP|_XA));
 }
