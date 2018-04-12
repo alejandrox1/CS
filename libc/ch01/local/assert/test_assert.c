@@ -9,6 +9,9 @@ static int val = 0;
 
 /*
  * field_abort handles a SIGABRT signal.
+ * For htis test, we are assuming that a failed assert (active form - no
+ * NDEBUG) will occur when we test the global val to be anything but equal to
+ * 1.
  */
 static void field_abort(int sig)
 {
@@ -24,6 +27,10 @@ static void field_abort(int sig)
     }
 }
 
+/*
+ * dumy asumes that assert was included with NDEBUG defined so a failed assert
+ * will return void.
+ */
 static void dummy()
 {
     int i = 0;
@@ -46,6 +53,11 @@ int main()
     
     fputs("Sample assertion failure message --\n", stderr);
     assert(val == 0);
+
+    /*
+     * If program terminates here then there was a problem with the signal
+     * handler.
+     */
     puts("FAILURE testing <assert.h>");
     exit(EXIT_FAILURE);
 }
