@@ -1,4 +1,4 @@
-/* xctype.c _Ctype conversion table -- ASCII version. */
+/* xctype.c _Ctype translation table -- ASCII version. */
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
