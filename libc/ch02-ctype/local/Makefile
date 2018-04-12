@@ -21,6 +21,7 @@ $(TARGET): $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) $(INFLAGS) -c -o $@ $<
 
+
 $(SOURCES:.c=.d):%.d:%.c
 	$(CC) $(CFLAGS) $(IFLAGS) -MM $< >$@
 
