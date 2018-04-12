@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Werror
+CFLAGS=-Wall -Werror -g
 IFLAGS=-I./../local/include
 LDFLAGS=-L./../local/lib -Wl,-rpath=./../local/lib
 
