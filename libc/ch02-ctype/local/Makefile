@@ -1,5 +1,6 @@
 CC=gcc
 CFLAGS=-fPIC -g -Wall -Werror
+INFLAGS=-Iinclude
 LDFLAGS=-shared
 
 INCDIR=include
@@ -17,8 +18,11 @@ $(TARGET): $(OBJECTS)
 	@mkdir -p lib
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
+%.o: %.c
+	$(CC) $(CFLAGS) $(INFLAGS) -c -o $@ $<
+
 $(SOURCES:.c=.d):%.d:%.c
-	$(CC) $(CFLAGS) -MM $< >$@
+	$(CC) $(CFLAGS) $(IFLAGS) -MM $< >$@
 
 include $(SOURCES:.c=.d)
 
