@@ -4,9 +4,8 @@ set -e
 GRE="\e[32m"                                                                    
 END="\e[0m"
 
-if [ ! -f lib/libmyc.so ]; then
-    make && make clean
-fi
+
+make clean-all && make && make clean
 
 CFLAGS="-Wall -Werror -Wno-unused-variable"
 IFLAGS="-Iinclude"
