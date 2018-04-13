@@ -22,16 +22,9 @@ $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INFLAGS) -c -o $@ $<
 
 
-$(SOURCES:.c=.d):%.d:%.c
-	$(CC) $(CFLAGS) $(IFLAGS) -MM $< >$@
-
-include $(SOURCES:.c=.d)
-
 clean:
 	rm -f $(OBJECTS)
-	rm -f $(SOURCES:.c=.d)
 
 clean-all:
 	rm -f $(OBJECTS)
-	rm -f $(SOURCES:.c=.d)
 	rm -f $(TARGET)
