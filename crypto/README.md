@@ -10,3 +10,6 @@
 * [Cryptology ePrint Archive: Report 2017/1154 Post-Quantum Zero-Knowledge
   Proofs for Accumulators with Applications to Ring Signatures from
   Symmetric-Key Primitives](https://eprint.iacr.org/2017/1154)
+
+## Resource Cites
+* [Secure Computation Papers](https://guutboy.github.io/)
