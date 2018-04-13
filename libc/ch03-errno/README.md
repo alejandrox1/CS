@@ -7,7 +7,7 @@
 * Have each function return its value as a success or a failure indication.
   This may complicate getting our answer from the returned value.
 
-Best soluton? Define an error return value that is distinguishable from any
+Best solution? Define an error return value that is distinguishable from any
 valid answer.
 The functions do not exactly report which error occurred.
 The specific error is stored in a variable with external linkage.
