@@ -15,7 +15,7 @@ static void prclass(const char *name, int (*fn)(int))
     fputs(": ", stdout);
     for (c = EOF; c <= UCHAR_MAX; ++c)
         if ((*fn)(c))
-            fput(c, stdout);
+            fputc(c, stdout);
     fputs("\n", stdout);
 }
 
