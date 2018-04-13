@@ -22,7 +22,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	@mkdir -p lib
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INFLAGS) -c -o $@ $<
