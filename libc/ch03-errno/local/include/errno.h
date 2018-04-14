@@ -13,8 +13,9 @@
 #include <bits/errno.h>
 #undef __need_Emath
 
+
 #ifndef errno
-extern int errno;
+extern __thread int errno;
 #endif
 
-#undef
+#endif
