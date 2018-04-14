@@ -2,4 +2,4 @@
 #include <errno.h>
 #undef errno
 
-int errno = 0;
+__thread int errno = 0;
