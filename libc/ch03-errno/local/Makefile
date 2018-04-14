@@ -32,7 +32,7 @@ tests: all
 	for t in ${TSRC}; do \
 		EXEC="$${t::-2}"; \
 		echo -e "\e[32mTesting $${t}...\e[0m\n"; \
-		gcc ${TCFLAGS} ${TLFLAGS} ${INFLAGS} -o $${EXEC} $${t} -lmyc && \
+		gcc ${TCFLAGS} ${TLFLAGS} ${INFLAGS} -o $${EXEC} $${t} -lmyc -lm && \
 		./$${EXEC}; \
 	done
 
