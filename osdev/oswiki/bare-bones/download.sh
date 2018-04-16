@@ -21,43 +21,25 @@ BD_GCC="${SRC}/build-gcc"
 export PATH="${BIN}:${PATH}"
 
 
-get_binutils() {
-    LOG_FILE="binutils.log"
-    echo -e "${GRE}>>> Downloading Binutils-${BINUTILS_VER}...\n${NOC}";
+get_pkg() {
+    LOG_FILE="${1}.log"
+    echo -e "${GRE}>>> Downloading ${1}...${NOC}";
     (
         cd "${SRC}";
         if command -v curl> /dev/null 2>&1; then
-            curl -C - -O "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz" > ${LOG_FILE} 2>&1 && \
-                tar -xzf "binutils-${BINUTILS_VER}.tar.gz" >> binutils.log 2>&1;
+            curl -C - -O "${2}" > ${LOG_FILE} 2>&1 && \
+                tar -xzf "${1}.tar.gz" >> ${LOG_FILE} 2>&1;
         elif command -v wget > /dev/null 2>&1; then
-            wget -c "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz" > ${LOG_FILE} 2>&1 && \
-                tar -xzf "binutils-${BINUTILS_VER}.tar.gz" >> binutils.log 2>&1;
+            wget -c "${2}" > ${LOG_FILE} 2>&1 && \
+                tar -xzf "${1}.tar.gz" >> ${LOG_FILE} 2>&1;
         else
             echo -e "${RED}>>> Neither curl nor wget are currently installed...\n${NOC}";
             exit 1
         fi
     )
-    echo -e "${GRE}>>> Finished unpacking Binutils-${BINUTILS_VER}${NOC}";
+    echo -e "${GRE}>>> Finished unpacking ${1}.\n${NOC}";
 }
 
-get_gcc() {
-    LOG_FILE="gcc.log"
-    echo -e "${GRE}>>> Downloading GCC-${GCC_VER}...\n${NOC}";
-    (
-        cd ${SRC};
-        if command -v curl> /dev/null 2>&1; then
-            curl -C - -O "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz" > ${LOG_FILE} 2>&1 && \
-                tar -xzf "gcc-${GCC_VER}.tar.gz" >> gcc.log 2>&1;
-        elif command -v wget > /dev/null 2>&1; then
-            wget -c "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz" > ${LOG_FILE} 2>&1 && \
-                tar -xzf "gcc-${GCC_VER}.tar.gz" >> gcc.log 2>&1;
-        else
-            echo -e "${RED}>>> Neither curl nor wget are currently installed...\n${NOC}";
-            exit 1
-        fi
-    )
-    echo -e "${GRE}>>> Finished unpacking GCC-${GCC_VER}...\n${NOC}";
-}
 
 # Set up build directories.
 if [ -d "$CROSS" ]; then rm -rf "${CROSS}"; fi
@@ -67,9 +49,8 @@ mkdir -p "$SRC" "$BD_BINUTILS" "$BD_GCC"
 
 
 # Get source code.
-get_binutils &
-get_gcc &
-wait
+get_pkg "binutils-${BINUTILS_VER}" "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz";
+get_pkg "gcc-${GCC_VER}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz";
 
 # Build cross-compiler.
 # disable-nls : dible-nls : disable native language support                                 
