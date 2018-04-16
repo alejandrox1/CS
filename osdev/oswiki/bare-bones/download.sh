@@ -25,24 +25,28 @@ if command -v curl> /dev/null 2>&1; then
     echo -e "${GRE}Downloading Binutils-${BINUTILS_VER}...\n${NOC}"
     (
         cd ${BD_BINUTILS};
-        curl -C - -O ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz
+        curl -C - -O ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz && \
+            tar -xzf binutils-${BINUTILS_VER}.tar.gz
     )
     echo -e "${GRE}Downloading GCC-${GCC_VER}...\n${NOC}"
     (
         cd ${BD_GCC};
-        curl -C - -O ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz
+        curl -C - -O ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz && \
+            tar -xzf gcc-${GCC_VER}.tar.gz
     )
 
 elif command -v wget > /dev/null 2>&1; then
     echo -e "${GRE}Downloading Binutils-${BINUTILS_VER}...\n${NOC}"
     (
         cd ${BD_BINUTILS};
-        wget -c ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz
+        wget -c ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz && \
+            tar -xzf binutils-${BINUTILS_VER}.tar.gz
     )
     echo -e "${GRE}Downloading GCC-${GCC_VER}...\n${NOC}"
     (
         cd ${BD_GCC};
-        wget -c ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz
+        wget -c ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz && \
+            tar -xzf gcc-${GCC_VER}.tar.gz
     )
 
 else
