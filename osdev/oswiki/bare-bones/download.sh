@@ -13,14 +13,15 @@ GCC_VER="5.4.0"
 BD_BINUTILS=$(pwd)/build-binutils
 BD_GCC=$(pwd)/build-gcc
 
-# Work direcories.
+
+# Set up build directories.
 if [ -d $BD_BINUTILS ]; then rm -rf ${BD_BINUTILS}; fi
 mkdir $BD_BINUTILS
 if [ -d $BD_GCC ]; then rm -rf ${BD_GCC}; fi
 mkdir $BD_GCC
 
-# Download binutils and gcc.
-if command -v crl> /dev/null 2>&1; then
+# Get source code.
+if command -v curl> /dev/null 2>&1; then
     echo -e "${GRE}Downloading Binutils-${BINUTILS_VER}...\n${NOC}"
     (
         cd ${BD_BINUTILS};
