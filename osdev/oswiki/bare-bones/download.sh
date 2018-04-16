@@ -11,14 +11,25 @@ BINUTILS_VER="2.23"
 GCC_VER="5.4.0"
 
 TARGET=i686-elf
+BINUTILS="binutils-${BINUTILS_VER}"
+GCC="gcc-${GCC_VER}"
+
 CROSS="$(pwd)/cross"
 BIN="$(pwd)/cross/bin"
 SRC="$(pwd)/src"
 BD_BINUTILS="${SRC}/build-binutils"
 BD_GCC="${SRC}/build-gcc"
+
 # Ensure compiler build is able to detect our new binutils once it has been     
 # built.
 export PATH="${BIN}:${PATH}"
+
+
+# Set up build directories.
+if [ -d "$CROSS" ]; then rm -rf "${CROSS}"; fi
+mkdir -p "$CROSS" "$BIN"
+if [ -d "$SRC" ]; then rm -rf "${SRC}"; fi
+mkdir -p "$SRC" "$BD_BINUTILS" "$BD_GCC"
 
 
 get_pkg() {
@@ -41,20 +52,27 @@ get_pkg() {
 }
 
 
-# Set up build directories.
-if [ -d "$CROSS" ]; then rm -rf "${CROSS}"; fi
-mkdir -p "$CROSS" "$BIN"
-if [ -d "$SRC" ]; then rm -rf "${SRC}"; fi
-mkdir -p "$SRC" "$BD_BINUTILS" "$BD_GCC"
 
 
 # Get source code.
-get_pkg "binutils-${BINUTILS_VER}" "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz";
-get_pkg "gcc-${GCC_VER}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz";
+get_pkg "${BINUTILS}" "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz";
+get_pkg "${GCC}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz";
 
 # Build cross-compiler.
-# disable-nls : dible-nls : disable native language support                                 
-# with-sysroot : enables sysroot support                                        
-#../binutils-2.24/configure --target=$TARGET --prefix="$CROSS" --with-sysroot --disable-nls --disable-werror
-#make                                                                            
-#make install 
+(
+    cd "${BD_BINUTILS}";
+    ../${BINUTILS}/configure --target="${TARGET}" --prefix="${CROSS}" --with-sysroot --disable-nls --disable-werror &&\
+        make && \
+        make install && \
+        echo -e "${GRE}>>> Finished making ${BINUTILS}.\n${NOC}";
+) && \
+(
+    which -- ${TARGET}-as || echo ${TARGET}-as is not in the PATH && \
+        cd "${BD_GCC}" && \
+        ../${GCC}/configure --target=${TARGET} --prefix="${CROSS}" --disable-nls --enable-languages=c,c++ --without-headers && \
+        make all-gcc && \
+        make all-target-libgcc && \
+        make install-gcc && \
+        make install-target-libgcc && \
+        echo -e "${GRE}>>> Finished making ${GCC}.\n${NOC}";
+)
