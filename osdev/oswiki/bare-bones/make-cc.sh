@@ -10,6 +10,8 @@
 # 3. Make cross-compiler.
 #    - Make and install Binutils and GCC.
 #
+# Taken from https://wiki.osdev.org/GCC_Cross-Compiler
+#
 GRE="\e[32m"
 RED="\e[31m"
 NOC="\e[0m"
