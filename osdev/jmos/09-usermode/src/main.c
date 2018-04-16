@@ -26,7 +26,7 @@ int kmain(struct multiboot *mboot_ptr, uint32_t initial_stack)
     monitor_clear();
     // Initialise the PIT to 100Hz
     asm volatile("sti");
-    init_timer(50);
+    init_timer(100);
 
     // Find the location of our initial ramdisk.
     KASSERT(mboot_ptr->mods_count > 0);
@@ -82,9 +82,8 @@ int kmain(struct multiboot *mboot_ptr, uint32_t initial_stack)
         i++;
     }
     monitor_write("\n");
-
+   
     asm volatile("sti");
-
     /*
      * user mode and syscalls
      */

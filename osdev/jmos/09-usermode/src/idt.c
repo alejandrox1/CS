@@ -36,11 +36,11 @@ void init_idt()
 	
 	// Limit is set to the last valid byte in the IDT, after adding in the 
 	// start position (i.e. size-1).                          
-	idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;                               
+	idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;              
 	idt_ptr.base  = (uint32_t)&idt_entries; 
 	
 	// Zero the IDT to start with.
-	memset((uint8_t *)&idt_entries, 0, sizeof(idt_entry_t)*255);
+	memset((uint8_t *)&idt_entries, 0, sizeof(idt_entry_t)*256);
 
 	// Remap the irq table.
 	outb(0x20, 0x11);
@@ -137,7 +137,7 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
 
 	// Uncomment the OR below when we get to using user-mode. 
 	// It sets the interrupt gate's privilege level to 3.
-	idt_entries[num].flags   = flags /* | 0x60 */;
+	idt_entries[num].flags   = flags | 0x60;
 }
 
 
@@ -147,35 +147,35 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
 /*
  * idt_handler 
  */
-void idt_handler(registers_t *regs)
+void idt_handler(registers_t regs)
 {
-	if (interrupt_handlers[regs->int_no])
-		interrupt_handlers[regs->int_no](regs);
-	else
-	{
-		monitor_write("unhandled interrupt: ");
-		monitor_write_dec(regs->int_no);
-		monitor_write("\n");
-	}
+    uint8_t int_no = regs.int_no & 0xFF;
+    if (interrupt_handlers[int_no] != 0)
+    {
+        interrupt_handler_t handler = interrupt_handlers[int_no];
+        handler(&regs);
+    }
+    else
+    {
+        monitor_write("unhandled interrupt: ");
+        monitor_write_hex(int_no);
+        monitor_put('\n');
+        for(;;);
+    }
 }
 
 /*
- * irqd_handler
+ * irq_handler
  */
-void irq_handler(registers_t *regs)
+void irq_handler(registers_t regs)
 {
-	if (interrupt_handlers[regs->int_no])
-		interrupt_handlers[regs->int_no](regs);
+    if (regs.int_no >= 40)
+        outb(0xA0, 0x20);
+    outb(0x20, 0x20);
 
-	// Send an end of interrupt (EOI) signal to the PICs, if the interrupt
-	// involved the slave.
-	if (regs->int_no >= 40)
-	{
-		// Send reset signal to slave. 
-		outb(0xA0, 0x20);
-	}
-	// Send reset signal to master (and slave, if necessary).
-	outb(0x20, 0x20);
+    if (interrupt_handlers[regs.int_no] != 0)
+    {
+        interrupt_handler_t handler = interrupt_handlers[regs.int_no];
+        handler(&regs);
+    }
 }
-
-	//

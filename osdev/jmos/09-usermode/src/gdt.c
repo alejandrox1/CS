@@ -35,7 +35,7 @@ void init_gdt()
 	
 	// The limit is the last valid byte from the start of the GDT - size of the
 	// GDT minus 1.
-	gdt_ptr.limit = sizeof(gdt_entry_t) * ENTRIES - 1;
+	gdt_ptr.limit = (sizeof(gdt_entry_t) * ENTRIES) - 1;
 	gdt_ptr.base = (uint32_t)&gdt_entries;
 	
 	gdt_set_gate(0, 0, 0, 0, 0);                // Null segment.

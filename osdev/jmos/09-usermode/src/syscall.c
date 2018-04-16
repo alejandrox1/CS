@@ -9,7 +9,7 @@
 #include "syscall.h"
 #include "idt.h"
 #include "monitor.h"
-
+#include "kassert.h"
 
 DEFN_SYSCALL1(monitor_write,     0, const char*);
 DEFN_SYSCALL1(monitor_write_hex, 1, const char*);
@@ -50,6 +50,7 @@ static void syscall_handler(registers_t *regs)
     // Get syscall location.
     void *location = syscalls[regs->eax];
 
+    monitor_trace("in syscall_handler\n");
     // We don't know how many arguments the function wants, so simply push them
     // all onto the stack.
     int ret;

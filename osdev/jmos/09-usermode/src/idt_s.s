@@ -20,8 +20,8 @@ idt_flush:
     global isr%1
 	isr%1:
         cli
-		push 0     ; Push dummy error code.
-		push %1    ; Push the interrupt number.
+		push byte 0     ; Push dummy error code.
+		push %1         ; Push the interrupt number.
 		jmp isr_common_stub 
 %endmacro
 
@@ -123,10 +123,10 @@ isr_common_stub:
 	mov fs, ax
 	mov gs, ax
 
-	push esp         ; Push a pointer to the current top of the stack. This 
+	         ; Push a pointer to the current top of the stack. This 
 	                 ; will become the register_t* parameter.
 	call idt_handler ; C routine (idt.c).
-	add esp, 4       ; Remove the pointer to the stack from the stack (ha!).
+	       ; Remove the pointer to the stack from the stack (ha!).
 
 	pop ebx          ; Load data segment descriptor.
 	mov ds, bx
@@ -136,7 +136,8 @@ isr_common_stub:
 
 	popa
 	add esp, 8       ; Clean up the pushed error code and ISR number.
-	iret             ; pop CS, SS, ESP, EIP, and EFLAGS.
+	sti
+    iret             ; pop CS, SS, ESP, EIP, and EFLAGS.
 
 
 ;
@@ -154,9 +155,7 @@ irq_common_stub:
     mov fs, ax
     mov gs, ax
 
-    push esp
     call irq_handler
-    add esp, 4
 
     pop ebx
     mov ds, bx
@@ -166,4 +165,5 @@ irq_common_stub:
 
     popa
     add esp, 8 
+    sti
     iret

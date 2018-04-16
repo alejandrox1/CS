@@ -44,6 +44,7 @@ void initialise_tasking()
     current_task->eip            = 0;
     current_task->page_directory = current_directory;
     current_task->next           = 0;
+    current_task->kernel_stack = kmalloc_a(KERNEL_STACK_SIZE);
 
     // Get them interrupts back.
     asm volatile("sti");
@@ -96,6 +97,8 @@ void switch_task()
     // Make sure the memory manager knows we changed page directory.
     current_directory = current_task->page_directory;
 
+    // Change our kernel stack over.
+    set_kernel_stack(current_task->kernel_stack+KERNEL_STACK_SIZE);
     /*
      * - Temporarily put EIP in ECX.
      * - Load stack and base pointer for new stack.
@@ -125,12 +128,13 @@ int fork()
 
     // Create a new process.
     task_t *new_task = (task_t *)kmalloc(sizeof(task_t));
-    new_task->id             = next_pid++;
-    new_task->esp            = 0;
-    new_task->ebp            = 0;
-    new_task->eip            = 0;
-    new_task->page_directory = directory;
-    new_task->next           = 0;
+    new_task->id               = next_pid++;
+    new_task->esp              = 0;
+    new_task->ebp              = 0;
+    new_task->eip              = 0;
+    new_task->page_directory   = directory;
+    new_task->next             = 0;
+    current_task->kernel_stack = kmalloc_a(KERNEL_STACK_SIZE);
 
     // Add it to the end of the ready queue.
     task_t *tmp_task = (task_t *)ready_queue;
