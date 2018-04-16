@@ -1,19 +1,33 @@
 #!/bin/bash
-
+#
+# make-cc.sh -  Build a GCC cross-compiler for target platform TARGET.
+#               This script build a cross compiler on Ubuntu 16.04.4 LTS,
+#               kernel 4.13.0-37-generic.
+#
+# 1. Set up environment.
+#    - Make cross/ and src/ subdirs.
+# 2. Download GNU Bintuils and GNU GCC.
+# 3. Make cross-compiler.
+#    - Make and install Binutils and GCC.
+#
 GRE="\e[32m"
 RED="\e[31m"
 NOC="\e[0m"
 
 set -e
 
+###############################################################################
+##                        Environment and Variables                          ##
+###############################################################################
 # Version for building cross-compiler.
+TARGET=i686-elf
 BINUTILS_VER="2.23"
 GCC_VER="5.4.0"
 
-TARGET=i686-elf
 BINUTILS="binutils-${BINUTILS_VER}"
 GCC="gcc-${GCC_VER}"
 
+# Build environment
 CROSS="$(pwd)/cross"
 BIN="$(pwd)/cross/bin"
 SRC="$(pwd)/src"
@@ -24,7 +38,9 @@ BD_GCC="${SRC}/build-gcc"
 # built.
 export PATH="${BIN}:${PATH}"
 
-
+###############################################################################
+##                         Set up environment                                ##
+###############################################################################
 # Set up build directories.
 if [ -d "$CROSS" ]; then rm -rf "${CROSS}"; fi
 mkdir -p "$CROSS" "$BIN"
@@ -52,8 +68,9 @@ get_pkg() {
 }
 
 
-
-
+###############################################################################
+##                        Download and Install SRC                           ##
+###############################################################################
 # Get source code.
 get_pkg "${BINUTILS}" "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz";
 get_pkg "${GCC}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz";
