@@ -46,6 +46,6 @@ elif command -v wget > /dev/null 2>&1; then
     )
 
 else
-    echo -e "${RED}Neither Curl or wget are currently installed...\n${NOC}"
+    echo -e "${RED}Neither curl nor wget are currently installed...\n${NOC}"
     exit 1
 fi
