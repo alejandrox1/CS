@@ -12,7 +12,7 @@ CSRC=$(shell find boot/ drivers/ include/ kernel/ lib/ -name "*.c")
 COBJ=$(CSRC:.c=.o)
 
 all: $(TARGET)
-	grub-file --is-x86-multiboot $< && echo Multiboot confirmed.
+	grub-file --is-x86-multiboot $<
 
 $(TARGET): $(SOBJ) $(COBJ)
 	$(CC) -T linker.ld -o $@ $(LDFLAGS) $^ -lgcc
