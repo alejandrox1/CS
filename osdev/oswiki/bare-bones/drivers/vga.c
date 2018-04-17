@@ -6,7 +6,8 @@ static const size_t VGA_WIDTH  = 80;
 static const size_t VGA_HEIGHT = 29;
 
 /* Hardware text mode color constants. */
-enum vga_color = {
+enum vga_color 
+{
     VGA_COLOR_BLACK         = 0,
     VGA_COLOR_BLUE          = 1,
     VGA_COLOR_GREEN         = 2,
