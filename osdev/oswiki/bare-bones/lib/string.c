@@ -1,7 +1,6 @@
 #include <string.h>
 #include <stddef.h>
 
-#ifndef __HAVE_ARCH_STRLEN
 /*
  * strlen - Find the length of a string.
  * @s: The string o be sized.
@@ -14,4 +13,3 @@ size_t strlen(const char *s)
         /* Nothing. */;
     return sc - s;
 }
-#endif
