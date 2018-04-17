@@ -96,3 +96,6 @@ get_pkg "${GCC}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz
         make install-target-libgcc && \
         echo -e "${GRE}>>> Finished making ${GCC}.\n${NOC}";
 )
+
+# Install dependencies for grub-mkrescue.
+sudo apt-get update -y && sudo apt-get install -y grub-pc-bin xorriso
