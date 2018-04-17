@@ -23,7 +23,7 @@ set -e
 ###############################################################################
 # Version for building cross-compiler.
 TARGET=i686-elf
-BINUTILS_VER="2.23"
+BINUTILS_VER="2.24"
 GCC_VER="5.4.0"
 
 BINUTILS="binutils-${BINUTILS_VER}"
