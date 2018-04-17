@@ -6,7 +6,7 @@ static const size_t VGA_WIDTH  = 80;
 static const size_t VGA_HEIGHT = 29;
 
 /* Hardware text mode color constants. */
-enum vga_color 
+enum vga_color
 {
     VGA_COLOR_BLACK         = 0,
     VGA_COLOR_BLUE          = 1,
@@ -87,7 +87,7 @@ void terminal_writestring(const char *data)
  * @fg: foreground color.
  * @bg: background color.
  */
-static inline uint8_t vag_entry_color(enum vga_color fg, enum vga_color bg)
+static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 {
     return (bg << 4) | fg;
 }
