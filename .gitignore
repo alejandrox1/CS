@@ -41,6 +41,9 @@ posix-threads/programming_with_posix_threads_src
 # some compiling going on
 *.o
 
+# Make
+*.d
+
 # backups
 *.swp
 
