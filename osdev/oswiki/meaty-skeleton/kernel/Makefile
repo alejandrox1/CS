@@ -81,4 +81,4 @@ install-kernel:
 	mkdir -p $(DESTDIR)$(BOOTDIR)
 	cp myos.kernel $(DESTDIR)$(BOOTDIR)
 
-include $(OBJS:.o=.d)
+-include $(OBJS:.o=.d)
