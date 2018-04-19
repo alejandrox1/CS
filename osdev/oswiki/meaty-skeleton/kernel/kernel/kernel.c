@@ -9,7 +9,8 @@
 #error "This needs to be compiled for a 32-bit ix86 target"
 #endif
 
-void kernel_main(void) {
+void kernel_main(void)
+{
     terminal_initialize();
     terminal_writestring("Hello, kernel world!\n");
 }
