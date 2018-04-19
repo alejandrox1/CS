@@ -53,7 +53,7 @@ _start:
     /*
     To set up a stack, we set the ESP register to point to the top of our stack.
     */
-    mov $stack_top, %esp
+    movl $stack_top, %esp
 
     /*
     This is a googd place to initializecrucial processor state before the high-
