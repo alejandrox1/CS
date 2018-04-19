@@ -31,6 +31,9 @@ osdev/jmos/exp_tmp_minimal_linux_like_kernel_usermode
 # Posix threads
 posix-threads/programming_with_posix_threads_src
 
+# clan 
+*.clang-format
+
 # crypto
 *.key
 *.pem
