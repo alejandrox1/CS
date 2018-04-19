@@ -12,11 +12,7 @@ static size_t terminal_column;
 static uint8_t terminal_color;
 static uint16_t *terminal_buffer;
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg);
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color);
 void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
-void terminal_putchar(char c);
-void terminal_write(const char *data, size_t size);
 /******************************************************************************
  *                                Public API                                  *
  *****************************************************************************/
@@ -82,25 +78,6 @@ void terminal_writestring(const char *data) {
 /******************************************************************************
  *                               Private API                                  *
  *****************************************************************************/
-/*
- * vga_entry_color - Return an attribute byte to set the background and
- * foreground for the vga terminal.
- * @fg: foreground color.
- * @bg: background color.
- */
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
-    return (bg << 4) | fg;
-}
-
-/*
- * vga_entry - Return the proper format word to write to VGA terminal.
- * @uc: unsigned char to be writen to vga terminal.
- * @color: character and background color (see vga_entry_color).
- */
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color) {
-    return (uint16_t)uc | ((uint16_t)color << 8);
-}
-
 /*
  * terminal_putentryat - Write character of a given color to VGA terminal. Uses
  * vga_entry.
