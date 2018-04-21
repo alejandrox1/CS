@@ -111,3 +111,4 @@ Or try out `git mergetool` - recomend you run,
 ```
 git config --global merge.tool vimdiff
 ```
+For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/).
