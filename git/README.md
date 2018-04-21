@@ -63,3 +63,21 @@ Create a new branch at a specific branch:
 ```
 git checkout -b <branch> <tag>
 ```
+
+
+## Branches
+### Creating Branches
+* To create a branch,
+  ```
+  git branch <branch name>
+  ```
+
+* Switch branhces,
+  ```
+  git checkout <branch name>
+  ```
+
+Last two commands together,
+```
+git checkout -b <branch name>
+```
