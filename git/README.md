@@ -81,3 +81,33 @@ Last two commands together,
 ```
 git checkout -b <branch name>
 ```
+
+
+### Merging
+```
+git checkout master
+git merge <branch name>
+git branch -d <branch name>    # Delete branch.
+```
+
+Merging with conflicts is a little more interesting.
+Let's say you are trying to merge branch `iss53` into `master`,
+```
+git checkout master
+git merge iss53
+```
+
+Should return some error message requesting you to fix conflicts - the process
+of merging has momentarily stopped.
+
+If you want to see which files are unmerged at any point after a merge conflict
+simple run `git status`.
+
+Go through the unmerged files and fixed any blocks with `<<<<<<<`, `=======`, and `>>>>>>>`.
+After resolving each of these sections in each conflicted file, run `git add`
+on them and they'll be ready to me merged.
+
+Or try out `git mergetool` - recomend you run,
+```
+git config --global merge.tool vimdiff
+```
