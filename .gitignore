@@ -38,6 +38,10 @@ posix-threads/programming_with_posix_threads_src
 *.key
 *.pem
 
+# libs
+*.so
+*.a
+
 # some compiling going on
 *.o
 
