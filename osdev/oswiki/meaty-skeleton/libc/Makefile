@@ -2,7 +2,6 @@ DEFAULT_HOST!=../default-host.sh
 HOST?=DEFAULT_HOST
 HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 
-# Cross-compiler is kept one level up frothe root of the dev tree.
 CC=../../cross-compiler/cc/cross/bin/i686-elf-gcc
 CFLAGS?=-O2 -g
 CPPFLAGS?=
