@@ -4,7 +4,7 @@ PROJECTS="libc kernel"
 export MAKE=${MAKE:-make}
 export HOST=${HOST:-$(./default-host.sh)}
 
-CCDIR="../cross-compiler/cc/cross/bin/"
+CCDIR=~/Documents/origami/CS/osdev/oswiki/cross-compiler/cc/cross/bin/
 export AR=${CCDIR}${HOST}-ar
 export AS=${CCDIR}${HOST}-as
 export CC=${CCDIR}${HOST}-gcc
