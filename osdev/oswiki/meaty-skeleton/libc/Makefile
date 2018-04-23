@@ -28,25 +28,26 @@ LIBK_CFLAGS:=$(LIBK_CFLAGS) $(KERNEL_ARCH_CFLAGS)
 LIBK_CPPFLAGS:=$(LIBK_CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
 
 FREEOBJS=\
-		 $(ARCH_FREEOBJS) \
-		 stdio/printf.o \
-		 stdio/putchar.o \
-		 stdio/puts.o \
-		 stdlib/abort.o \
-		 string/memcmp.o \
-		 string/memcpy.o \
-		 string/memmove.o \
-		 string/memset.o \
-		 string/strlen.o \
+$(ARCH_FREEOBJS) \
+stdio/printf.o \
+stdio/putchar.o \
+stdio/puts.o \
+stdlib/abort.o \
+string/memcmp.o \
+string/memcpy.o \
+string/memmove.o \
+string/memset.o \
+string/strlen.o \
 
 HOSTEDOBJS=\
-		   $(ARCH_HOSTEDOBJS) \
+$(ARCH_HOSTEDOBJS) \
 
 OBJS=\
-	 $(FREEOBJS) \
-	 $(HOSTEDOBJS) \
+$(FREEOBJS) \
+$(HOSTEDOBJS) \
 
 LIBK_OBJS=$(FREEOBJS:.o=.libk.o)
+
 #BINARIES=libc.a libk.a
 BINARIES=libk.a
 
