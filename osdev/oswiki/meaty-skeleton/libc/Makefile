@@ -4,11 +4,13 @@ HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 
 AR=../../cross-compiler/cc/cross/bin/i686-elf-ar
 CC=../../cross-compiler/cc/cross/bin/i686-elf-gcc
+
 CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
 LIBS?=
-DESTDIR?=
+
+DESTDIR?=$(shell pwd)/../sysroot
 PREFIX?=/usr/local
 EXEC_PREFIX?=$(PREFIX)
 INCLUDEDIR?=$(PREFIX)/include
@@ -89,7 +91,6 @@ install-headers:
 install-libs: $(BINARIES)
 	mkdir -p $(DESTDIR)$(LIBDIR)
 	cp $(BINARIES) $(DESTDIR)$(LIBDIR)
-
 
 -include $(OBJS:.o=.d)
 -include $(LIBK_OBJS:.o=.d)
