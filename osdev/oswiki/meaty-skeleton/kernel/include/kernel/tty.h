@@ -2,6 +2,7 @@
 #define _KERNEL_TTY_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 
 void terminal_initialize(void);
