@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void abort(void) __attribute__((__noreturn__))
+
+__attribute__((__noreturn__)) void abort(void)
 {
 #if defined(__is_libk)
     // TODO: Add proper kernel panic.
