@@ -10,7 +10,7 @@ CPPFLAGS?=
 LDFLAGS?=
 LIBS?=
 
-DESTDIR?=$(shell pwd)/../sysroot
+DESTDIR?=
 PREFIX?=/usr/local
 EXEC_PREFIX?=$(PREFIX)
 INCLUDEDIR?=$(PREFIX)/include
