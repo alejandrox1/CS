@@ -1,6 +1,6 @@
 #include <limits.h>
-#include <stdbool.h>
 #include <stdarg.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -36,7 +36,7 @@ int printf(const char* __restrict format, ...)
                 // TODO: Set errno to EOVERFLOW.
                 return -1;
             }
-            
+
             if (!print(format, amount))
                 return -1;
 
@@ -63,7 +63,7 @@ int printf(const char* __restrict format, ...)
         {
             format++;
             const char* str = va_arg(parameters, const char*);
-            size_t len = strlen(str);
+            size_t      len = strlen(str);
             if (maxrem < len)
             {
                 // TODO: Set errno to EOVERFLOW.
@@ -75,7 +75,7 @@ int printf(const char* __restrict format, ...)
         }
         else
         {
-            format = format_begun_at;
+            format     = format_begin_at;
             size_t len = strlen(format);
             if (maxrem < len)
             {
