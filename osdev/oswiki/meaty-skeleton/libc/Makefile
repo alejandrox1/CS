@@ -2,6 +2,7 @@ DEFAULT_HOST!=../default-host.sh
 HOST?=DEFAULT_HOST
 HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 
+AR=../../cross-compiler/cc/cross/bin/i686-elf-ar
 CC=../../cross-compiler/cc/cross/bin/i686-elf-gcc
 CFLAGS?=-O2 -g
 CPPFLAGS?=
