@@ -3,16 +3,16 @@
 #include <stddef.h>
 #include <string.h>
 
-static const size_t    VGA_WIDTH   = 80;
-static const size_t    VGA_HEIGHT  = 25;
-static uint16_t *const VGA_MEMEORY = (uint16_t *)0xB8000;
+static const size_t    VGA_WIDTH  = 80;
+static const size_t    VGA_HEIGHT = 25;
+static uint16_t* const VGA_MEMORY = (uint16_t*)0xB8000;
 
 static size_t    terminal_row;
 static size_t    terminal_column;
 static uint8_t   terminal_color;
-static uint16_t *terminal_buffer;
+static uint16_t* terminal_buffer;
 
-void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
+void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y);
 /******************************************************************************
  *                                Public API                                  *
  *****************************************************************************/
@@ -67,7 +67,7 @@ void terminal_putchar(char c)
  * @data: (const char *) String to be written.
  * @size: (size_t) Number of characters to be written.
  */
-void terminal_write(const char *data, size_t size)
+void terminal_write(const char* data, size_t size)
 {
     size_t i;
     for (i = 0; i < size; ++i)
@@ -78,7 +78,7 @@ void terminal_write(const char *data, size_t size)
  * terminal_writestring - Write a string to VGA terminal.
  * @data: (const char *) String to be written.
  */
-void terminal_writestring(const char *data)
+void terminal_writestring(const char* data)
 {
     terminal_write(data, strlen(data));
 }
