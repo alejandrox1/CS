@@ -1,8 +1,7 @@
 DEFAULT_HOST!=../default-host.sh
-HOST?=DEFAULT_HOST
+HOST?=$(DEFAULT_HOST)
 HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 
-CC=../cc/cross/bin/i686-elf-gcc
 CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
@@ -29,31 +28,31 @@ LDFLAGS:=$(LDFLAGS) $(KERNEL_ARCH_LDFLAGS)
 LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 
 KERNEL_OBJS=\
-			$(KERNEL_ARCH_OBJS) \
-			kernel/kernel.o \
+$(KERNEL_ARCH_OBJS) \
+kernel/kernel.o \
 
 OBJS=\
-	 $(ARCHDIR)/crti.o \
-	 $(ARCHDIR)/crtbegin.o \
-	 $(KERNEL_OBJS) \
-	 $(ARCHDIR)/crtend.o \
-	 $(ARCHDIR)/crtn.o \
+$(ARCHDIR)/crti.o \
+$(ARCHDIR)/crtbegin.o \
+$(KERNEL_OBJS) \
+$(ARCHDIR)/crtend.o \
+$(ARCHDIR)/crtn.o \
 
 LINK_LIST=\
-		  $(LDFLAGS) \
-		  $(ARCHDIR)/crti.o \
-		  $(ARCHDIR)/crtbegin.o \
-		  $(KERNEL_OBJS) \
-		  $(LIBS) \
-		  $(ARCHDIR)/crtend.o \
-		  $(ARCHDIR)crtn.o \
+$(LDFLAGS) \
+$(ARCHDIR)/crti.o \
+$(ARCHDIR)/crtbegin.o \
+$(KERNEL_OBJS) \
+$(LIBS) \
+$(ARCHDIR)/crtend.o \
+$(ARCHDIR)/crtn.o \
 
 .PHONY: all clean install install-headers install-kernel
 .SUFFIXES: .o .c .s
 
 all: myos.kernel
 
-myos.kernel: $(OBJS) $(RCHDIR)/linker.ld 
+myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld 
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)
 	grub-file --is-x86-multiboot myos.kernel
 
@@ -77,7 +76,7 @@ install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
 	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/.
 
-install-kernel:
+install-kernel: myos.kernel 
 	mkdir -p $(DESTDIR)$(BOOTDIR)
 	cp myos.kernel $(DESTDIR)$(BOOTDIR)
 
