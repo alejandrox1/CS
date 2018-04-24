@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 __attribute__((__noreturn__)) void abort(void)
 {
 #if defined(__is_libk)
