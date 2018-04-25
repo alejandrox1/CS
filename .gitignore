@@ -27,7 +27,7 @@ osdev/jmos/jamesm-tutorials
 osdev/jmos/exp_tmp_minimal_linux_like_kernel_heap
 osdev/jmos/exp_tmp_minimal_linux_like_kernel_tasking
 osdev/jmos/exp_tmp_minimal_linux_like_kernel_usermode
-osdev/oswiki/cross-compiler/cc
+osdev/oswiki/cross-compiler/cc*
 
 # Posix threads
 posix-threads/programming_with_posix_threads_src
