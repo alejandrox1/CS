@@ -100,7 +100,7 @@ get_pkg "${GDB}" "ftp://ftp.gnu.org/gnu/gdb/gdb-${GDB_VER}.tar.gz"
 ) && \
 (
     cd "${BD_GDB}";
-    ./configure --target=${TARGET} --program-prefix="${CROSS}" --disable-werror && \
+    ./configure --target=${TARGET} --program-prefix=${TARGET}- --prefix="${CROSS}" --disable-werror && \
         make && \
         make install && \
         echo -e "${GRE}>>> Finished making ${GDB}.\n${NOC}";
