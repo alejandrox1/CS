@@ -30,7 +30,7 @@ GCC="gcc-${GCC_VER}"
 GDB="gdb-${GDB_VER}"
 
 # Build environment
-BASE="$(pwd)/jos-cc-${GCC_VER}-${BINUTILS_VER}"
+BASE="$(pwd)/cc-gdb-${GCC_VER}-${BINUTILS_VER}"
 CROSS="${BASE}/cross"
 BIN="${CROSS}/bin"
 SRC="${BASE}/src"
