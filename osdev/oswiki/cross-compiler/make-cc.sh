@@ -30,7 +30,7 @@ BINUTILS="binutils-${BINUTILS_VER}"
 GCC="gcc-${GCC_VER}"
 
 # Build environment
-BASE="$(pwd)/cc"
+BASE="$(pwd)/cc-${GCC_VER}-${BINUTILS_VER}"
 CROSS="${BASE}/cross"
 BIN="${CROSS}/bin"
 SRC="${BASE}/src"
