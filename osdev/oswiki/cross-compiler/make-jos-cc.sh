@@ -78,7 +78,7 @@ get_pkg() {
 # Get source code.
 get_pkg "${BINUTILS}" "ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz";
 get_pkg "${GCC}" "ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.gz";
-get_pkg "${GDB}" 
+get_pkg "${GDB}" "ftp://ftp.gnu.org/gnu/gdb/gdb-${GDB_VER}.tar.gz" 
 
 # Build cross-compiler.
 (
