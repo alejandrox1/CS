@@ -100,7 +100,10 @@ get_pkg "${GDB}" "ftp://ftp.gnu.org/gnu/gdb/gdb-${GDB_VER}.tar.gz"
 ) && \
 (
     cd "${BD_GDB}";
-    ./configure --target=${TARGET} --program-prefix=${TARGET}- --prefix="${CROSS}" --disable-werror && \
+    # If GDB fails to nstall on the Docs section you may need to install
+    # texinfo (Debian)
+    # sudo apt-get install texinfo
+    ../${GDB}/configure --target=${TARGET} --program-prefix=${TARGET}- --prefix="${CROSS}" --disable-werror && \
         make && \
         make install && \
         echo -e "${GRE}>>> Finished making ${GDB}.\n${NOC}";
