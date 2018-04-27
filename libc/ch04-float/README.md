@@ -197,5 +197,3 @@ builtin_define_float_constants (const char *name_prefix,
     }                                                                           
 }
 ```
-
-```
