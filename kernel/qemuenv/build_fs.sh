@@ -14,5 +14,6 @@ mkfs.ext2 $IMG
 mkdir -p $DIR
 sudo mount -o loop $IMG $DIR
 sudo debootstrap --variant=buildd --arch ${ARCH} ${DIST} ${DIR}
+sudo chroot ${DIR} /bin/bash -c "passwd"
 sudo umount ${DIR}
-
+rmdir ${DIR}
