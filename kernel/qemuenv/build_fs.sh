@@ -7,6 +7,8 @@ DIST=xenial
 IMG=vmroot_${DIST}_${ARCH}.img
 DIR=mount_point
 
+if [ -f ${IMG} ]; then rm ${IMG}; fi
+
 qemu-img create $IMG 1g
 mkfs.ext2 $IMG
 
