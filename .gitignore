@@ -21,6 +21,10 @@ libc/glibc
 # Networking
 networking/unix_networkprog_src/
 
+# OS
+os/Linux_Prgramming_Interface/lpi-src
+
+
 # OS Dev
 osdev/jmos/tutorials
 osdev/jmos/jamesm-tutorials
