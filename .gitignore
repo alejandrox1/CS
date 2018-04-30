@@ -60,7 +60,7 @@ posix-threads/programming_with_posix_threads_src
 *.swp
 
 # Images
-**/floppy.img
+*.img
 
 # Logs
 **/bochsout.txt
