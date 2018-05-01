@@ -13,6 +13,7 @@
 #endif
 
 void errExit(const char* format, ...) NORETURN;
+void fatal(const char* format, ...) NORETURN;
 void usageError(const char* format, ...) NORETURN;
 
 #endif
