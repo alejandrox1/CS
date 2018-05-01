@@ -43,6 +43,20 @@ void errExit(const char* format, ...)
 }
 
 /**
+ * fatal - Print an error message.
+ */
+void fatal(const char* format, ...)
+{
+    va_list argList;
+
+    va_start(argList, format);
+    outputError(FALSE, 0, TRUE, format, argList);
+    va_end(argList);
+
+    terminate(TRUE);
+}
+
+/**
  * usgaeError - Prints a command usage error message and terminates the
  * process.
  */
