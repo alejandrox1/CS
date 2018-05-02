@@ -32,6 +32,25 @@ NORETURN static void terminate(Boolean useExit3);
  *                            Public API                                      *
  *****************************************************************************/
 /**
+ * cmdLineErr - Diagnose an error in command line arguments and terminate the
+ * process.
+ */
+void cmdLineErr(const char* format, ...)
+{
+    va_list argList;
+
+    fflush(stdout);
+
+    fprintf(stderr, "Command-line usage error: ");
+    va_start(argList, format);
+    vfprintf(stderr, format, argList);
+    va_end(argList);
+
+    fflush(stderr);
+    exit(EXIT_FAILURE);
+}
+
+/**
  * errExit - Displays an error messgae including an errno diagnostic, and
  * terminates the process.
  */
