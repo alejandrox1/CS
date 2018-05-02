@@ -6,6 +6,7 @@
  * Taken from the Linux Programming Interface.
  */
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static long getNum(const char* fname, const char* arg, int flags, const char* name);
@@ -34,6 +35,19 @@ long getLong(const char* arg, int flags, const char* name)
  * @arg: Command-line argument.
  * @name: Name of command-line argument.
  */
+static void gnFail(const char* fname, const char* msg, const char* arg, const char* name)
+{
+    fprintf(stderr, "%s error", fname);
+    if (name != NULL)
+        fprintf(stderr, " (in %s)", name);
+    fprintf(stderr, ": %s\n", msg);
+    if (arg != NULL && *arg != '\0')
+        fprintf(stderr, "\toffending text: %s\n", arg);
+
+    exit(EXIT_FAILURE);
+}
+
+
 /**
  * getNum - Convert a numeric command-line argument ('arg') into a long integer
  * and return it.
