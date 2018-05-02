@@ -5,26 +5,25 @@
  *
  * Taken from the Linux Programming Interface.
  */
-#include <sys/stat.h>
-#include <stdarg.h>
+#include "error_functions.h"
 #include <fcntl.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
-#include "error_functions.h"
 
 #ifndef BUFF_SIZE
 #define BUFF_SIZE 1024
 #endif
 
-
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    int inputFd, outputFd, openFlags;
-    mode_t filePerms;
+    int     inputFd, outputFd, openFlags;
+    mode_t  filePerms;
     ssize_t numRead;
-    char buf[BUFF_SIZE];
+    char    buf[BUFF_SIZE];
 
     if (argc != 3 || strcmp(argv[1], "--help") == 0)
         usageError("%s old-file new-file\n", argv[0]);
@@ -35,8 +34,9 @@ int main(int argc, char *argv[])
         errExit("opening file %s", argv[1]);
 
     openFlags = O_CREAT | O_WRONLY | O_TRUNC;
-    filePerms = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH; /* rw-rw-rw- */
-    outputFd  = open(argv[2], openFlags, filePerms);
+    filePerms = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH |
+                S_IWOTH; /* rw-rw-rw- */
+    outputFd = open(argv[2], openFlags, filePerms);
     if (outputFd == -1)
         errExit("opening file %s", argv[2]);
 

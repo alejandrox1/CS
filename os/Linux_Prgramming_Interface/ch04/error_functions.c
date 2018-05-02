@@ -4,13 +4,13 @@
  *
  * Taken from the Linux Programming Interface.
  */
-#include <stdarg.h>
+#include "error_functions.h"
 #include <errno.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "error_functions.h"
 
 #ifdef TRUE
 #undef TRUE
@@ -22,7 +22,11 @@
 
 typedef enum { FALSE, TRUE } Boolean;
 
-static void outputError(Boolean useErr, int err, Boolean flushStdout, const char* format, va_list ap);
+static void outputError(Boolean     useErr,
+                        int         err,
+                        Boolean     flushStdout,
+                        const char* format,
+                        va_list     ap);
 NORETURN static void terminate(Boolean useExit3);
 /******************************************************************************
  *                            Public API                                      *
@@ -86,7 +90,11 @@ void usageError(const char* format, ...)
  *  - outputing the caller-supplied error message specified in 'format' and
  *    'ap'.
  */
-static void outputError(Boolean useErr, int err, Boolean flushStdout, const char* format, va_list ap)
+static void outputError(Boolean     useErr,
+                        int         err,
+                        Boolean     flushStdout,
+                        const char* format,
+                        va_list     ap)
 {
 #define BUFF_SIZE 500
     char buf[BUFF_SIZE], userMsg[BUFF_SIZE], errText[BUFF_SIZE];
@@ -106,13 +114,12 @@ static void outputError(Boolean useErr, int err, Boolean flushStdout, const char
     fflush(stderr);
 }
 
-
 /**
  * terminate - Terminates calling process.
  */
 static void terminate(Boolean useExit3)
 {
-    char *s;
+    char* s;
 
     s = getenv("EF_DUMPCORE");
 

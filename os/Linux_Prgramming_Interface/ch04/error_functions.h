@@ -7,7 +7,7 @@
 #define ERROR_FUNCTIONS_H
 
 #ifdef __GNUC__
-#define NORETURN __attribute__ ((__noreturn__))
+#define NORETURN __attribute__((__noreturn__))
 #else
 #define NORETURN
 #endif
