@@ -21,4 +21,4 @@ format:
 clean:
 	@echo - Cleaning up all executables...
 	rm -f cp
-	rm -f seek_io
+	rm -f seek
