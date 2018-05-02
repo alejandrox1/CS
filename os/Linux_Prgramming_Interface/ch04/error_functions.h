@@ -12,6 +12,7 @@
 #define NORETURN
 #endif
 
+void cmdLineErr(const char* format, ...) NORETURN;
 void errExit(const char* format, ...) NORETURN;
 void fatal(const char* format, ...) NORETURN;
 void usageError(const char* format, ...) NORETURN;
