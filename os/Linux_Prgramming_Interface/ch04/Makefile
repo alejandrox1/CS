@@ -4,7 +4,7 @@ V=
 CC=gcc
 CFLAGS=-Wall -Werror
 
-.PHONY: cp format clean
+.PHONY: cp seek format clean
 
 cp: cp.c error_functions.c
 	@echo + Building cp utility...
