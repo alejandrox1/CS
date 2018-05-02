@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     ssize_t numRead, numWritten;
 
     if (argc < 3 || strcmp(argv[1], "--help") == 0)
-        usageErr("%s file {r<lenght>|R<lenght>|w<string>|s<offset>}...\n", argv[0]);
+        usageError("%s file {r<lenght>|R<lenght>|w<string>|s<offset>}...\n", argv[0]);
 
     fd = open(argv[1], O_RDWR | O_CREAT, 
             S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
                         else
                             printf("%02x ", (unsigned int)buf[j]);
                     }
-                    print("\n");
+                    printf("\n");
                 }
                 free(buf);
                 break;
