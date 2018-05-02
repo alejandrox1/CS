@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "get_num.h"
 
 static void gnFail(const char* fname, const char* msg, const char* arg, const char* name);
 static long getNum(const char* fname, const char* arg, int flags, const char* name);
@@ -63,7 +64,7 @@ static void gnFail(const char* fname, const char* msg, const char* arg, const ch
  */
 static long getNum(const char* fname, const char* arg, int flags, const char* name)
 {
-    long rest;
+    long res;
     char* endptr;
     int base;
 
@@ -73,14 +74,14 @@ static long getNum(const char* fname, const char* arg, int flags, const char* na
     base = (flags & GN_ANY_BASE) ? 0 : (flags & GN_BASE_8) ? 8 : (flags & GN_BASE_16) ? 16 : 10;
 
     errno = 0;
-    res = strtol(argv, &endptr, base);
+    res = strtol(arg, &endptr, base);
     if (errno != 0)
         gnFail(fname, "strtol() failed", arg, name);
 
     if (*endptr != '\0')
         gnFail(fname, "nonumeric characters", arg, name);
 
-    if ((flags & GN_NONNGE) && res < 0)
+    if ((flags & GN_NONNEG) && res < 0)
         gnFail(fname, "negative value not allowed", arg, name);
 
     if ((flags & GN_GT_0) && res <= 0)
