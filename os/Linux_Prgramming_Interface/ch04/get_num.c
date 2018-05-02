@@ -1,17 +1,19 @@
 /*
- * get_num.c 
+ * get_num.c
  *
  * Functions to process numerica command-line arguments.
  *
  * Taken from the Linux Programming Interface.
  */
+#include "get_num.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "get_num.h"
 
-static void gnFail(const char* fname, const char* msg, const char* arg, const char* name);
-static long getNum(const char* fname, const char* arg, int flags, const char* name);
+static void
+gnFail(const char* fname, const char* msg, const char* arg, const char* name);
+static long
+getNum(const char* fname, const char* arg, int flags, const char* name);
 /******************************************************************************
  *                             Public API                                     *
  *****************************************************************************/
@@ -37,7 +39,8 @@ long getLong(const char* arg, int flags, const char* name)
  * @arg: Command-line argument.
  * @name: Name of command-line argument.
  */
-static void gnFail(const char* fname, const char* msg, const char* arg, const char* name)
+static void
+gnFail(const char* fname, const char* msg, const char* arg, const char* name)
 {
     fprintf(stderr, "%s error", fname);
     if (name != NULL)
@@ -48,7 +51,6 @@ static void gnFail(const char* fname, const char* msg, const char* arg, const ch
 
     exit(EXIT_FAILURE);
 }
-
 
 /**
  * getNum - Convert a numeric command-line argument ('arg') into a long integer
@@ -62,19 +64,22 @@ static void gnFail(const char* fname, const char* msg, const char* arg, const ch
  * diagnostic checks are performed on the numeric result.
  * @name: Name associated with command line argument 'arg'.
  */
-static long getNum(const char* fname, const char* arg, int flags, const char* name)
+static long
+getNum(const char* fname, const char* arg, int flags, const char* name)
 {
-    long res;
+    long  res;
     char* endptr;
-    int base;
+    int   base;
 
     if (arg == NULL || *arg == '\0')
         gnFail(fname, "null or empty string", arg, name);
 
-    base = (flags & GN_ANY_BASE) ? 0 : (flags & GN_BASE_8) ? 8 : (flags & GN_BASE_16) ? 16 : 10;
+    base = (flags & GN_ANY_BASE) ? 0 : (flags & GN_BASE_8)
+                                           ? 8
+                                           : (flags & GN_BASE_16) ? 16 : 10;
 
     errno = 0;
-    res = strtol(arg, &endptr, base);
+    res   = strtol(arg, &endptr, base);
     if (errno != 0)
         gnFail(fname, "strtol() failed", arg, name);
 
