@@ -19,6 +19,7 @@
 #include <shadow.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "error_functions.h"
 #include "get_pass.h"
