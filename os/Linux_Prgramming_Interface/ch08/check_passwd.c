@@ -72,7 +72,6 @@ int main(void)
         pwd->pw_passwd = spwd->sp_pwdp;
 
     password = get_pass("Password: ");
-
     /* Encrypt password and erase cleartext version inmediately. */
     encrypted = crypt(password, pwd->pw_passwd);
     free(password);
