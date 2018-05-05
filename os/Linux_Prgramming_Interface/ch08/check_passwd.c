@@ -20,7 +20,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include "error_function.h"
+#include "error_functions.h"
 #include "get_pass.h"
 
 #ifdef TRUE                                                                     
