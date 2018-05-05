@@ -9,7 +9,8 @@
 char* get_pass(const char* prompt)
 {
     struct termios oflags, nflags;
-    char password[64];
+#define PW_LEN 64
+    char *password = (char *)malloc(sizeof(char)*PW_LEN);
 
     /* Dissable echo. */
     tcgetattr(fileno(stdin), &oflags);
@@ -21,7 +22,7 @@ char* get_pass(const char* prompt)
         errExit("tcsetattr");
 
     /* Get password from stdin. */
-    printf(prompt);
+    printf("%s", prompt);
     fgets(password, sizeof(password), stdin);
     password[strlen(password)-1] = '\0';
 
