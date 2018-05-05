@@ -8,7 +8,7 @@ CFLAGS=-Wall -Werror -Wextra
 
 check_passwd: check_passwd.c get_pass.c error_functions.c
 	@echo + Building check_passwd utility...
-	$(V)$(CC) $(CFLAGS) -o $@ $^
+	$(V)$(CC) $(CFLAGS) -o $@ $^ -lcrypt
 
 format:
 	@echo + Formatting src...
