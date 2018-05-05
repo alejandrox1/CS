@@ -2,7 +2,7 @@ V=
 #V=@
 
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra
+CFLAGS=-Wall -Werror -Wextra #-DDEBUG
 
 .PHONY: check_passwd format clean
 
