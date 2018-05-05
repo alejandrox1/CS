@@ -23,8 +23,11 @@ char* get_pass(const char* prompt)
 
     /* Get password from stdin. */
     printf("%s", prompt);
-    fgets(password, sizeof(password), stdin);
+    fgets(password, sizeof(char)*PW_LEN, stdin);
     password[strlen(password)-1] = '\0';
+#ifdef DEBUG
+    printf("you typed '%s'\n", password);
+#endif
 
     /* Restore terminal. */
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
