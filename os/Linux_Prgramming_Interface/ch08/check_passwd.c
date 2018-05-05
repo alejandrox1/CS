@@ -33,7 +33,7 @@
                                                                                 
 typedef enum { FALSE, TRUE } Boolean;
 
-int main(int argc, char *argv[])
+int main(void)
 {
     char *username, *password, *encrypted, *p;
     struct passwd *pwd;
