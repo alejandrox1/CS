@@ -35,7 +35,7 @@ typedef enum { FALSE, TRUE } Boolean;
 
 int main(void)
 {
-    char *username, *password, *encrypted;
+    char *username, *password, *encrypted, *p;
     struct passwd *pwd;
     struct spwd *spwd;
     Boolean authOk;
@@ -74,6 +74,8 @@ int main(void)
     password = get_pass("Password: ");
     /* Encrypt password and erase cleartext version inmediately. */
     encrypted = crypt(password, pwd->pw_passwd);
+    for (p = password; *p != '\0'; ++p)
+        *p = '\0';
     free(password);
 
     if (encrypted == NULL)
