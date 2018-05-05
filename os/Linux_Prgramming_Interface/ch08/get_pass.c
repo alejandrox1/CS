@@ -8,7 +8,7 @@
 
 char* get_pass(const char* prompt)
 {
-    struct termios, oflags, nflags;
+    struct termios oflags, nflags;
     char password[64];
 
     /* Dissable echo. */
