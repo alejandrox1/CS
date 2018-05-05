@@ -7,7 +7,7 @@
  * Taken from The Linux programming Interface.
  */
 /* Compile with -lcrypt */
-#if ! define(__sun)
+#if ! defined(__sun)
 # define _BSD_SOURCE   /* getpass() from unistd.h */
 # ifndef _XOPEN_SOURCE 
 # define _XOPEN_SOURCE /* crypt() from unistd.h   */
