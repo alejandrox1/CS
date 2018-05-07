@@ -23,8 +23,8 @@ int main(void)
 {
     uid_t ruid, euid, suid, fsuid;
     gid_t rgid, egid, sgid, fsgid;
-    //gid_t suppGroups[SG_SIZE];
-    //int numGroups, j;
+    gid_t suppGroups[SG_SIZE];
+    int numGroups, j;
     char *p;
 
     if (getresuid(&ruid, &euid, &suid) == -1)
@@ -60,6 +60,18 @@ int main(void)
     printf("saved=%s (%ld); ", (p == NULL) ? "???" : p, (long)sgid);            
     p = groupNameFromId(fsuid);                                                  
     printf("fs=%s (%ld); ", (p == NULL) ? "???" : p, (long)fsgid);              
+    printf("\n");
+
+    numGroups = getgroups(SG_SIZE, suppGroups);
+    if (numGroups == -1)
+        errExit("getgroups");
+
+    printf("Supplementary groups (%d): ", numGroups);
+    for (j = 0; j < numGroups; ++j)
+    {
+        p = groupNameFromId(suppGroups[j]);
+        printf("%s (%ld) ", (p == NULL) ? "???" : p, (long)suppGroups[j]);
+    }
     printf("\n");
 
     exit(EXIT_SUCCESS);
