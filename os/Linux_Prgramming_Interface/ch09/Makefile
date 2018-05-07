@@ -16,4 +16,4 @@ format:
 
 clean:
 	@echo - Cleaning up all executables...
-	rm -f check_passwd
+	rm -f idshow
