@@ -7,40 +7,40 @@
  * Taken from The Linux programming Interface.
  */
 /* Compile with -lcrypt */
-#if ! defined(__sun)
-# define _BSD_SOURCE   /* getpass() from unistd.h */
-# ifndef _XOPEN_SOURCE 
-# define _XOPEN_SOURCE /* crypt() from unistd.h   */
-# endif
+#if !defined(__sun)
+#define _BSD_SOURCE /* getpass() from unistd.h */
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE /* crypt() from unistd.h   */
 #endif
-#include <unistd.h>
+#endif
+#include "error_functions.h"
+#include "get_pass.h"
+#include <errno.h>
 #include <limits.h>
 #include <pwd.h>
 #include <shadow.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "error_functions.h"
-#include "get_pass.h"
+#include <unistd.h>
 
-#ifdef TRUE                                                                     
-#undef TRUE  
-#endif                                                                               
-#ifdef FALSE                                                                    
-#undef FALSE                                                                    
-#endif                                                                          
-                                                                                
+#ifdef TRUE
+#undef TRUE
+#endif
+#ifdef FALSE
+#undef FALSE
+#endif
+
 typedef enum { FALSE, TRUE } Boolean;
 
 int main(void)
 {
-    char *username, *password, *encrypted, *p;
-    struct passwd *pwd;
-    struct spwd *spwd;
-    Boolean authOk;
-    size_t len;
-    long lnmax;
+    char *         username, *password, *encrypted, *p;
+    struct passwd* pwd;
+    struct spwd*   spwd;
+    Boolean        authOk;
+    size_t         len;
+    long           lnmax;
 
     /* Determine the size of a buffer to hold a username and allocate it. */
     lnmax = sysconf(_SC_LOGIN_NAME_MAX);
@@ -57,18 +57,19 @@ int main(void)
         exit(EXIT_SUCCESS);
 
     len = strlen(username);
-    if (username[len-1] == '\n')
-        username[len-1] = '\0';
+    if (username[len - 1] == '\n')
+        username[len - 1] = '\0';
 
-    /* Look up password and shadow password records for the username provided. */
+    /* Look up password and shadow password records for the username provided.
+     */
     pwd = getpwnam(username);
     if (pwd == NULL)
         fatal("Couldn't get password record");
     spwd = getspnam(username);
     if (spwd == NULL && errno == EACCES)
         fatal("no permission to read shadow password file");
-    
-    if(spwd != NULL)
+
+    if (spwd != NULL)
         pwd->pw_passwd = spwd->sp_pwdp;
 
     password = get_pass("Password: ");
@@ -88,8 +89,7 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-
     printf("Successfully authenticated: UID=%ld\n", (long)pwd->pw_uid);
-    
+
     exit(EXIT_SUCCESS);
 }

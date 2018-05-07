@@ -12,14 +12,14 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifdef TRUE                                                                     
-#undef TRUE                                                                     
-#endif                                                                          
-                                                                                
-#ifdef FALSE                                                                    
-#undef FALSE                                                                    
-#endif                                                                          
-                                                                                
+#ifdef TRUE
+#undef TRUE
+#endif
+
+#ifdef FALSE
+#undef FALSE
+#endif
+
 typedef enum { FALSE, TRUE } Boolean;
 
 static void outputError(Boolean     useErr,
