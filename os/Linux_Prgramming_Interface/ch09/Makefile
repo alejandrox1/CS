@@ -6,7 +6,7 @@ CFLAGS=-Wall -Werror -Wextra #-DDEBUG
 
 .PHONY: idshow format clean
 
-idhsow: check_passwd.c error_functions.c ugid_functions.c
+idhsow: idshow.c error_functions.c ugid_functions.c
 	@echo + Building $@ utility...
 	$(V)$(CC) $(CFLAGS) -o $@ $^
 
