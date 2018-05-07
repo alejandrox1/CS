@@ -8,22 +8,23 @@
  *
  * Taken from The Linux Prgramming Interface.
  */
-#define __GNU_SOURCE
+#define _GNU_SOURCE
 #include <sys/fsuid.h>
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "error_functions.h"
-#include "ugid_funcstions.h"
+#include "ugid_functions.h"
 
 #define SG_SIZE (NGROUPS_MAX + 1)
 
-int main(int argc, char* argv[])
+int main(void)
 {
     uid_t ruid, euid, suid, fsuid;
     gid_t rgid, egid, sgid, fsgid;
-    gid_t suppGroups[SG_SIZE];
-    int numGroups, j;
+    //gid_t suppGroups[SG_SIZE];
+    //int numGroups, j;
     char *p;
 
     if (getresuid(&ruid, &euid, &suid) == -1)
@@ -40,12 +41,26 @@ int main(int argc, char* argv[])
     fsgid = setfsgid(0);
 
     printf("UID: ");
-    p = userNameFromID(ruid);
+    p = userNameFromId(ruid);
     printf("real=%s (%ld); ", (p == NULL) ? "???" : p, (long)ruid);
-    p = userNameFromID(ruid);                                                   
+    p = userNameFromId(ruid);                                                   
     printf("eff=%s (%ld); ", (p == NULL) ? "???" : p, (long)euid);
-    p = userNameFromID(ruid);                                                   
+    p = userNameFromId(ruid);                                                   
     printf("saved=%s (%ld); ", (p == NULL) ? "???" : p, (long)suid);
+    p = userNameFromId(fsuid);
+    printf("fs=%s (%ld); ", (p == NULL) ? "???" : p, (long)fsuid);
+    printf("\n");
+
+    printf("GID: ");
+    p = groupNameFromId(ruid);
+    printf("real=%s (%ld); ", (p == NULL) ? "???" : p, (long)rgid);             
+    p = groupNameFromId(ruid);                                                   
+    printf("eff=%s (%ld); ", (p == NULL) ? "???" : p, (long)egid);              
+    p = groupNameFromId(ruid);                                                   
+    printf("saved=%s (%ld); ", (p == NULL) ? "???" : p, (long)sgid);            
+    p = groupNameFromId(fsuid);                                                  
+    printf("fs=%s (%ld); ", (p == NULL) ? "???" : p, (long)fsgid);              
+    printf("\n");
 
     exit(EXIT_SUCCESS);
 }
