@@ -14,7 +14,7 @@
  *
  * Taken from The Linux Programming Interface.
  */
-#if ! define(__sun)
+#if ! defined(__sun)
 # ifndef _XOPEN_SOURCE
 # define _XOPEN_SOURCE
 # endif
@@ -35,17 +35,17 @@ int main(int argc, char* argv[])
     char* ofmt;
 
     if (argc < 3 || strcmp(argv[1], "--help") == 0)
-        usgaeError("%s input-date-time in-format [out-format]\n", argv[0]);
+        usageError("%s input-date-time in-format [out-format]\n", argv[0]);
 
     if (setlocale(LC_ALL, "") == NULL)
         errExit("setlocale");
 
-    memset(&tm, sizeof(struct tm));
+    memset(&tm, 0, sizeof(struct tm));
     if (strptime(argv[1], argv[2], &tm) == NULL)
         fatal("strptime");
 
     /* Not set by strptime(); tells mktime() to determine if DST is in effect. */
-    tm.tm_isdt = -1;
+    tm.tm_isdst = -1;
     
     printf("calendar time (seconds since Epoch): %ld\n", (long)mktime(&tm));
 
