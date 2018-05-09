@@ -7,7 +7,7 @@ CFLAGS=-Wall -Werror -Wextra #-DDEBUG
 
 .PHONY: calendar_time format clean
 
-calendar_time: calendar_time.c error_functions.c ugid_functions.c
+calendar_time: calendar_time.c error_functions.c
 	@echo + Building $@ utility...
 	$(V)$(CC) $(CFLAGS) -o $@ $^
 
