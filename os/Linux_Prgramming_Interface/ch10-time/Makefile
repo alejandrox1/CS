@@ -11,6 +11,10 @@ calendar_time: calendar_time.c error_functions.c
 	@echo + Building $@ utility...
 	$(V)$(CC) $(CFLAGS) -o $@ $^
 
+strtime: strtime.c error_functions.c
+	@echo + Building $@ utility...
+	$(V)$(CC) $(CFLAGS) -o $@ $^
+
 format:
 	@echo + Formatting src...
 	$(V)find . -name "*.c" -o -name "*.h" | xargs $(CFORMAT) -i
@@ -18,3 +22,4 @@ format:
 clean:
 	@echo - Cleaning up all executables...
 	rm -f calendar_time
+	rm -f strtime
