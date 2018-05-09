@@ -20,13 +20,17 @@
 #undef FALSE
 #endif
 
-typedef enum { FALSE, TRUE } Boolean;
+typedef enum
+{
+    FALSE,
+    TRUE
+} Boolean;
 
-static void outputError(Boolean     useErr,
-                        int         err,
-                        Boolean     flushStdout,
-                        const char* format,
-                        va_list     ap);
+static void          outputError(Boolean     useErr,
+                                 int         err,
+                                 Boolean     flushStdout,
+                                 const char* format,
+                                 va_list     ap);
 NORETURN static void terminate(Boolean useExit3);
 /******************************************************************************
  *                            Public API                                      *

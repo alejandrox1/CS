@@ -4,9 +4,9 @@
  * Taken from The Linux Programming Interface.
  */
 #include "ugid_functions.h"
-#include <stdio.h>
-#include <pwd.h>
 #include <grp.h>
+#include <pwd.h>
+#include <stdio.h>
 
 /******************************************************************************
  *                               Public API                                   *
@@ -17,12 +17,11 @@
  */
 char* groupNameFromId(gid_t gid)
 {
-    struct group *grp;
+    struct group* grp;
 
     grp = getgrgid(gid);
     return (grp == NULL) ? NULL : grp->gr_name;
 }
-
 
 /**
  * userNameFromId - Return name corresponding to 'uid', or NULL on return.
@@ -30,7 +29,7 @@ char* groupNameFromId(gid_t gid)
  */
 char* userNameFromId(uid_t uid)
 {
-    struct passwd *pwd;
+    struct passwd* pwd;
 
     pwd = getpwuid(uid);
     return (pwd == NULL) ? NULL : pwd->pw_name;
