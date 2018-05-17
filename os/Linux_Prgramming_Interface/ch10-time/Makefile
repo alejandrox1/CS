@@ -5,7 +5,7 @@ CFORMAT=clang-format-6.0
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra #-DDEBUG
 
-.PHONY: calendar_time format clean
+.PHONY: calendar_time show_time strtime format clean
 
 calendar_time: calendar_time.c error_functions.c
 	@echo + Building $@ utility...
