@@ -1,10 +1,17 @@
 #!/bin/bash
-
+#
+# show_time:
+#   If you run into trouble while trying to run `show_time` with an error
+#   saying:  
+#       [2 No such file or directory] setlocale
+#   Then you may want to go and `sudo vi /etc/locale.gen` and uncomment
+#   whatever locales you want to have available.
+#   After this, do `sudo locale-gen` and you should be set to go.
+#
 BLU="\e[34;1m"
 GRE="\e[32m"
 NOC="\e[0m"
 
-set -x
 
 # 1. Run with the set from env.
 # 2. Run with German locale.
@@ -31,4 +38,6 @@ echo -e "${BLU}Testing strtime...${NOC}" && \
     ./strtime "9:39:46pm 1 Feb 2011" "%I:%M:%S%p %d %b %Y" && \
     echo && \
     echo -e "${GRE}\"9:39:46pm 1 Feb 2011\" \"%I:%M:%S%p %d %b %Y\" \"%F %T\"${NOC}" && \
-    ./strtime "9:39:46pm 1 Feb 2011" "%I:%M:%S%p %d %b %Y" "%F %T" 
+    ./strtime "9:39:46pm 1 Feb 2011" "%I:%M:%S%p %d %b %Y" "%F %T"
+
+make clean
