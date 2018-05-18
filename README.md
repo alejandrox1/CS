@@ -7,6 +7,10 @@
 
 * [Cryptography](crypto/) All things cryptography or vaguely related.
 
+* [GNU Tutorials](GNU/) Working with GNU-linux.
+
+* [GPUs](gpu/) Anything GPU-related.
+
 * [High Performance Parallelism](HPP/) High performance stuff :-)
 
 * [Kernel](kernel/) A guide into everything related to the Linux kernel.
