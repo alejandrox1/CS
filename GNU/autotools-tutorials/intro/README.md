@@ -29,3 +29,15 @@ The smallest project requires two files:
 
 * Other subdirs can include `config` for intermediate files, `doc` for the
   project's documentation, and `test` for the projects self-test suite.
+
+
+## Building and Installing the Project
+Run `bootsratp.sh` and then,
+```bash
+# Find a place for the bin dir
+./configure --prefix=<some dir>
+make
+make install
+```
+
+To install without debugging symbols install with `make install-strip`.
