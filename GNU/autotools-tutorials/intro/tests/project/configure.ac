@@ -1,6 +1,3 @@
-PACKAGE=helloworld
-VERSION=0.1.0
-
 AC_INIT([helloworld], [0.1.0])
 AC_CONFIG_SRCDIR([src/main.cc])
 AM_INIT_AUTOMAKE
