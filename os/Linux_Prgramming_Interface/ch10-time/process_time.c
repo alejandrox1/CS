@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     for (j = 0; j < numCalls; j++)
         (void) getppid();
 
-    displayProcessTimes("After getppid() loop:\n");
+    displayProcessTimes("After getpid() loop:\n");
 
     exit(EXIT_SUCCESS);
 }
