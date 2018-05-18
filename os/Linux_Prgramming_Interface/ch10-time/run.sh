@@ -40,4 +40,9 @@ echo -e "${BLU}Testing strtime...${NOC}" && \
     echo -e "${GRE}\"9:39:46pm 1 Feb 2011\" \"%I:%M:%S%p %d %b %Y\" \"%F %T\"${NOC}" && \
     ./strtime "9:39:46pm 1 Feb 2011" "%I:%M:%S%p %d %b %Y" "%F %T"
 
+echo -e "${BLU}Testing process_time...${NOC}" && \
+    make clean && make process_time && \
+    echo -e "${GRE}./process_time 10000000${NOC}" && \
+    ./process_time 10000000
+
 make clean
