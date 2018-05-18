@@ -1,6 +1,6 @@
 /* show_time.c
  *
- * A short program that allows us to see the effects of locale and timezone on 
+ * A short program that allows us to see the effects of locale and timezone on
  * some of the functions that deal with time.
  *
  * Try running this program with command lines such as the following:
@@ -10,22 +10,22 @@
  *      TZ=":US/Central" ./show_time
  *      TZ=":CET" ./show_time
  */
+#include "error_functions.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <locale.h>
-#include "error_functions.h"
 
 #define BUF_SIZE 200
 
 int main(void)
 {
-    time_t t;
-    struct tm *loc;
-    char buf[BUF_SIZE];
+    time_t     t;
+    struct tm* loc;
+    char       buf[BUF_SIZE];
 
     if (setlocale(LC_ALL, "") == NULL)
-        errExit("setlocale");   /* Use locale settings in conversions */
+        errExit("setlocale"); /* Use locale settings in conversions */
 
     t = time(NULL);
 
