@@ -14,25 +14,25 @@
  *
  * Taken from The Linux Programming Interface.
  */
-#if ! defined(__sun)
-# ifndef _XOPEN_SOURCE
-# define _XOPEN_SOURCE
-# endif
+#if !defined(__sun)
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE
 #endif
+#endif
+#include "error_functions.h"
 #include <locale.h>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "error_functions.h"
+#include <time.h>
 
 #define SBUF_SIZE 1000
 
 int main(int argc, char* argv[])
 {
     struct tm tm;
-    char sbuf[SBUF_SIZE];
-    char* ofmt;
+    char      sbuf[SBUF_SIZE];
+    char*     ofmt;
 
     if (argc < 3 || strcmp(argv[1], "--help") == 0)
         usageError("%s input-date-time in-format [out-format]\n", argv[0]);
@@ -44,12 +44,13 @@ int main(int argc, char* argv[])
     if (strptime(argv[1], argv[2], &tm) == NULL)
         fatal("strptime");
 
-    /* Not set by strptime(); tells mktime() to determine if DST is in effect. */
+    /* Not set by strptime(); tells mktime() to determine if DST is in effect.
+     */
     tm.tm_isdst = -1;
-    
+
     printf("calendar time (seconds since Epoch): %ld\n", (long)mktime(&tm));
 
-    ofmt = (argc > 3) ? argv[3]: "%H:%M:%S %A, %d %B %Y %Z";
+    ofmt = (argc > 3) ? argv[3] : "%H:%M:%S %A, %d %B %Y %Z";
     if (strftime(sbuf, SBUF_SIZE, ofmt, &tm) == 0)
         fatal("strftime returned 0");
     printf("strftime() returned: %s\n", sbuf);
