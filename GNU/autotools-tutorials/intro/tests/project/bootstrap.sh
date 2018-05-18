@@ -2,6 +2,8 @@
 
 set -e
 
+test -d autom4te.cache && rm -rf autom4te.cache
+
 # Collect all macro invocations in configure.in needed to build a configure
 # script. This will generate a file called 'aclocal.m4'.
 aclocal
