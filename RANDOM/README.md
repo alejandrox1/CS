@@ -1,25 +1,30 @@
 # General
-To print a random number between `1` and `X` do:
-```
-$ echo $[RANDOM%X+1]
-```
+* To print a random number between `1` and `X` do:
+  ```
+  $ echo $[RANDOM%X+1]
+  ```
 
 # Navigating aroud the File system
-If you set `shopt -s autocd` in the bash shell, then you'll be able to change directories by just typing the name of the directory.
+* If you set `shopt -s autocd` in the bash shell, then you'll be able to change
+  directories by just typing the name of the directory.
 
-This up shell function can change directory quickly up the directory tree: `up 2` is the same as `cd ../..`. Extra bonus points if you understand how the printf
-   trick works.
-```
-up() { cd $(eval "printf '../'%.0s {1..$1}") && pwd }
-```
+* You are writing too fast and misspelled the path of your directory while working 
+  in an interactive bash session? Try the following command `shopt -s cdspell` 
+  and bash will try several minor spelling corrections to see if it can find 
+  the actual directory.
+
+* This up shell function can change directory quickly up the directory tree: `up 2` 
+  is the same as `cd ../..`. Extra bonus points if you understand how the printf trick works.
+  ```
+  up() { cd $(eval "printf '../'%.0s {1..$1}") && pwd }
+  ```
 
 # Building
-If your build process is failing and you know that you need some extra library directories. Try setting `LIBRARY_PATH` to be colon separated list of directories.
-   Both the intel and gcc compilers will use the list as library directories (`-L/foo/bar`).
+* If your build process is failing and you know that you need some extra library
+  directories. Try setting `LIBRARY_PATH` to be colon separated list of directories.
+  Both the intel and gcc compilers will use the list as library directories (`-L/foo/bar`).
 
 
-You are writing too fast and misspelled the path of your directory while working in an interactive bash session?
-   Try the following command "shopt -s cdspell" and bash will try several minor spelling corrections to see if it can find the actual directory.
 
 Add the following include statements in your Makefile to compile PETSc code:
      include ${PETSC_DIR}/conf/variables
