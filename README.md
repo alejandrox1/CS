@@ -31,3 +31,5 @@
 
 * [Posix Threads](posix-threads/) Even more cool example services using
   pthreads.
+
+* [Random](RANDOM/) A ton of cool and useful tips and tricks.
