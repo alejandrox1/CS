@@ -9,7 +9,7 @@ if [ -f "${CLRES}" ]; then
 fi
 
 make clean && make line_size && \
-    for ts in 2 4 8 16 32 64 128; do
+    for ts in 2 4 8 16 32 64 128 256; do
         ./line_size "${ts}" | tee -a "${CLRES}" 
     done && \
     gnuplot -p plot.gp

@@ -28,10 +28,10 @@ int main(int argc, char* argv[])
         struct timespec start, end;
         clock_gettime(CLOCK_MONOTONIC, &start);
 
-        for (i=0; i<length; i+= step)
+        for (i=0; i<length; i+=1)
         {
-            k = rand() % (length + 1);
-            arr[k] *= 3;
+            //k = rand() % (step + 1);
+            arr[(i+k) % length] = 3;
         }
 
         clock_gettime(CLOCK_MONOTONIC, &end);
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         else
             duration = end.tv_nsec - start.tv_nsec;
 #ifdef DEBUG
-        printf("%d, %ld\n", step, duration / 1000);
+        printf("iter=%d, step=%d, duration(micro)%ld\n", iter, step, duration / 1000);
 #endif
         duration /= 1000000; /* miliseconds */
         avg += duration;
