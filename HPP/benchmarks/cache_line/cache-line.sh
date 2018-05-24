@@ -2,7 +2,7 @@
 
 set -e
 
-CLRES="cl_results.txt"
+CLRES="results.txt"
 
 if [ -f "${CLRES}" ]; then
     echo Deleting "${CLRES}" && rm "${CLRES}"
