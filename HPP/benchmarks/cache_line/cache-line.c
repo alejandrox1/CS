@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
     printf("Size of double: %ld\n", sizeof(double));
 #endif
 
+    srand(time(NULL));
     int step = atoi(argv[1]);
     const int length = 1 * 64 * 1024 * 1024;
     int* arr = (int*)malloc(length * sizeof(int));
@@ -23,12 +24,15 @@ int main(int argc, char* argv[])
     int times = 30, t = 0;
     for (t=0; t<times; ++t)
     {
-        int i=0;
+        int i=0, k=0;
         struct timespec start, end;
         clock_gettime(CLOCK_MONOTONIC, &start);
 
         for (i=0; i<length; i+= step)
-            arr[i] *= 3;
+        {
+            k = rand() % (length + 1);
+            arr[k] *= 3;
+        }
 
         clock_gettime(CLOCK_MONOTONIC, &end);
 
