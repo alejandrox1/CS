@@ -4,7 +4,19 @@
   $ echo $[RANDOM%X+1]
   ```
 
-# Navigating aroud the File system
+* When you need to match all `.*` files except for the current directory `.` or
+  the parent directory `..`, use the `.??*` file globbing pattern. 
+  For example: 
+  ```
+  cp .??* dot.orig
+  ```
+  copies all the dot files in a directory named `dot.orig`.
+
+# File System
+## Diagnostics
+* Use the command `du -h *` to see disk usage for all directories in the current directory.
+
+##  Navigating aroud the File system
 * If you set `shopt -s autocd` in the bash shell, then you'll be able to change
   directories by just typing the name of the directory.
 
@@ -25,19 +37,26 @@
   Both the intel and gcc compilers will use the list as library directories (`-L/foo/bar`).
 
 
+# TACC
+* You can find all installed bio codes by executing
+  ```
+  module keyword bio
+  ```
 
-Add the following include statements in your Makefile to compile PETSc code:
-     include ${PETSC_DIR}/conf/variables
-     include ${PETSC_DIR}/conf/rules
+## Software Building
+* Add the following include statements in your Makefile to compile PETSc code:
+  ```
+  include ${PETSC_DIR}/conf/variables
+  include ${PETSC_DIR}/conf/rules
+  ```
 
-Use the command "du -h *" to see disk usage for all directories in the current directory.
-
-When you need to match all ".*" files except for the current directory "." or the parent directory "..", use the ".??*" file globbing pattern. For example: "cp
-   .??* dot.orig" copies all the dot files in a directory named "dot.orig".
-
-Did you know that job resource utilization reports are available via TACC's remora tool? Try it:
-     $ module load remora
-     $ module help remora
+## Diagnostics
+* Did you know that job resource utilization reports are available via TACC's 
+  [remora](https://github.com/TACC/remora) tool? Try it:
+  ```
+  module load remora
+  module help remora
+  ```
 
 
 When running a for loop in multiple directories, it may be helpful to use parentheses to create a sub-shell:
