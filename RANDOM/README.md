@@ -21,6 +21,15 @@ A ton of life advice from (mainly) the
   echo "$?"
   ```
 
+* Since bash sources `~/.bashrc` on every sub-shell you want to prevent things
+  like path duplication by putting in guard if statements:
+  ```
+  if [ -z "$__INIT" ]; then
+      export __INIT=1
+      export PATH=$HOME/bin:$PATH
+  fi
+  ```
+
 # File System
 ## Diagnostics
 * Use the command `du -h *` to see disk usage for all directories in the current directory.
