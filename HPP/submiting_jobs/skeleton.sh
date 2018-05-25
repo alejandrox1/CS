@@ -17,8 +17,8 @@
 ##
 set -e
 set -o pipefail
-reset="\e[0m";
-red="\e[1;31m";
+reset="\e[0m"
+red="\e[1;31m"
 
 # Input parameters
 INPUT_FILE="parameters.json"
