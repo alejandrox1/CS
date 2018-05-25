@@ -8,12 +8,14 @@
 ##
 ## Usage:
 ##
-##      ./skeleton.sh [-v|-h]
+##      ./skeleton.sh [-v|-h] [-i|--input INPUT_FILE]
 ##
-##      -v print to stdout any information related to this script.
+##      -v|--version print to stdout any information related to this script.
 ##
-##      -h print to stdout any help information included in the header of the
-##         script.
+##      -h|--help print to stdout any help information included in the header
+##                of the script.
+##
+##      -i|--input [JSON] file with input parameters.
 ##
 set -e
 set -o pipefail
@@ -28,11 +30,11 @@ while [[ "$#" > 0 ]]; do
     arg="$1"
 
     case "${arg}" in
-        -v)
+        -v|--version)
             echo "$(grep "^#-" ${BASH_SOURCE[0]} | cut -c 4-)"
             exit 0
             ;;
-        -h)
+        -h|--help)
             echo "$(grep "^##" ${BASH_SOURCE[0]} | cut -c 4-)"
             exit 0
             ;;
