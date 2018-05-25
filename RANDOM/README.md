@@ -25,6 +25,9 @@ A ton of life advice from (mainly) the
 ## Diagnostics
 * Use the command `du -h *` to see disk usage for all directories in the current directory.
 
+* The command `ls -F` adds an extra character to mark file type: 
+  `/` for directories `*` executables and `@` for symbolic links.
+
 ##  Navigating aroud the File system
 * If you set `shopt -s autocd` in the bash shell, then you'll be able to change
   directories by just typing the name of the directory.
