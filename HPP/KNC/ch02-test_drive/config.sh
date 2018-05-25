@@ -8,7 +8,7 @@ if command -v icc > /dev/null 2>&1; then    # Intel compilation configuration.
     if [ "${NO_OPTIMIZATION}" == "true" ]; then
         export CFLAGS='-no-vec -no-simd'
     else
-        export CFLAGS='-mmic -vec-report=3 -O3'
+        export CFLAGS='-vec-report=3 -O3'
     fi
 elif command -v gcc > /dev/null 2>&1; then  # GCC compilation configuration.
     export CC=gcc
