@@ -1,0 +1,6 @@
+{
+    "job_parameters": {
+        "nodes": 2,
+        "cores": 8
+    }
+}
