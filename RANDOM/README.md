@@ -102,3 +102,6 @@ A ton of life advice from (mainly) the
   module load remora
   module help remora
   ```
+
+# Cool Command-line Utilities
+* [Reshaping JSON with jq](https://programminghistorian.org/en/lessons/json-and-jq)
