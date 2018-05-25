@@ -21,13 +21,8 @@
 #endif
 
 // 64 byte aligned for fast cache access.
-#if defined(__INTEL_COMPILER)
-float fa[FLOPS_ARRAY_SIZE] __attribute__((align(64)));                          
-float fb[FLOPS_ARRAY_SIZE] __attribute__((align(64)));
-#elif defined(__GNUC__)
 float fa[FLOPS_ARRAY_SIZE] __attribute__((aligned(64)));
 float fb[FLOPS_ARRAY_SIZE] __attribute__((aligned(64)));
-#endif
 
 double dtime();
 
