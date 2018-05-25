@@ -14,7 +14,7 @@
 #define MAXFLOPS_ITER 100000000
 #define LOOP_COUNT 128
 // Fused Multiply Add (FMA)
-#if defined(__FMA__)
+#if defined(__FMA__) && defined(__AVX__)
 # define FLOPSPERCALC 2
 #else
 # define FLOPSPERCALC 1
