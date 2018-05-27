@@ -98,15 +98,18 @@ A ton of life advice from (mainly) the
   `tacc_affinity`. See the system user guide for more details.
 
 ## Diagnostics
-* Did you know that job resource utilization reports are available via TACC's 
-  [remora](https://github.com/TACC/remora) tool? Try it:
-  ```
-  module load remora
-  module help remora
+* Looking for a file? On a `Lustre file system` like `$WORK`, and `$SCRATCH`, 
+  use `lfs find` instead of `find` to search for files. It is much faster:
+  ```bash
+  lfs find <directory> -name '*.c'
   ```
 
-* Curious about the network topology in your job? Try TACC's 
-  [remora](https://github.com/TACC/remora) tool:
+* Curious about:
+  - The network topology in your job? 
+  - Job resource utilization reports
+  - Would you like to know how much memory your code uses during execution?
+  
+  Try TACC's [remora](https://github.com/TACC/remora) tool:
   ```
   module load remora
   module help remora
