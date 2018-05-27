@@ -39,6 +39,20 @@ branch.
 `git clone`, for example, automatically sets up your local master branch to
 track the remote master (default) branch.
 
+In the case of local changes then you can either commit them, stash them, or
+just replace with the latest version of the file:
+```bash
+# commit local changes
+git commit -v
+
+# stashing
+git stash
+git stash pop
+
+# replace with new version
+git checkout <filename>
+```
+
 ## Tags
 ### Creating Tags
 ```
