@@ -67,7 +67,7 @@ git tag -a v1.2 <commit hash>
 ### Sharing Tags
 Same as pushing a branch
 ```
-git push <remote name> <tag anme>
+git push <remote name> <tag name>
 # or
 git push <remote name> --tags
 ```
