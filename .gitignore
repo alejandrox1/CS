@@ -4,6 +4,7 @@ containers/lxc_original
 
 # HPP
 HPP/src
+HPP/remora
 
 # kernel proj
 kernel/linux-2.4.22
