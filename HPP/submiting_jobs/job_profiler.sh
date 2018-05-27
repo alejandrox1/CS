@@ -39,5 +39,6 @@
 # 
 #   remora_post_crash <JOBID>
 #
+module load remora
 
 remora ibrun my_parallel_program [arguments]
