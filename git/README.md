@@ -96,6 +96,11 @@ Last two commands together,
 git checkout -b <branch name>
 ```
 
+To push a local branch,
+```bash
+git push -u origin master
+```
+
 
 ### Merging
 ```
