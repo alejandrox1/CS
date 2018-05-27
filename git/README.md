@@ -101,6 +101,15 @@ To push a local branch,
 git push -u origin master
 ```
 
+### Deleting branches
+```bash
+# Delete a remote branch
+git push origin --delete <branch>
+
+# Delete local branch
+git branch -D <branch>
+```
+
 
 ### Merging
 ```
