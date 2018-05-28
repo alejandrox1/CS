@@ -22,15 +22,15 @@ export CFLAGS="-xAVX -axCORE-AVX2"
 export CXXFLAGS="-xAVX -axCORE-AVX2"
 export LDFLAGS="-xAVX -axCORE-AVX2"
 
- 
+set -x 
 # Create clone and get specific version from tags.
 (
     rm -rf "${TOPHAT_PATH}" && \
-    mkdir -p "${APPS_SRC}" "${TOPHAT_PATH}" && cd "${APPS_SRC}" && \
+    mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
     wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
         tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
-        mv "${TOPHAT_PKG_VER}/*" "${TOPHAT_PATH}" && rmdir "${TOPHAT_PKG_VER}" 
-)
+        mv "${APPS_SRC}/${TOPHAT_PKG_VER}/" "${TOPHAT_PATH}"
+) || exit 1
 # The bellow approach returns the following error:
 # configure: error: cannot find sources (config.h.in) in . or ..
 #(    
