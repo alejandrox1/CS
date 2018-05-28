@@ -55,13 +55,23 @@ git checkout <filename>
 
 ## Tags
 ### Creating Tags
-```
+```bash
 git tag -a v1.3 -m "version 1.3"
 git tag
 ```
 or
-```
+```bash
 git tag -a v1.2 <commit hash>
+```
+
+### Getting Tags
+```bash
+git fetch origin --tags
+
+# List all tags
+git tag
+
+git checkout <tag name>
 ```
 
 ### Sharing Tags
