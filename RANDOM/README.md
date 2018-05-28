@@ -15,6 +15,14 @@ A ton of life advice from (mainly) the
   ```
   copies all the dot files in a directory named `dot.orig`.
 
+* Commands like `ls`, `mv` and `cp` support file globbing pattern matching:
+  ```bash
+  ls t*     # -> list all files that start with t
+  ls [tx]*  # -> list all files that do start with t or x
+  ls [^tx]* # -> list all files that do NOT start with t or x
+  ls t?.sh  # -> list files like t1.sh t2.sh but not t22.sh
+  ```
+
 * You can get the status of the last command with `$?`. It is 0 for success
   and non-zero for failure:
   ```
