@@ -28,7 +28,7 @@ export LDFLAGS="-xAVX -axCORE-AVX2"
     mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
     wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
         tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
-        mv "${TOPHAT_PKG_VER}" "${TOPHAT_PATH}" && \
+        mv "${TOPHAT_PKG_VER}" "${TOPHAT_PATH}" 
 )
 # The bellow approach returns the following error:
 # configure: error: cannot find sources (config.h.in) in . or ..
