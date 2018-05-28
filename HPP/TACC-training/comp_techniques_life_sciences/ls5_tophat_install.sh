@@ -29,7 +29,7 @@ set -x
     mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
     wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
         tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
-        mv "${APPS_SRC}/${TOPHAT_PKG_VER}/" "${TOPHAT_PATH}"
+        mv "${APPS_SRC}/${TOPHAT_PKG_VER}" "${TOPHAT_PATH}"
 ) || exit 1
 # The bellow approach returns the following error:
 # configure: error: cannot find sources (config.h.in) in . or ..
