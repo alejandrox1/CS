@@ -1,4 +1,20 @@
 #!/bin/bash
+#
+# Install tophat - A spliced read mapper for RNA-Seq 
+# http://ccb.jhu.edu/software/tophat/index.shtml
+#
+# This script will install the tophat app under $WORK/apps. To modify the
+# location chaneg $APPS_SRC. The version to be installed (v2.1.{0,1,2}) is
+# specified in $TOPHAT_VERSION. 
+# The source code and binaries will located in TOPHAT_PATH.
+#
+# There is an alternate installation method which downloads a tarall from a
+# server. To employ this installation method uncomment (and change) 
+# $TOPHAT_PKG_VER to whatever tophat-x.x.x version you are looking for.
+#
+# INstallation instructions adpated from: Computational Techniques for Life Sciences 
+# https://tacc.github.io/ctls2017/docs/hpc_software_environment/hpc_software_environment_01.html
+#
 set -e
 set -o pipefail
 set -o posix
@@ -14,7 +30,9 @@ export APPS_SRC="${WORK}/apps"
 export TOPHAT_SRC="${APPS_SRC}/tophat"                                             
 export TOPHAT_VERSION="v2.1.1"
 export TOPHAT_PATH="${TOPHAT_SRC}/${TOPHAT_VERSION}"
-export TOPHAT_PKG_VER="tophat-2.1.1"
+# For the alternate installation method (using wget) uncomment the following.
+#export TOPHAT_PKG_VER="tophat-2.1.1"
+
 # Use Intel compilers to install tophat.
 export CC=`which icc`
 export CXX=`which icpc`
