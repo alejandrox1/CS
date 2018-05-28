@@ -9,12 +9,10 @@ module load perl/5.22.1
 module load bowtie/2.2.6
 
 
-# Intall app on $WORK.                                                          
-cdw
-
-export TOPHAT_SRC_PATH="apps"                                                                 
+export APPS_SRC="${WORK}/apps"
+export TOPHAT_SRC="${APPS_SRC}/tophat"                                             
 export TOPHAT_VERSION="v2.1.1"
-export TOPHAT_PATH="${TOPHAT_SRC_PATH}/tophat/${TOPHAT_VERSION}"
+export TOPHAT_PATH="${TOPHAT_SRC}/${TOPHAT_VERSION}"
 # Use Intel compilers to install tophat.
 export CC=`which icc`
 export CXX=`which icpc`
@@ -26,16 +24,16 @@ export LDFLAGS="-xAVX -axCORE-AVX2"
 
 # Create clone and get specific version from tags.
 (    
-    mkdir -p "${TOPHAT_SRC_PATH}" && \
-    cd "${TOPHAT_SRC_PATH}" && \
-    git clone https://github.com/infphilo/tophat && \
-    cd tophat && \
+    mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
+    git clone https://github.com/infphilo/tophat "${TOPHAT_PATH}" && \
+    cd "${TOPHAT_PATH}" && \
     git fetch origin --tags --prune && \
     git checkout "${TOPHAT_VERSION}"
 )
 
 # Configure tophat - take advantage of the Intel processors.
 (
+    cd "${TOPHAT_PATH}" && \
     ./configure --prefix="${TOPHAT_PATH}" \
         --with-boost="${TACC_BOOST_DIR}" \
         --enable-intel64 && \
