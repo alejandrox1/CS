@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -o pipefail
+set -o posix
 export reset="\e[0m"
 export red="\e[1;31m"
 export green="\e[32m"
@@ -24,22 +25,22 @@ export LDFLAGS="-xAVX -axCORE-AVX2"
 
 set -x 
 # Create clone and get specific version from tags.
-(
-    mkdir -p "${APPS_SRC}" "${TOPHAT_SRC}" && cd "${APPS_SRC}" && \
-    wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
-        tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
-        mv "${APPS_SRC}/${TOPHAT_PKG_VER}" "${TOPHAT_PATH}"
+(    
+    mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
+    git clone https://github.com/infphilo/tophat "${TOPHAT_PATH}" && \
+    cd "${TOPHAT_PATH}" && \
+    git fetch origin --tags --prune && \
+    git checkout "${TOPHAT_VERSION}" && \
+    ./bootstrap
 ) || exit 1
-# The bellow approach returns the following error:
-# configure: error: cannot find sources (config.h.in) in . or ..
-#(    
-#    mkdir -p "${APPS_SRC}" && cd "${APPS_SRC}" && \
-#    git clone https://github.com/infphilo/tophat "${TOPHAT_PATH}" && \
-#    cd "${TOPHAT_PATH}" && \
-#    git fetch origin --tags --prune && \
-#    git checkout "${TOPHAT_VERSION}" && \
-#    aclocal && autoconf && automake --add-missing
-#)
+# Alternate version - notice that it the server from which we are fetching
+#  the src does not have an appropiate certificate at the time of this writing.
+#(
+#    mkdir -p "${APPS_SRC}" "${TOPHAT_SRC}" && cd "${APPS_SRC}" && \
+#    wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
+#        tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
+#        mv "${APPS_SRC}/${TOPHAT_PKG_VER}" "${TOPHAT_PATH}"
+#) || exit 1
 
 
 # Configure tophat - take advantage of the Intel processors.
