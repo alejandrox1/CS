@@ -34,7 +34,8 @@ export LDFLAGS="-xAVX -axCORE-AVX2"
 # Configure tophat - take advantage of the Intel processors.
 (
     cd "${TOPHAT_PATH}" && \
-    ./configure --prefix="${TOPHAT_PATH}" \
+        aclocal && autoconf && \
+        ./configure --prefix="${TOPHAT_PATH}" \
         --with-boost="${TACC_BOOST_DIR}" \
         --enable-intel64 && \
         make && \
