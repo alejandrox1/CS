@@ -25,6 +25,7 @@ export LDFLAGS="-xAVX -axCORE-AVX2"
  
 # Create clone and get specific version from tags.
 (
+    rm -rf "${TOPHAT_PATH}" && \
     mkdir -p "${APPS_SRC}" "${TOPHAT_PATH}" && cd "${APPS_SRC}" && \
     wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
         tar -xvzf "${TOPHAT_PKG_VER}.tar.gz" && \
