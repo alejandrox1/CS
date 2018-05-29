@@ -36,22 +36,10 @@ export TOPHAT_PATH="${TOPHAT_SRC}/${TOPHAT_VERSION}"
 # Use Intel compilers to install tophat.
 export CC=`which icc`
 export CXX=`which icpc`
-if [ "${TACC_SYSTEM}" == "stampede2" ]; then
-    # Compilation (optimization) flags for KNL/Skylake nodes.
-    export CFLAGS="-xMIC-AVX512"
-    export CXXFLAGS="-xMIC-AVX512"
-    export LDFLAGS="-xMIC-AVX512"
-elif [ "${TACC_SYSTEM}" == "ls5" ]; then
-    # Compilation (optimization) flags for Haswell/Ivy Bridge nodes.
-    export CFLAGS="-xAVX -axCORE-AVX2"
-    export CXXFLAGS="-xAVX -axCORE-AVX2"
-    export LDFLAGS="-xAVX -axCORE-AVX2"
-else
-    # Compilation (optimization) flags for Haswell/Ivy Bridge nodes.
-    export CFLAGS=""
-    export CXXFLAGS=""
-    export LDFLAGS=""
-fi
+# Compilation (optimization) flags for Haswell/Ivy Bridge nodes.
+export CFLAGS="-xAVX -axCORE-AVX2"
+export CXXFLAGS="-xAVX -axCORE-AVX2"
+export LDFLAGS="-xAVX -axCORE-AVX2"
 
 set -x 
 # Create clone and get specific version from tags.
