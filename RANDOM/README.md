@@ -38,6 +38,8 @@ A ton of life advice from (mainly) the
   fi
   ```
 
+* To see how to control an ssh session type: `<enter>~?`
+
 ## Compilation
 * Are you having trouble figuring out why your link went bad? 
   Try adding `-Wl,--trace` to your link line and capture the output.
