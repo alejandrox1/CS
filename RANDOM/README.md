@@ -38,6 +38,11 @@ A ton of life advice from (mainly) the
   fi
   ```
 
+## Compilation
+* Are you having trouble figuring out why your link went bad? 
+  Try adding `-Wl,--trace` to your link line and capture the output.
+
+
 # File System
 ## Diagnostics
 * Use the command `du -h *` to see disk usage for all directories in the current directory.
