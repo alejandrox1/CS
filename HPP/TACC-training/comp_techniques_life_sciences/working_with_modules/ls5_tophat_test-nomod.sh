@@ -12,6 +12,7 @@
 set -e                                                                          
 set -o pipefail                                                                 
 set -o posix
+module load remora
 module load boost/1.59                                                          
 module load perl/5.22.1                                                         
 module load bowtie/2.2.6
@@ -25,4 +26,4 @@ mkdir -p "${TOPHAT_TEST}" && \
     wget --no-check-certificate https://ccb.jhu.edu/software/tophat/downloads/test_data.tar.gz && \
     tar -xvzf test_data.tar.gz && \
     cd test_data && \
-    tophat -r 20 test_ref reads_1.fq reads_2.fq
+    remora tophat -r 20 test_ref reads_1.fq reads_2.fq
