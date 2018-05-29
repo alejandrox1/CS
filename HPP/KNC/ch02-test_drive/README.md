@@ -5,7 +5,7 @@ We provide a simple SAXPY type calculation in the source file `helloflops1.c`.
 To build this application simply run the `build.sh` script. 
 The script allows the control of the level of optimization for the resulting
 binary:
-```bash 
+```
  $ ./build.sh -h
 
 Usage:
