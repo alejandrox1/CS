@@ -16,6 +16,18 @@
 ##                of the script.
 ##
 ##      -no-opt normal compilation (no autovectorization enabled).
+##      
+##      -knl (intended for compilation on KNL nodes) enable the use of the
+##           AVX-512 instruction set during compilation. For more details see
+##           documentation about the use of the -xMIC-AVX512 compiler flag.
+##
+##      -skylake (intended for compilation on Skylake nodes) enable the use of
+##               the AVX-512 instruction set during compilation. For more details
+##               see documentation about the use of the -xMIC-AVX512 compiler flag.
+##
+##      -haswell (inteded for compilation on Haswell nodes) enable the use of the
+##               AVX instruction set during compilation. For more details see 
+##               documentation about the use of the -xAVX compiler flag.
 ##
 set -e
 set -o pipefail
