@@ -7,8 +7,10 @@ if command -v icc > /dev/null 2>&1; then    # Intel compilation configuration.
     export CC=icc
     if [ "${NO_OPTIMIZATION}" == "true" ]; then
         export CFLAGS='-no-vec -no-simd'
-    else
-        export CFLAGS='-qopt-report=3 -O3'
+    elif [ "${KNL}" == "true" ] || [ "${SKYLAKE}" == "true" ]; then
+        export CFLAGS='-xMIC-AVX512 -qopt-report=3 -O3'
+    elif [ "${HASWELL}" == "true" ];
+        export CFLAGS='-xAVX -qopt-report=3 -O3'
     fi
 elif command -v gcc > /dev/null 2>&1; then  # GCC compilation configuration.
     export CC=gcc
