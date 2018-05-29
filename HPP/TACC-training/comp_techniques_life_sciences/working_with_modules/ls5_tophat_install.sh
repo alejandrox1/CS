@@ -51,8 +51,7 @@ set -x
     git checkout "${TOPHAT_VERSION}" && \
     ./bootstrap
 ) || exit 1
-# Alternate version - notice that it the server from which we are fetching
-#  the src does not have an appropiate certificate at the time of this writing.
+# Alternate version - notice the use of the --no-check-certificate.
 #(
 #    mkdir -p "${APPS_SRC}" "${TOPHAT_SRC}" && cd "${APPS_SRC}" && \
 #    wget --no-check-certificate "https://ccb.jhu.edu/software/tophat/downloads/${TOPHAT_PKG_VER}.tar.gz" && \
