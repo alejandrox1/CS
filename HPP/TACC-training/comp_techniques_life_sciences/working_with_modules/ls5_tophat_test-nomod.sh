@@ -12,6 +12,9 @@
 set -e                                                                          
 set -o pipefail                                                                 
 set -o posix
+module load boost/1.59                                                          
+module load perl/5.22.1                                                         
+module load bowtie/2.2.6
 
 export PATH=$PATH:/work/05692/jochoa/lonestar/apps/tophat/v2.1.1/bin
 
