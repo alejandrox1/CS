@@ -7,6 +7,7 @@
 #SBATCH -t 2-0 
 #SBATCH -J Job_name
 #SBATCH -o slurm.%j.out
+#SBATCH -o slurm.%j.eout
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=alarcj137@gmail.com
 #
