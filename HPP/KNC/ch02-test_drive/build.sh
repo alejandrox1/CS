@@ -24,6 +24,9 @@ export red="\e[1;31m"
 export green="\e[32m"
 
 NO_OPTIMIZATION="false"
+KNL="false"
+SKYLAKE="false"
+HASWELL="false"
 
 # Parse command line arguments.
 while [[ "$#" > 0 ]]; do
@@ -40,6 +43,15 @@ while [[ "$#" > 0 ]]; do
             ;;
         -no-opt)
             NO_OPTIMIZATION="true"
+            ;;
+        -knl)
+            KNL="true"
+            ;;
+        -skylake)
+            SKYLAKE="true"
+            ;;
+        -haswell)
+            HASWELL="true"
             ;;
         *)
             ( >&2 echo "Unknown command-line option: '${arg}'.")
