@@ -1,10 +1,9 @@
-EXECS=main
 MPICC?=mpicc
 
-all: ${EXECS}
+.PHONY: all clean
 
-main: main.c
+all: main.c
 	${MPICC} -o hello_world main.c
 
 clean:
-	rm hello_world
+	rm -f hello_world
