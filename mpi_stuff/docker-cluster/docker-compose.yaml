@@ -17,3 +17,10 @@ services:
             - "${CLUSTER_SSH_PORT}:22"
         networks:
             - net
+
+    worker:
+        image: "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
+        user: root
+        entrypoint: ["mpi_bootstrap", "role=worker", "mpi_master_service_name=master", "mpi_worker_service_name=worker"]
+        networks:
+            - net
