@@ -44,7 +44,7 @@ up_master() {
     docker-compose up -d master
 }
 
-up_workers() {
+scale_workers() {
     num_workers="$1"
     echo -e "${green}docker-compose up -d --scale worker=${num_workers}${reset}"
     docker-compose up -d --scale worker=${num_workers}
@@ -57,6 +57,6 @@ up_registry
 generate_ssh_keys
 build_and_push_images
 up_master
-up_workers 3
+scale_workers 3
 
 echo -e "${blue}${ASCII_ART_HEADER2}${reset}"
