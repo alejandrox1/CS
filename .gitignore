@@ -43,6 +43,8 @@ posix-threads/programming_with_posix_threads_src
 # crypto
 *.key
 *.pem
+**/id_rsa
+**/id_rsa.pub
 
 # ctags
 *tags
