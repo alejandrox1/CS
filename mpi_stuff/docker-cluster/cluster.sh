@@ -50,10 +50,13 @@ up_workers() {
     docker-compose up -d --scale worker=${num_workers}
 }
 
-echo -e "${blue}${ASCII_ART_HEADER}${reset}"
+echo -e "${blue}${ASCII_ART_HEADER1}${reset}"
+
 down_all
 up_registry
 generate_ssh_keys
 build_and_push_images
 up_master
 up_workers 3
+
+echo -e "${blue}${ASCII_ART_HEADER2}${reset}"
