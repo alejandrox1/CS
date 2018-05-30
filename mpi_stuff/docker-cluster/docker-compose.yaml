@@ -7,4 +7,4 @@ services:
     registry:
         image: registry # https://hub.docker.com/_/registry/
         ports:
-            - "${REGISTRY_PORT}"
+            - "${CLUSTER_REGISTRY_PORT}:5000"
