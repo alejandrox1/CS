@@ -9,7 +9,19 @@
 set -e
 set -o pipefail
 
-REGISTRY_ADDR=localhost
-REGISTRY_PORT=5000
-SSH_PORT=2222
-IMAGE_NAME=mpi
+. ./utils.sh
+. ./config.sh
+
+down_all() {
+    echo -e "${blue}${ASCII_ART_HEADER}${reset}"
+    echo -e "${green}$docker-compose down registry${reset}"
+
+    docker-compose down registry
+}
+
+up_registry() {
+    echo -e "${blue}${ASCII_ART_HEADER}${reset}" 
+    echo -e "${green}$docker-compose up -d registry${reset}"
+
+    docker-compose up -d registry
+}
