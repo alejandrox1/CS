@@ -50,13 +50,64 @@ scale_workers() {
     docker-compose up -d --scale worker=${num_workers}
 }
 
-echo -e "${blue}${ASCII_ART_HEADER1}${reset}"
+exec_on_mpi_master() {
+    docker exec -it -u mpi $(docker-compose ps | grep 'master'| awk '{print $1}') "$@"
+}
 
-down_all
-up_registry
-generate_ssh_keys
-build_and_push_images
-up_master
-scale_workers 3
+cmd_up=0
+cmd_down=0
+cmd_login=0
 
-echo -e "${blue}${ASCII_ART_HEADER2}${reset}"
+# Parse command line arguments.                                                 
+while [[ "$#" > 0 ]]; do
+    arg="$1"
+
+    case "${arg}" in
+        -v|--version)
+            echo "$(grep "^#-" ${BASH_SOURCE[0]} | cut -c 4-)"
+            exit 0
+            ;;
+        -h|--help)
+            echo "$(grep "^##" ${BASH_SOURCE[0]} | cut -c 4-)"
+            exit 0
+            ;;
+        up)
+            cmd_up=1
+            ;;
+        down)
+            cmd_down=1
+            ;;
+        login)
+            cmd_login=1
+            ;;
+        *)
+            echo "Unknown command-line option: '${arg}'."
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+
+if [ $cmd_up == 1 ]; then
+    echo -e "${blue}${ASCII_ART_UP1}${reset}"
+    
+    down_all
+    up_registry
+    generate_ssh_keys
+    build_and_push_images
+    up_master
+    scale_workers 3
+
+    echo -e "${blue}${ASCII_ART_UP2}${reset}"
+
+elif [ $cmd_down == 1 ]; then
+    echo -e "${blue}${ASCII_ART_DOWN}${reset}"
+    down_all
+
+elif [ $cmd_login == 1 ]; then
+    exec_on_mpi_master ash
+
+else
+    echo whats gucci?
+fi
