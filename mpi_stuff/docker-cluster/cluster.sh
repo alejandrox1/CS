@@ -32,11 +32,11 @@ generate_ssh_keys() {
 }
 
 build_and_push_images() {
-    echo -e "${green}docker build -t ${CLUSTER_REGISTRY_ADDR}:${CLUSTER_REGISTRY_PORT}/${IMAGE_NAME} .${reset}"
-    docker build -t "${CLUSTER_REGISTRY_ADDR}:${CLUSTER_REGISTRY_PORT}/${IMAGE_NAME}" .
+    echo -e "${green}docker build -t ${CLUSTER_REGISTRY}/${IMAGE_NAME} .${reset}"
+    docker build -t "${CLUSTER_REGISTRY}/${IMAGE_NAME}" .
 
-    echo -e "${green}docker push ${CLUSTER_REGISTRY_ADDR}:${CLUSTER_REGISTRY_PORT}/${IMAGE_NAME}${reset}"
-    docker push "${CLUSTER_REGISTRY_ADDR}:${CLUSTER_REGISTRY_PORT}/${IMAGE_NAME}"
+    echo -e "${green}docker push ${CLUSTER_REGISTRY}/${IMAGE_NAME}${reset}"
+    docker push "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
 }
 
 echo -e "${blue}${ASCII_ART_HEADER}${reset}"
