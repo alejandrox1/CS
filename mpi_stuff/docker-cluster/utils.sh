@@ -10,7 +10,7 @@ export red="\e[1;31m"
 #        (.___\/{                                                                
 #~^~^~^~^~^~^~^~^~^~^~^~^~"
 
-export ASCII_ART_HEADER='
+export ASCII_ART_HEADER1='
                     ##        .
               ## ## ##       ==
            ## ## ## ##      ===
@@ -25,5 +25,22 @@ export ASCII_ART_HEADER='
       /  \| /  \ /   |/  / _\ |
       \__/| \__/ \__ |\_ \__  |
 
-         MPI Docker Cluster      
+    Bootsraping MPI Docker Cluster...
 '
+
+export ASCII_ART_HEADER2='                                                       
+                    ##        .                                                 
+              ## ## ##       ==                                                 
+           ## ## ## ##      ===                                                 
+       /""""""""""""""""\___/ ===                                               
+  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~                                        
+       \______ o          __/                                                   
+         \    \        __/                                                      
+          \____\______/                                                         
+                                                                                
+          |          |                                                          
+       __ |  __   __ | _  __   _                                                
+      /  \| /  \ /   |/  / _\ |                                                 
+      \__/| \__/ \__ |\_ \__  |                                                 
+                                                                                
+       MPI Docker Cluster Ready...'
