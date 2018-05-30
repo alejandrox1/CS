@@ -43,4 +43,5 @@ export ASCII_ART_HEADER2='
       /  \| /  \ /   |/  / _\ |                                                 
       \__/| \__/ \__ |\_ \__  |                                                 
                                                                                 
-       MPI Docker Cluster Ready...'
+       MPI Docker Cluster Ready...
+'
