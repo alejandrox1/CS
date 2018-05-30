@@ -39,8 +39,15 @@ build_and_push_images() {
     docker push "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
 }
 
+up_master() {
+    echo -e "${green}docker-compose up -d master${reset}"
+    docker-compose up -d master
+}
+
+
 echo -e "${blue}${ASCII_ART_HEADER}${reset}"
 down_all
 up_registry
 generate_ssh_keys
 build_and_push_images
+up_master
