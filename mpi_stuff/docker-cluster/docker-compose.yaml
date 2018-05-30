@@ -1,0 +1,10 @@
+version: "3"
+
+networks:
+    net:
+
+services:
+    registry:
+        image: registry # https://hub.docker.com/_/registry/
+        ports:
+            - "${REGISTRY_PORT}"
