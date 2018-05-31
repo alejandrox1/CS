@@ -4,7 +4,7 @@ MAINTAINER Jorge Alarcon Ochoa <alarcj137@gmail.com>
 
 RUN apk update && apk upgrade && apk add --no-cache gfortran build-base
 
-# Install MPICH
+# Install MPICH.
 ARG MPICH_VERSION="3.2"
 ARG MPICH_CONFIGURE_OPTIONS
 ARG MPICH_MAKE_OPTIONS
@@ -18,9 +18,29 @@ RUN wget http://www.mpich.org/static/downloads/${MPICH_VERSION}/mpich-${MPICH_VE
     make ${MPICH_MAKE_OPTIONS} && make install && \
     rm -rf /tmp/mpich-src
 
-## Test MPI installation
+# Test MPI installation.
 RUN mkdir /tmp/mpich_test
 WORKDIR /tmp/mpich_test
 ADD mpich_test .
 RUN sh mpich_test.sh && rm -rf /tmp/mpich_test
 
+# Add default user.
+ARG USER=mpi
+ENV USER ${USER}
+ENV USER_HOME /home/${USER}
+
+RUN adduser -D ${USER} && \
+    echo "${USER}   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chown -R ${USER}:${USER} ${USER_HOME}
+
+# Create working directory for user.
+ARG WORKDIR=/project
+ENV WORKDIR ${WORKDIR}
+
+RUN mkdir ${WORKDIR} && chown -R ${USER}:${USER} ${WORKDIR}
+
+
+WORKDIR ${WORKDIR}
+USER ${USER}
+
+CMD ["/bin/ash"]
