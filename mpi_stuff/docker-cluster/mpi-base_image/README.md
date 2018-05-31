@@ -7,4 +7,7 @@ The container image build MPI with C, C++, and Fortran support; creates and
 adds a default user, `USER`, to the list of suddoers as well as creating a
 workspace, `WORKDIR=/project` for said user.
 
+The directory [`mpich_test`](mpich_test) is used while building the container
+image to test for the installation of the C and Fortran MPI compiler wrappers.
+
 This image is based off [nlknguyen/alpine-mpich's base image](https://github.com/NLKNguyen/alpine-mpich/blob/master/base/Dockerfile).
