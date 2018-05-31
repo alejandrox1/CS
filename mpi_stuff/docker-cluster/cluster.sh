@@ -143,7 +143,7 @@ while [[ "$#" > 0 ]]; do
     shift
 done
 
-
+# ENTRYPOINT.
 if [ $cmd_up == 1 ]; then
     echo -e "${blue}${ASCII_ART_UP1}${reset}"
     
@@ -152,7 +152,7 @@ if [ $cmd_up == 1 ]; then
     generate_ssh_keys
     build_and_push_images
     up_master
-    scale_workers 1
+    scale_workers $NUM_WORKERS
 
     echo -e "${blue}${ASCII_ART_UP2}${reset}"
 
