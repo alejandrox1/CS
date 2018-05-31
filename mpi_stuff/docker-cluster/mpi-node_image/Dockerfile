@@ -54,4 +54,14 @@ RUN echo "StrictHostKeyChecking no" > ${SSHDIR}/config
 ##                           General Setup                                   ##
 ##                                                                           ##
 ###############################################################################
+#
+ADD auto_update_hosts /usr/local/bin/auto_update_hosts
+RUN chmod +x /usr/local/bin/auto_update_hosts
 
+#
+ADD get_hosts /usr/local/bin/get_hosts
+RUN chmod +x /usr/local/bin/get_hosts
+
+# 
+ADD mpi_bootstrap /usr/local/bin/mpi_bootstrap
+RUN chmod +x /usr/local/bin/mpi_bootstrap
