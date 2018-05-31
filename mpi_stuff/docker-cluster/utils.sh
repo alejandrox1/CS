@@ -29,21 +29,5 @@ export ASCII_ART_HEADER_BASE='
 export ASCII_ART_UP1=${ASCII_ART_HEADER_BASE}'    Bootsraping MPI Docker Cluster...'
 export ASCII_ART_UP2=${ASCII_ART_HEADER_BASE}'       MPI Docker Cluster Ready...'
 export ASCII_ART_DOWN=${ASCII_ART_HEADER_BASE}'    Tearing down MPI Docker Cluster...'
-
-export ASCII_ART_HEADER1='
-                    ##        .
-              ## ## ##       ==
-           ## ## ## ##      ===
-       /""""""""""""""""\___/ ===
-  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
-       \______ o          __/
-         \    \        __/
-          \____\______/
-
-          |          |
-       __ |  __   __ | _  __   _
-      /  \| /  \ /   |/  / _\ |
-      \__/| \__/ \__ |\_ \__  |
-
-    Tearing down MPI Docker Cluster...
-'
+export ASCII_ART_LOGIN=${ASCII_ART_HEADER_BASE}'   Loging in to the MPI Docker Cluster...'
+export ASCII_ART_SCALE=${ASCII_ART_HEADER_BASE}'     Scaling MPI Docker Cluster...'
