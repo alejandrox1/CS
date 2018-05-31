@@ -93,9 +93,11 @@ exec_on_mpi_master() {
     docker exec -it -u mpi $(docker-compose ps | grep 'master'| awk '{print $1}') "$@"
 }
 
+# Command control variables.
 cmd_up=0
 cmd_down=0
 cmd_login=0
+cmd_exec=0
 cmd_scale=0
 NUM_WORKERS=0
 
@@ -115,13 +117,20 @@ while [[ "$#" > 0 ]]; do
         up)
             cmd_up=1
             ;;
+        -size)
+            NUM_WORKERS="$2"
+            shift
+            ;;
         down)
             cmd_down=1
             ;;
         login)
             cmd_login=1
             ;;
-        -s|-scale)
+        exec)
+            cmd_exec=1
+            ;;
+        scale)
             cmd_scale=1
             NUM_WORKERS="$2"
             shift
@@ -154,6 +163,10 @@ elif [ $cmd_down == 1 ]; then
 elif [ $cmd_login == 1 ]; then
     echo -e "${blue}${ASCII_ART_LOGIN}${reset}"
     exec_on_mpi_master ash
+
+elif [ $cmd_exec == 1 ]; then
+    echo -e "${blue}${ASCII_ART_EXEC}${reset}"
+    exec_on_mpi_master ash -c "${SHELL_COMMAND}"
 
 elif [ $cmd_scale == 1 ]; then
     echo -e "${blue}${ASCII_ART_SCALE}${reset}"
