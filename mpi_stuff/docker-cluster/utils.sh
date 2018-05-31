@@ -30,4 +30,5 @@ export ASCII_ART_UP1=${ASCII_ART_HEADER_BASE}'    Bootsraping MPI Docker Cluster
 export ASCII_ART_UP2=${ASCII_ART_HEADER_BASE}'       MPI Docker Cluster Ready...'
 export ASCII_ART_DOWN=${ASCII_ART_HEADER_BASE}'    Tearing down MPI Docker Cluster...'
 export ASCII_ART_LOGIN=${ASCII_ART_HEADER_BASE}'   Loging in to the MPI Docker Cluster...'
+export ASCII_ART_EXEC=${ASCII_ART_HEADER_BASE}' Executing command on MPI Docker Cluster...'
 export ASCII_ART_SCALE=${ASCII_ART_HEADER_BASE}'     Scaling MPI Docker Cluster...'
