@@ -3,6 +3,7 @@ set -e
 set -o pipefail
 
 mpicc --version > /dev/null
+mpifort --version > /dev/null
 mpiexec --version > /dev/null
 mpicc -o mpi_hello_world mpi_hello_world.c > /dev/null
 mpirun -n 4 ./mpi_hello_world > /dev/null
