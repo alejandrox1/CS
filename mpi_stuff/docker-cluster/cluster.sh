@@ -116,6 +116,7 @@ while [[ "$#" > 0 ]]; do
             ;;
         up)
             cmd_up=1
+            NUM_WORKERS=3
             ;;
         -size)
             NUM_WORKERS="$2"
