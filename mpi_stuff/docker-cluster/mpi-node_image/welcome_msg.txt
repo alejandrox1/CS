@@ -1,0 +1,36 @@
+          _____                    _____                    _____
+         /\    \                  /\    \                  /\    \
+        /::\____\                /::\    \                /::\    \
+       /::::|   |               /::::\    \               \:::\    \
+      /:::::|   |              /::::::\    \               \:::\    \
+     /::::::|   |             /:::/\:::\    \               \:::\    \
+    /:::/|::|   |            /:::/__\:::\    \               \:::\    \
+   /:::/ |::|   |           /::::\   \:::\    \              /::::\    \
+  /:::/  |::|___|______    /::::::\   \:::\    \    ____    /::::::\    \
+ /:::/   |::::::::\    \  /:::/\:::\   \:::\____\  /\   \  /:::/\:::\    \
+/:::/    |:::::::::\____\/:::/  \:::\   \:::|    |/::\   \/:::/  \:::\____\
+\::/    / ~~~~~/:::/    /\::/    \:::\  /:::|____|\:::\  /:::/    \::/    /
+ \/____/      /:::/    /  \/_____/\:::\/:::/    /  \:::\/:::/    / \/____/
+             /:::/    /            \::::::/    /    \::::::/    /
+            /:::/    /              \::::/    /      \::::/____/
+           /:::/    /                \::/____/        \:::\    \
+          /:::/    /                  ~~               \:::\    \
+         /:::/    /                                     \:::\    \
+        /:::/    /                                       \:::\____\
+        \::/    /                                         \::/    /
+         \/____/                                           \/____/
+
+Welcome to Alpine MPICH Cluster!
+
+Try this to see all host names in the cluster:
+$ mpirun hostname
+
+You don't need to provide host file to MPI because the default host file
+of connected nodes in the cluster is automatically updated at /etc/opt/hosts
+
+To obtain hostfile manually and provide to MPI by yourself:
+$ get_hosts > hosts
+$ mpirun -f hosts hostname
+
+For more information: https://github.com/NLKNguyen/alpine-mpich/
+
