@@ -46,7 +46,7 @@ EOF
 case $ROLE in
     "master")
         # Auto update default host file.
-        auto_update_hosts "${HYDRA_HOST_FILE}" > /dev/null 2>&1 &
+        auto_update_hosts "${HYDRA_HOST_FILE}" &
 
         # Start ssh server.
         /usr/sbin/sshd -D
@@ -58,6 +58,7 @@ case $ROLE in
 
         # Retry indefinetely to connect to the master node.
         while sleep 1; do
+            # shellcheck disable=SC2086
             ssh -T -o "StrictHostKeyChecking no"   \
                 -i "${USER_HOME}/.ssh/id_rsa"      \
                 ${USER}@${MPI_MASTER_SERVICE_NAME} \
