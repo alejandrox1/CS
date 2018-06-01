@@ -34,6 +34,10 @@
 ##      scale: scale the number of containers acting as MPI worker nodes.
 ##          ./cluster scale INT
 ##
+## To login into the master node, try:
+##      
+##      . ./config.sh
+##      ssh -o "StrictHostKeyChecking no" -i ssh/id_rsa -p $CLUSTER_SSH_PORT mpi@localhost
 ##
 set -e
 set -o pipefail
