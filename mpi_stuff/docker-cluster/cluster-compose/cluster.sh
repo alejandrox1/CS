@@ -137,7 +137,6 @@ while [[ "$#" > 0 ]]; do
             ;;
         scale)
             cmd_scale=1
-            shift
             ;;
         *)
             echo "Unknown command-line option: '${arg}'."
