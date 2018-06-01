@@ -1,4 +1,4 @@
-FROM alejandrox1/alpine-mich-base:latest
+FROM alejandrox1/alpine-mpich-base:latest
 MAINTAINER Jorge Alarcon Ochoa <alarcj137@gmail.com>
 # Based off nlknguyen/alpine-mpich https://github.com/NLKNguyen/alpine-mpich/blob/master/onbuild/Dockerfile
 #
@@ -6,6 +6,8 @@ MAINTAINER Jorge Alarcon Ochoa <alarcj137@gmail.com>
 #   USER - mpi (defined by ARG).
 #   USER_HOME - home dir for USER.
 #   WORKDIR - /projects (defined by ARG).
+
+USER root
 
 RUN apk update && apk add --no-cache openssh
 
@@ -52,7 +54,6 @@ RUN mkdir -p ${SSHDIR}
 # directory has config file.
 RUN echo "StrictHostKeyChecking no" > ${SSHDIR}/config
 
-
 ###############################################################################
 ##                                                                           ##
 ##                           General Setup                                   ##
@@ -69,3 +70,8 @@ RUN chmod +x /usr/local/bin/auto_update_hosts
 # 
 ADD mpi_bootstrap.sh /usr/local/bin/mpi_bootstrap
 RUN chmod +x /usr/local/bin/mpi_bootstrap
+
+
+# Switch back to default user
+USER ${USER}
+
