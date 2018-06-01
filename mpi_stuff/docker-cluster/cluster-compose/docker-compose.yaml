@@ -16,7 +16,7 @@ services:
         ports:
             - "${CLUSTER_SSH_PORT}:22"
         volumes:
-            - ./src:/project
+            - ./project:/project
         networks:
             - net
 
