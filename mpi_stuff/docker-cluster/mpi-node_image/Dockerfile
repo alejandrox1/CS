@@ -75,3 +75,14 @@ RUN chmod +x /usr/local/bin/mpi_bootstrap
 # Switch back to default user
 USER ${USER}
 
+
+ONBUILD USER root
+
+ONBUILD COPY ssh/ ${SSHDIR}/
+
+ONBUILD RUN cat ${SSHDIR}/*.pub >> ${SSHDIR}/authorized_keys
+ONBUILD RUN chmod -R 600 ${SSHDIR}/* \
+         && chown -R ${USER}:${USER} ${SSHDIR}
+
+# Switch back to default user when continue the build process
+ONBUILD USER ${USER}
