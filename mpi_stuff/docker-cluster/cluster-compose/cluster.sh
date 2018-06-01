@@ -32,7 +32,7 @@
 ##          ./cluster.sh exec CMD
 ##
 ##      scale: scale the number of containers acting as MPI worker nodes.
-##          ./cluster scale INT
+##          ./cluster scale -size INT
 ##
 ## To login into the master node, try:
 ##      
@@ -137,7 +137,6 @@ while [[ "$#" > 0 ]]; do
             ;;
         scale)
             cmd_scale=1
-            NUM_WORKERS="$2"
             shift
             ;;
         *)
