@@ -1,0 +1,22 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%runscript
+    exec echo "The runscript is the container's default runtime command!"
+    exec cat /etc/*release
+
+%files
+    ./root.txt
+    ./homeuser.txt /etc/opt
+
+%environment
+    VARIABLE=MEATBALLVALUE
+    export VARIABLE
+
+%labels
+    AUTHOR alarcj137@gmail.com
+
+%post
+    apt-get update -y && apt-get -y install git wget python3
+    mkdir /data
+    echo "The post section is where you can install and configure your container..."
