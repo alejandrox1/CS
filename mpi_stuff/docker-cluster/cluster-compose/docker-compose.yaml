@@ -15,6 +15,8 @@ services:
         entrypoint: ["mpi_bootstrap", "role=master", "mpi_master_service_name=master", "mpi_worker_service_name=worker"]
         ports:
             - "${CLUSTER_SSH_PORT}:22"
+        volumes:
+            - ./src:/project
         networks:
             - net
 
@@ -22,5 +24,7 @@ services:
         image: "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
         user: root
         entrypoint: ["mpi_bootstrap", "role=worker", "mpi_master_service_name=master", "mpi_worker_service_name=worker"]
+        volumes:
+            - ./project:/project
         networks:
             - net
