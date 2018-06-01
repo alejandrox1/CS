@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # auto_update_hosts.
 #
