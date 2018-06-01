@@ -18,4 +18,4 @@ In the future, we plan to expand the cluster to use `docker swarm` and
 `kubernetes`.
 
 ## References
-This work is based off [Alpine MPICH CLuster](https://github.com/NLKNguyen/alpine-mpich/tree/master/cluster).
+This work is based off [Alpine MPICH Cluster](https://github.com/NLKNguyen/alpine-mpich/tree/master/cluster).
