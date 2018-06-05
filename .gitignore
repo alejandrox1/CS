@@ -67,3 +67,6 @@ posix-threads/programming_with_posix_threads_src
 
 # Logs
 **/bochsout.txt
+
+# Jupyter
+**/.ipynb_checkpoints
