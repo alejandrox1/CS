@@ -150,3 +150,10 @@ Or try out `git mergetool` - recomend you run,
 git config --global merge.tool vimdiff
 ```
 For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/).
+
+# Large Files
+In case you went through the trouble of trying to push a large file and then
+not being able to push:
+```
+git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch <file>' HEAD
+```
