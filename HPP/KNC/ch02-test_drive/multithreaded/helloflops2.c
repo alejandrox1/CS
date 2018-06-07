@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     //omp_set_dynamic(0); // Explicitly disable dynamic teams.
     omp_set_num_threads(num_threads);
 #if defined(__INTEL_COMPILER) && defined(_OPENMP)
-    kmp_setdefaults("KMP_AFFINITY=compact");
+    kmp_set_defaults("KMP_AFFINITY=compact");
 #endif
 
 #pragma omp parallel for
