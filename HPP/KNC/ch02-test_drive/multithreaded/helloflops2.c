@@ -45,11 +45,15 @@ int main(int argc, char** argv)
     printf("Initializing...\n");
     //omp_set_dynamic(0); // Explicitly disable dynamic teams.
     omp_set_num_threads(num_threads);
+
 #if defined(__INTEL_COMPILER) && defined(_OPENMP)
-    kmp_set_defaults("KMP_AFFINITY=compact");
+    // Fill a core with threads before moving on.
+    //kmp_set_defaults("KMP_AFFINITY=compact");
+    // Distribute the number of threads across cores.
+    kmp_set_defaults("KMP_AFFINITY=scatter");
 #endif
 
-#pragma omp parallel for
+#pragma omp parallel for 
     for (i=0; i<FLOPS_ARRAY_SIZE; ++i)
     {
         if (i==0) numthreads = omp_get_num_threads();
