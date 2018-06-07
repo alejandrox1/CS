@@ -9,7 +9,7 @@ if command -v icc > /dev/null 2>&1; then    # Intel compilation configuration.
         export CFLAGS='-no-vec -no-simd'
     elif [ "${KNL}" == "true" ] || [ "${SKYLAKE}" == "true" ]; then
         export CFLAGS='-xMIC-AVX512 -qopt-report=3 -O3'
-    elif [ "${HASWELL}" == "true" ];
+    elif [ "${HASWELL}" == "true" ]; then
         export CFLAGS='-xAVX -qopt-report=3 -O3'
     fi
 elif command -v gcc > /dev/null 2>&1; then  # GCC compilation configuration.
