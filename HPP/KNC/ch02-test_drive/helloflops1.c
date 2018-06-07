@@ -61,7 +61,7 @@ int main(void)
 
     /* Output results. */
     if ((ttime) > 0)
-        printf("GFlops = %10.3lf, Secs = %10.3lf, GFlops per sec = %10.3lf\n",
+        printf("GFlop = %10.3lf, Secs = %10.3lf, GFlop/s = %10.3lf\n",
                 gflops, ttime, gflops/ttime);
 
     exit(EXIT_SUCCESS);
