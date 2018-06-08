@@ -1,0 +1,30 @@
+version: "3"
+
+networks:
+    net:
+
+services:
+    registry:
+        image: registry # https://hub.docker.com/_/registry/
+        ports:
+            - "${CLUSTER_REGISTRY_PORT}:5000"
+
+    master:
+        image: "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
+        user: root
+        entrypoint: ["mpi_bootstrap", "role=master", "mpi_master_service_name=master", "mpi_worker_service_name=worker"]
+        ports:
+            - "${CLUSTER_SSH_PORT}:22"
+        volumes:
+            - ./project:/project
+        networks:
+            - net
+
+    worker:
+        image: "${CLUSTER_REGISTRY}/${IMAGE_NAME}"
+        user: root
+        entrypoint: ["mpi_bootstrap", "role=worker", "mpi_master_service_name=master", "mpi_worker_service_name=worker"]
+        volumes:
+            - ./project:/project
+        networks:
+            - net
