@@ -22,6 +22,7 @@ set -o pipefail
 export blue="\e[1;34m"                                                         
 export green="\e[32m"                                                           
 export red="\e[1;31m"
+export reset="\e[0m" 
 
 # Input parameters
 INPUT_FILE="parameters.json"
