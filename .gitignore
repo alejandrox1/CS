@@ -1,11 +1,16 @@
 # containers proj
 containers/lxc
 containers/lxc_original
+*.simg
 
 # HPP
 HPP/src
 HPP/remora
 HPP/ML/benchmarks
+HPP/INTEL/micperf/l_mkl_2017.1.132
+HPP/INTEL/micperf/xppsl-1.5.3/
+*.tgz
+*.tar
 
 # kernel proj
 kernel/linux-2.4.22
