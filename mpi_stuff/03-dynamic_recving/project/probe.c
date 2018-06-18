@@ -5,7 +5,6 @@
  *
  * Taken from https://github.com/wesleykendall/mpitutorial
  */
-<<<<<<< HEAD
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,5 +53,3 @@ int main(int argc, char** argv)
 
     MPI_Finalize();
 }
-=======
->>>>>>> 6dbbe4e93c3b0a08db1ece3f2111680c32ed96f9
