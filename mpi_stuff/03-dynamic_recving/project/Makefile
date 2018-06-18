@@ -8,6 +8,7 @@ all: $(EXECS)
 %: %.c
 	$(MPICC) -o $@ $<
 
+
 .PHONY: all clean
 
 clean:
