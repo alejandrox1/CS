@@ -1,5 +1,12 @@
 # Blocking Point-to-Point Communications
 
+For point-to-point communication we will employ the flowing two MPI methods:
+```
+MPI_Send(void *data, int count, MPI_Datatype datatype, int destination, int tag, MPI_Comm communicator);
+
+MPI_Recv(void *data, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm communicator, MPI_Status *status);
+```
+
 ```
 ├── project
 │   ├── Makefile
