@@ -1,6 +1,6 @@
 MPICC?=mpicc
 
-EXECS=check_status
+EXECS=check_status probe
 
 
 all: $(EXECS)
