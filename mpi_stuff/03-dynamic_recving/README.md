@@ -18,8 +18,8 @@ To make a query on a received message,
 MPI_Probe(int source, int tag, MPI_Comm comm, MPI_Status* status);
 ```
 notice that it looks like `MPI_Recv` it just does not receive a message.
-Like `MPI_Recv`, `MPI_Probe` will block for a message with a matching source
-and tag.
+**Like `MPI_Recv`, `MPI_Probe` will block for a message with a matching source
+and tag**.
 
 
 ```
