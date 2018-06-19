@@ -7,8 +7,10 @@
  * Taken from https://github.com/wesleykendall/mpitutorial/blob
  */
 #include <mpi.h>
-#include <vector>
 #include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <vector>
 
 /**
  * Walker is a random walker data structure.
@@ -40,12 +42,76 @@ void receive_incoming_walkers(std::vector<Walker> *incoming_walkers,
 
 int main(int argc, char **argv)
 {
+    int domain_size, max_walk_size, walkers_per_proc;
+    if (argc < 4)
+    {
+        std::cerr << "Usage: ./random_walk domain_size max_walk_size walkers_per_proc\n";
+        exit(1);
+    }
+    domain_size      = atoi(argv[1]);
+    max_walk_size    = atoi(argv[2]);
+    walkers_per_proc = atoi(argv[3]);
+
     MPI_Init(NULL, NULL);
     int world_size, world_rank;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
+    srand(time(NULL) * world_rank);
+    int subdomain_start, subdomain_size;
+    std::vector<Walker> incoming_walkers, outgoing_walkers;
+
+    // Begin by decomposing the domain.
+    domain_decomposition(domain_size, world_rank, world_size, 
+            &subdomain_start, &subdomain_size);
+
+    // Initialize walkers in their subdomains.
+    initialize_walkers(walkers_per_proc, max_walk_size, 
+            subdomain_start, &incoming_walkers);
+
+    std::cout << "MPI process " << world_rank << " initiated " << walkers_per_proc
+        << " walkers in subdomain [" << subdomain_start << ", " 
+        << subdomain_start + subdoman_size-1 << "]\n";
+
+    // Determine the maximum number of sends and reeives needed to complete.
+    int max_sends_recvs = max_walk_size / (domain_size / world_size) + 1;
+    for (int m=0; m<max_sends_recs; ++m)
+    {
+        // Process all incoming walkers.
+        for (int i=0; i<incoming_walkers.size(); ++i)
+        {
+            walk(&incoming_walkers[i], subdomain_start, subdomain_size,
+                    domain_size, &outgoing_walkers);
+
+            std::cout << "MPI process " << world_rank << " sending " 
+                << outgoing_walkers.size() << " outgoing walkers to MPI process "
+                << (world_rank + 1) % world_size << "\n";
+
+            if (world_rank % 2 == 0)
+            {
+                // Send all outgoing walkers to next MPI process.
+                send_outgoing_walkers(&outgoing_walkers, world_rank, world_size);
+
+                // Receive all incoming walkers.
+                receive_incoming_walkers(&incoming_walkers, world_rank, world_size);
+            }
+            else
+            {
+                // Receive all incoming walkers.
+                receive_incoming_walkers(&incoming_walkers, world_rank, world_size);
+
+                // Send all outgoing walkers to next MPI process.
+                send_outgoing_walkers(&outgoing_walkers, world_rank, world_size);
+            }
+
+            std::cout << "MPI process " << world_rank << " received " 
+                << incoming_walkers.size() << " incoming walkers\n";
+        }
+    }
+    cout << "Process " << world_rank << " done\n"
+
     MPI_Finalize();
+    return 0;
 }
 
 /**
