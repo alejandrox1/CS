@@ -9,21 +9,27 @@ Find out the length of a mesage:
 ```
 MPI_Get_count(MPI_Status *status, MPI_Datatype datatype, int *count);
 ```
+A call to `MPI_Get_count` will return the number of `datatype` elements that
+were received.
+
+
+To make a query on a received message,
+```
+MPI_Probe(int source, int tag, MPI_Comm comm, MPI_Status* status);
+```
+notice that it looks like `MPI_Recv` it just does not receive a message.
+Like `MPI_Recv`, `MPI_Probe` will block for a message with a matching source
+and tag.
+
 
 ```
 ├── project
+│   ├── check_status.c
 │   ├── Makefile
-│   ├── ping_pong.c
-│   ├── ring.c
-│   └── send_recv.c
+│   └── probe.c
 ...
 ```
 
-1. `send_recv.c` shows the usage of `MPI_Send` and `MPI_Recv` to pass a number
-   between two MPI tasks.
+1. `check_status.c` check how many messages were received from the sender.
 
-2. `ping_pong.c` spawns processes that send a number back and forth until it 
-   reaches a specifid limit.
-
-3. `ring.c` sends a mesage from task to task ending with task rank 0 receiving
-   the message from task rank `world_size-1`.
+2. `probe.c` query information from the `MPI_Status`.
