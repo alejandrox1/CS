@@ -4,6 +4,15 @@
  * Domain decomposition for a one-dimensional random walk with periodic
  * boundary conditions.
  *
+ * Notes: the program will hault as one MPI process may finish before the
+ * otherone. 
+ *
+ * Usage: 
+ *      mpirun -np n ./random_walk domain_size max_walk_size walkers_per_proc
+ *
+ * Example:
+ *      mpirun -np 2 ./random_walk 100 50 5
+ *
  * Taken from https://github.com/wesleykendall/mpitutorial/blob
  */
 #include <mpi.h>
@@ -71,10 +80,10 @@ int main(int argc, char **argv)
 
     std::cout << "MPI process " << world_rank << " initiated " << walkers_per_proc
         << " walkers in subdomain [" << subdomain_start << ", " 
-        << subdomain_start + subdomain_size-1 << "]\n";
+        << subdomain_start + subdomain_size-1 << "]" << std::endl;
 
     // Determine the maximum number of sends and reeives needed to complete.
-    int max_sends_recvs = max_walk_size / (domain_size / world_size) + 1;
+    int max_sends_recvs = (max_walk_size / (domain_size / world_size)) + 1;
     for (int m=0; m<max_sends_recvs; ++m)
     {
         // Process all incoming walkers.
@@ -85,7 +94,7 @@ int main(int argc, char **argv)
 
             std::cout << "MPI process " << world_rank << " sending " 
                 << outgoing_walkers.size() << " outgoing walkers to MPI process "
-                << (world_rank + 1) % world_size << "\n";
+                << (world_rank + 1) % world_size << std::endl;
 
             // First MPI process will start by sending, so second proc should
             // receive any outbound walkers, and so on and so forth.
@@ -107,11 +116,12 @@ int main(int argc, char **argv)
             }
 
             std::cout << "MPI process " << world_rank << " received " 
-                << incoming_walkers.size() << " incoming walkers\n";
+                << incoming_walkers.size() << " incoming walkers" << std::endl;
         }
     }
-    std::cout << "Process " << world_rank << " done\n";
-
+    std::cout << "Process " << world_rank << " done" << std::endl;
+    
+    MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
     return 0;
 }
