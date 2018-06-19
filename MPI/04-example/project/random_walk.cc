@@ -33,6 +33,10 @@ void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers;
         int world_rank, int world_size);
 
 
+void receive_incoming_walkers(std::vector<Walker> *incoming_walkers,
+        int world_rank, int world_size);
+
+
 
 int main(int argc, char **argv)
 {
@@ -147,4 +151,29 @@ void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers;
             MPI_COMM_WORLD);
 
     outgoing_walkers->clear();
+}
+
+
+/**
+ * receive_incoming_walkers receives the walkers sent by walking off their
+ * initial subdomains.
+ *
+ * incoming_walkers: vector of incoming walkers.
+ * world_rank: MPI process rank.
+ * world_size: number of MPI processes in the MPI communicator.
+ */
+void receive_incoming_walkers(std::vector<Walker> *incoming_walkers,
+        int world_rank, int world_size)
+{
+    int rank_of_incoming = (world_rank==0) ? world_size-1 : world_rank-1;
+
+    int incoming_walkers_size;
+    MPI_Status status;
+    MPI_Probe(rank_of_incoming, 0, MPI_COMM_WORLD, &status);
+    MPI_Get_count(&status, MPI_BYTE, &incoming_walkers_size);
+
+    incoming_walkers->resize(incoming_walkers_size / sizeof(Walker));
+    
+    MPI_Recv((void *)incoming_walkers->data(), incoming_walkers_size, 
+            MPI_BYTE, rank_of_incoming, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
