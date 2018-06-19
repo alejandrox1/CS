@@ -1,11 +1,11 @@
-MPICC?=mpicc
+MPICC?=mpc++
 
 EXECS=random_walk
 
 
 all: $(EXECS)
 
-%: %.c
+%: %.cc
 	$(MPICC) -o $@ $<
 
 
