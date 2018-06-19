@@ -1,10 +1,15 @@
-EXECS=thread_support
 MPICC?=mpicc
+
+EXECS=thread_support
+
+
+all: $(EXECS)
+
+%: %.c
+	$(MPICC) -o $@ $<
+
 
 .PHONY: all clean
 
-${EXECS}: main.c
-	${MPICC} -o ${EXECS} main.c
-
 clean:
-	rm -f ${EXECS}
+	rm -f $(EXECS)
