@@ -31,7 +31,7 @@ void initialize_walkers(int walkers_per_proc, int max_walk_size,
 void walk(Walker *walker, int subdomain_start, int subdomain_size, 
         int domain_size, std::vector<Walker> *outgoing_walkers);
 
-void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers; 
+void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers, 
         int world_rank, int world_size);
 
 
@@ -71,11 +71,11 @@ int main(int argc, char **argv)
 
     std::cout << "MPI process " << world_rank << " initiated " << walkers_per_proc
         << " walkers in subdomain [" << subdomain_start << ", " 
-        << subdomain_start + subdoman_size-1 << "]\n";
+        << subdomain_start + subdomain_size-1 << "]\n";
 
     // Determine the maximum number of sends and reeives needed to complete.
     int max_sends_recvs = max_walk_size / (domain_size / world_size) + 1;
-    for (int m=0; m<max_sends_recs; ++m)
+    for (int m=0; m<max_sends_recvs; ++m)
     {
         // Process all incoming walkers.
         for (int i=0; i<incoming_walkers.size(); ++i)
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
                 << incoming_walkers.size() << " incoming walkers\n";
         }
     }
-    cout << "Process " << world_rank << " done\n"
+    std::cout << "Process " << world_rank << " done\n";
 
     MPI_Finalize();
     return 0;
@@ -205,7 +205,7 @@ void walk(Walker *walker, int subdomain_start, int subdomain_size,
  * world_rank: MPI process rank.
  * world_size: number of MPI processes in the MPI communicator.
  */
-void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers;
+void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers,
         int world_rank, int world_size)
 {
     //Send data as an array of MPI_BYTEs.
