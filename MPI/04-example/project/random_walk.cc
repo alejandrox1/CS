@@ -87,6 +87,8 @@ int main(int argc, char **argv)
                 << outgoing_walkers.size() << " outgoing walkers to MPI process "
                 << (world_rank + 1) % world_size << "\n";
 
+            // First MPI process will start by sending, so second proc should
+            // receive any outbound walkers, and so on and so forth.
             if (world_rank % 2 == 0)
             {
                 // Send all outgoing walkers to next MPI process.
