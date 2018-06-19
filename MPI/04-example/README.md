@@ -12,9 +12,8 @@ Parallelizing a one dimensional random walk with periodic boundary conditions
 
 ```
 ├── project
-│   ├── check_status.c
 │   ├── Makefile
-│   └── probe.c
+│   └── random_walk.c
 ...
 ```
 
