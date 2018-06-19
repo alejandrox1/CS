@@ -29,6 +29,11 @@ void initialize_walkers(int walkers_per_proc, int max_walk_size,
 void walk(Walker *walker, int subdomain_start, int subdomain_size, 
         int domain_size, std::vector<Walker> *outgoing_walkers);
 
+void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers; 
+        int world_rank, int world_size);
+
+
+
 int main(int argc, char **argv)
 {
     MPI_Init(NULL, NULL);
@@ -118,4 +123,28 @@ void walk(Walker *walker, int subdomain_start, int subdomain_size,
             --walker->steps_left_in_walk;
         }
     }
+}
+
+
+/**
+ * send_outgoing_walkers sends outgoing walkers to next subdomain (MPI
+ * process).
+ *
+ * outgoing_walkers: vector of walkers who have gone out of range for their
+ * initial subdomain.
+ * world_rank: MPI process rank.
+ * world_size: number of MPI processes in the MPI communicator.
+ */
+void send_outgoing_walkers(std::vector<Walker> *outgoing_walkers;
+        int world_rank, int world_size)
+{
+    //Send data as an array of MPI_BYTEs.
+    MPI_Send((void *)outgoing_walkers->data(), 
+            outgoing_walkers->size() * sizeof(Walker),
+            MPI_BYTE,
+            (world_rank + 1) % world_size,
+            0,
+            MPI_COMM_WORLD);
+
+    outgoing_walkers->clear();
 }
