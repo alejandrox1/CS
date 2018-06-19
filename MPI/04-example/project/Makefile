@@ -1,12 +1,16 @@
-MPICC?=mpic++
+MPICC?=mpicc
+MPICXX?=mpic++
 
 EXECS=random_walk
 
 
 all: $(EXECS)
 
-%: %.cc
+%: %.c
 	$(MPICC) -o $@ $<
+
+%: %.cc
+	$(MPICXX) -o $@ $<
 
 
 .PHONY: all clean
