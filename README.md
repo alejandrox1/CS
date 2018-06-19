@@ -25,9 +25,9 @@
 * [Networking](networking/) All cool stuff on the networking world (variety of
   services and low-level experiemnts).
 
-* [MPI](mpi_stuff/) A ton of stuff and examples dedicated to MPI.
+* [MPI](MPI/) A ton of stuff and examples dedicated to MPI.
 
-* [OpenMPI](smp_stuff/) A ton of cool OpenMP examples.
+* [OpenMP and Threads](SMP/) A ton of cool OpenMP/Posix threads examples.
 
 * [Posix Threads](posix-threads/) Even more cool example services using
   pthreads.
