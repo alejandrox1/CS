@@ -1,5 +1,5 @@
 /*
- * random_walk.c
+ * random_walk.cc
  *
  * Domain decomposition for a one-dimensional random walk with periodic
  * boundary conditions.
@@ -7,6 +7,8 @@
  * Taken from https://github.com/wesleykendall/mpitutorial/blob
  */
 #include <mpi.h>
+#include <vector>
+#include <cstdlib>
 
 /**
  * Walker is a random walker data structure.
@@ -21,6 +23,11 @@ typedef struct
 void domain_decomposition(int domain_size, int world_rank, int world_size, 
         int *subdomain_start, int *subdomain_size);
 
+void initialize_walkers(int walkers_per_proc, int max_walk_size, 
+        int subdomain_start, std::vector<Walker> *incoming_walkers);
+
+
+
 int main(int argc, char **argv)
 {
     MPI_Init(NULL, NULL);
@@ -34,12 +41,12 @@ int main(int argc, char **argv)
 /**
  * domain_decomposition
  *
- * @domain_size: range for walkers to roam around.
- * @world_rank: rank of MPI task.
- * @world_size: number of MPI tasks for the given communicator.
- * @subdomain_start: start of subdomain for a given MPI tasks (pass value by
+ * domain_size: range for walkers to roam around.
+ * world_rank: rank of MPI task.
+ * world_size: number of MPI tasks for the given communicator.
+ * subdomain_start: start of subdomain for a given MPI tasks (pass value by
  *      reference).
- * @subdomain_size: size fo subdomain for a given MPI task (pass value by
+ * subdomain_size: size fo subdomain for a given MPI task (pass value by
  *      reference).
  */
 void domain_decomposition(int domain_size, int world_rank, int world_size, 
@@ -56,4 +63,26 @@ void domain_decomposition(int domain_size, int world_rank, int world_size,
     // Give the last MPI tasks the remainder of the domain.
     if (world_rank == world_size-1)
         *subdomain_size += domain_size % world_size;
+}
+
+/**
+ * initialize_walkers takes subdomain bounds and adds walkers to a vector.
+ *
+ * walkers_per_proc: number of walkers per MPI process.
+ * max_walk_size: maximum length a walker can walk.
+ * subdomain_start: start of subdomain for MPI process.
+ * incoming_walker: vector of walkers.
+ */
+void initialize_walkers(int walkers_per_proc, int max_walk_size,
+        int subdomain_start, std::vector<Walker> *incoming_walkers)
+{
+    for (int i=0; i<walkers_per_proc; ++i)
+    {
+        Walker walker;
+        walker.location           = subdomain_start;
+        walker.steps_left_in_walk = (rand() / (float)RAND_MAX) * max_walk_size;
+
+        incoming_walkers->push_back(walker);
+    }
+}
 }
