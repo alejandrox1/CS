@@ -8,6 +8,16 @@
  */
 #include <mpi.h>
 
+/**
+ * Walker is a random walker data structure.
+ */
+typedef struct
+{
+    int location;
+    int steps_left_in_walk;
+} Walker;
+
+
 void domain_decomposition(int domain_size, int world_rank, int world_size, 
         int *subdomain_start, int *subdomain_size);
 
