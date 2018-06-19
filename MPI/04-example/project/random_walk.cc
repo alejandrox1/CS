@@ -26,7 +26,8 @@ void domain_decomposition(int domain_size, int world_rank, int world_size,
 void initialize_walkers(int walkers_per_proc, int max_walk_size, 
         int subdomain_start, std::vector<Walker> *incoming_walkers);
 
-
+void walk(Walker *walker, int subdomain_start, int subdomain_size, 
+        int domain_size, std::vector<Walker> *outgoing_walkers);
 
 int main(int argc, char **argv)
 {
@@ -85,4 +86,36 @@ void initialize_walkers(int walkers_per_proc, int max_walk_size,
         incoming_walkers->push_back(walker);
     }
 }
+
+/**
+ * walk moves a walker along. If a walker goes out of bounds then it is added
+ * to outgoing_walkers.
+ *
+ * walker: Walker structure.
+ * subdomain_start: start of subdomain for a given MPI process.
+ * subdomain_size: size fo subdomain for a give MPI process.
+ * domain_size: size of entire domain.
+ * outgoing_walkers: walkers that have gone out of bounds for a given
+ * subdomain.
+ */
+void walk(Walker *walker, int subdomain_start, int subdomain_size,
+        int domain_size, std::vector<Walker> *outgoing_walkers)
+{
+    while (walker->steps_left_in_walk > 0)
+    {
+        // Walker is walking out of the domain then go back to begining.
+        if (walker->location == subdomain_start + subdomain_size)
+        {
+            if (walker->location == domain_size)
+                walker->location = 0;
+
+            outgoing_walkers->push_back(*walker);
+            break;
+        }
+        else
+        {
+            ++walker->location;
+            --walker->steps_left_in_walk;
+        }
+    }
 }
