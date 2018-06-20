@@ -26,3 +26,13 @@ To test drive it
 cd doc && make html && python -m http.server
 ```
 On your browser go to `http://localhost:8000`
+
+
+On the root of this project, try running
+```
+python -m "import traignlelib"
+```
+
+```
+sys.path.insert(0, os.path.abspath('../trianglelib'))
+```
