@@ -15,6 +15,8 @@ Documenting Software with Sphinx and Autodoc
         :maxdepth: 2
         :caption: Contents:
 
+        api
+
     :Data: |today|
     :Author: alejandrox1
 
