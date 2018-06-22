@@ -5,7 +5,7 @@ A ton of life advice (some of it from the
 
 
 <!--========================================================================-->
-<!-- Tips and tricks for general administration, searching, compiling, etc. -->
+<!-- Tips and Tricks for General Administration, Searching, Compiling, etc. -->
 <!--========================================================================-->
 # General
 ## Bash functions
@@ -58,7 +58,7 @@ A ton of life advice (some of it from the
 
 
 <!--========================================================================-->
-<!-- More File system Administration specific commands                      -->
+<!-- More File system Administration Specific Commands                      -->
 <!--========================================================================-->
 # File System
 ## Diagnostics
@@ -93,7 +93,7 @@ A ton of life advice (some of it from the
 
 
 <!--========================================================================-->
-<!-- Building and throuble shooting cool applications                       -->
+<!-- Building and Throuble Shooting Cool Applications                       -->
 <!--========================================================================-->
 # Building
 * If your build process is failing and you know that you need some extra library
@@ -110,7 +110,7 @@ A ton of life advice (some of it from the
 
 
 <!--========================================================================-->
-<!-- Running cool applications                                              -->
+<!-- Running Cool Applications                                              -->
 <!--========================================================================-->
 # Running
 * Does rank 0 need more memory than your other `MPI` tasks?
@@ -125,7 +125,7 @@ A ton of life advice (some of it from the
 
 
 <!--========================================================================--> 
-<!-- TACC specific tips                                                     --> 
+<!-- TACC Specific Tips                                                     --> 
 <!--========================================================================-->
 # TACC
 * You can find all installed bio codes by executing
@@ -168,5 +168,12 @@ A ton of life advice (some of it from the
   module help remora
   ```
 
+
+
+
+
+<!--========================================================================-->
+<!-- External Links, Tutorials, Blog Posts -->
+<!--========================================================================-->
 # Cool Command-line Utilities
 * [Reshaping JSON with jq](https://programminghistorian.org/en/lessons/json-and-jq)
