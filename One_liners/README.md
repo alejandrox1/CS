@@ -23,6 +23,17 @@ A ton of life advice (some of it from the
   $ echo $[RANDOM%X+1]
   ```
 
+* Want to make a tarball with only certain files?
+  ```
+  find . -type f -name ".c" -print > ../files.lst
+  tar cvzf sometar.tar.gz `cat ../files.lst`
+  ```
+
+* To keep two directories in sync:
+  ```
+  rync -avz --progress dirA/ dirB
+  ```
+
 ## Searching
 * When you need to match all `.*` files except for the current directory `.` or
   the parent directory `..`, use the `.??*` file globbing pattern. 
