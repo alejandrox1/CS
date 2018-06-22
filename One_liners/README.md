@@ -5,11 +5,11 @@ A ton of life advice (some of it from the
 
 ## Table of Contents
 1. [General](#General)
-2. [File System](#File System)
+2. [File System](#FileSystem)
 3. [Building Software](#Building)
 4. [Executing Software](#Running) 
 5. [TACC specific](#TACC)
-6. [External Resources](#Cool Command-line Utilities)
+6. [External Resources](#CoolCommand-lineUtilities)
 
 
 
