@@ -6,7 +6,7 @@ A ton of life advice (some of it from the
 
 <!--========================================================================-->
 <!-- Tips and tricks for general administration, searching, compiling, etc. -->
-<!--=========================================================================-->
+<!--========================================================================-->
 # General
 ## Bash functions
 * To print a random number between `1` and `X` do:
@@ -57,6 +57,9 @@ A ton of life advice (some of it from the
 
 
 
+<!--========================================================================-->
+<!-- More File system Administration specific commands                      -->
+<!--========================================================================-->
 # File System
 ## Diagnostics
 * Use the command `du -h *` to see disk usage for all directories in the current directory.
@@ -84,6 +87,10 @@ A ton of life advice (some of it from the
   ```                                                                           
   for d in d1 d2 d3 ; do ( cd $d; do_some_command_here; ); done                 
   ``` 
+
+
+
+
 
 # Building
 * If your build process is failing and you know that you need some extra library
