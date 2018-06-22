@@ -124,6 +124,9 @@ A ton of life advice (some of it from the
 
 
 
+<!--========================================================================--> 
+<!-- TACC specific tips                                                     --> 
+<!--========================================================================-->
 # TACC
 * You can find all installed bio codes by executing
   ```
