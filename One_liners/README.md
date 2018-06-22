@@ -109,12 +109,20 @@ A ton of life advice (some of it from the
 
 
 
+<!--========================================================================-->
+<!-- Running cool applications                                              -->
+<!--========================================================================-->
 # Running
 * Does rank 0 need more memory than your other `MPI` tasks?
   If you have 64 tasks, for example, allocate 5 nodes and launch with:
   ```
   ibrun -n 64 -o 15 # puts rank 0 on a node by itself.
   ```
+
+
+
+
+
 
 # TACC
 * You can find all installed bio codes by executing
