@@ -145,6 +145,11 @@ A ton of life advice (some of it from the
   These variables will be defined after you load the module.
 
 * Want to install your own python modules? Do `module help python`.
+  First load a python module and the chose a local instalation option from pip:
+  ```
+  module load python3
+  pip install --user sphinx
+  ```
 
 ## Software Running
 * If you have an MPI application with threads, don't forget to use 
