@@ -3,12 +3,18 @@
 A ton of life advice (some of it from the 
 [Stampede Supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2)).
 
+
+<!--========================================================================-->
+<!-- Tips and tricks for general administration, searching, compiling, etc. -->
+<!--=========================================================================-->
 # General
+## Bash functions
 * To print a random number between `1` and `X` do:
   ```
   $ echo $[RANDOM%X+1]
   ```
 
+## Searching
 * When you need to match all `.*` files except for the current directory `.` or
   the parent directory `..`, use the `.??*` file globbing pattern. 
   For example: 
@@ -25,6 +31,7 @@ A ton of life advice (some of it from the
   ls t?.sh  # -> list files like t1.sh t2.sh but not t22.sh
   ```
 
+## Administration
 * You can get the status of the last command with `$?`. It is 0 for success
   and non-zero for failure:
   ```
@@ -45,6 +52,9 @@ A ton of life advice (some of it from the
 ## Compilation
 * Are you having trouble figuring out why your link went bad? 
   Try adding `-Wl,--trace` to your link line and capture the output.
+
+
+
 
 
 # File System
