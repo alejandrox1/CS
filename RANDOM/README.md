@@ -1,5 +1,7 @@
-A ton of life advice from (mainly) the 
-[Stampede Supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2).
+# Life Advice
+
+A ton of life advice (some of it from the 
+[Stampede Supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2)).
 
 # General
 * To print a random number between `1` and `X` do:
