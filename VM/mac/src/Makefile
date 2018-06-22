@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-Wall -Wextra -g -std=c11
 
-SRC=main.c
+SRC=mac.c
 
 all:
 	$(CC) $(CFLAGS) $(SRC) -o mac
