@@ -3,6 +3,15 @@
 A ton of life advice (some of it from the 
 [Stampede2 supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2)).
 
+## Table of Contents
+1. [General](# General)
+2. [File System](# File System)
+3. [Building Software](# Building)
+4. [Executing Software](# Running) 
+5. [TACC specific](# TACC)
+6. [External Resources](# Cool Command-line Utilities)
+
+
 
 <!--========================================================================-->
 <!-- Tips and Tricks for General Administration, Searching, Compiling, etc. -->
