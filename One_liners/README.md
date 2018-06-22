@@ -1,7 +1,7 @@
 # Life Advice
 
 A ton of life advice (some of it from the 
-[Stampede Supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2)).
+[Stampede2 supercomputer](https://portal.tacc.utexas.edu/user-guides/stampede2)).
 
 
 <!--========================================================================-->
@@ -92,6 +92,9 @@ A ton of life advice (some of it from the
 
 
 
+<!--========================================================================-->
+<!-- Building and throuble shooting cool applications                       -->
+<!--========================================================================-->
 # Building
 * If your build process is failing and you know that you need some extra library
   directories. Try setting `LIBRARY_PATH` to be colon separated list of directories.
@@ -100,6 +103,11 @@ A ton of life advice (some of it from the
 ## Building Scientific Stuff
 * To see `MVAPICH2`'s process mapping, `export MV2_SHOW_CPU_BINDING=1` inside
   your script or before launching your job.
+
+
+
+
+
 
 # Running
 * Does rank 0 need more memory than your other `MPI` tasks?
