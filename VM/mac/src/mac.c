@@ -86,7 +86,7 @@ void eval(int instr)
             --sp;
 
             ++sp;
-            stack[sp] = a + b;
+            stack[sp] = b + a;
             break;
         }
     }
