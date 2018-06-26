@@ -1,5 +1,10 @@
 # Git
-## Cool Ways of Staying Up to Date
+
+<!--========================================================================-->
+<!-- Working in your local repository                                       -->
+<!--========================================================================-->
+## Basics
+### Cool Ways of Staying Up to Date
 * Adding patches:
   ```
   git add -p <file>
@@ -14,7 +19,7 @@
   git config --global core.editor vi
   ```
 
-## Undoing Things Localy
+### Undoing Things Localy
 * Removing a file from the staging area:
   ```
   git rm --cached <file>
@@ -30,7 +35,7 @@
   git checkout -- <file>
   ```
 
-## Staying up to Date
+### Staying up to Date
 `git fetch <remote name>` will fetch changes from the given branch but will not merge
 them.
 If you have a branch set up to track a remote branch, you can use the `git
@@ -52,6 +57,8 @@ git stash pop
 # replace with new version
 git checkout <filename>
 ```
+
+
 
 ## Tags
 ### Creating Tags
