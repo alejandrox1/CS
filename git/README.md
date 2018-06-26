@@ -59,15 +59,17 @@ git checkout <filename>
 ```
 
 
-
+<!--========================================================================-->
+<!--    Working with tags                                                   -->
+<!--========================================================================-->
 ## Tags
 ### Creating Tags
-```bash
+```
 git tag -a v1.3 -m "version 1.3"
 git tag
 ```
 or
-```bash
+```
 git tag -a v1.2 <commit hash>
 ```
 
@@ -83,7 +85,7 @@ git checkout <tag name>
 
 ### Sharing Tags
 Same as pushing a branch
-```
+```bash
 git push <remote name> <tag name>
 # or
 git push <remote name> --tags
