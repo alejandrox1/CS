@@ -176,6 +176,27 @@ For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-
 
 
 
+
+<!--========================================================================-->
+<!--    Working with submodules                                             -->
+<!--========================================================================-->
+## Working with Submodules
+### Adding a submodule
+```
+git submodule add https://github.com/SD2E/sd2e-cli
+```
+
+This will create a file named `.gitmodules` which will have an entry as such
+```
+[submodule "sd2e-cli"]
+    path = sd2e-cli
+    url = https://github.com/SD2E/sd2e-cli
+```
+Note that you can go an modify this file to track a certain branch by adding
+`branch = dev`.
+
+
+
 <!--========================================================================-->
 <!--    Large file related                                                  -->
 <!--========================================================================-->
