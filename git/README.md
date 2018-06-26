@@ -98,6 +98,12 @@ git checkout -b <branch> <tag>
 ```
 
 
+
+
+
+<!--========================================================================-->
+<!--    Working with branches                                               -->
+<!--========================================================================-->
 ## Branches
 ### Creating Branches
 * To create a branch,
@@ -116,7 +122,7 @@ git checkout -b <branch name>
 ```
 
 To push a local branch,
-```bash
+```
 git push -u origin master
 ```
 
@@ -131,10 +137,12 @@ git branch -D <branch>
 
 
 ### Merging
-```
+```bash
 git checkout master
 git merge <branch name>
-git branch -d <branch name>    # Delete branch.
+
+# Delete branch.
+git branch -d <branch name>
 ```
 
 Merging with conflicts is a little more interesting.
@@ -154,11 +162,15 @@ Go through the unmerged files and fixed any blocks with `<<<<<<<`, `=======`, an
 After resolving each of these sections in each conflicted file, run `git add`
 on them and they'll be ready to me merged.
 
-Or try out `git mergetool` - recomend you run,
+Or try out `git mergetool`. We recomend you run,
 ```
 git config --global merge.tool vimdiff
 ```
 For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/).
+
+
+
+
 
 # Large Files
 In case you went through the trouble of trying to push a large file and then
