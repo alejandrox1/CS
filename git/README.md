@@ -180,7 +180,7 @@ For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-
 <!--========================================================================-->
 <!--    Working with submodules                                             -->
 <!--========================================================================-->
-## Working with Submodules
+## Submodules
 ### Adding a submodule
 ```
 git submodule add https://github.com/SD2E/sd2e-cli
