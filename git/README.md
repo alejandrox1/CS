@@ -176,7 +176,9 @@ For a cool tutorial check this [out](http://www.rosipov.com/blog/use-vimdiff-as-
 
 
 
-
+<!--========================================================================-->
+<!--    Large file related                                                  -->
+<!--========================================================================-->
 # Large Files
 In case you went through the trouble of trying to push a large file and then
 not being able to push:
