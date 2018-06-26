@@ -136,6 +136,11 @@ git branch -D <branch>
 ```
 
 
+### List all branches
+```
+git branch -a
+```
+
 ### Merging
 ```bash
 git checkout master
