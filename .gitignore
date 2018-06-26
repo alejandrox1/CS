@@ -20,6 +20,7 @@ kernel/linux-2.6.32.27
 kernel/linux-2.6.39
 kernel/linux-2.6.8.1
 kernel/linux-4.16
+kernel/qemuenv/linux
 
 # libc
 libc/glibc
