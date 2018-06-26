@@ -37,7 +37,17 @@ Welcome to trianglelib's documentation!
    :maxdepth: 2                                                                 
    :caption: Contents:                                                          
                                                                                 
-                                                                                
+          
+Application-developer documentation
+-----------------------------------
+
+The user-space API manual gathers together documents describing aspects of
+the kernel interface as seen by application developers.
+
+.. toctree::
+   :maxdepth: 2
+
+   userspace-api/index
                                                                                 
 Indices and tables                                                              
 ##################                                         
