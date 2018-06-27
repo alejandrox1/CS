@@ -200,6 +200,21 @@ All you have left to do is to save the changes
 git push origin master
 ```
 
+## Cloning a Project with Submodules
+You can clone the project as such
+```
+git clone --recurse-submodules https://github.com/SD2E/sd2e-cli
+```
+and all the submodules will be updated with theentire state of the project
+corresponsind to the saved commit.
+
+Alternatively, after cloning you can go into the submodule and do
+```
+git submodule init
+
+git submodule fetch
+```
+
 
 <!--========================================================================-->
 <!--    Large file related                                                  -->
