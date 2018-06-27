@@ -228,6 +228,25 @@ git submodule update --remote
 ```
 
 
+### Working on a Submodule
+Pulling in work from a submodule will leave the subrepository in a detached
+HEAD state (no local working branch).
+
+To get something to work on you need to check out a branch to work on and then
+go as you normally would.
+You can merge changes into your local work or you can try to rebase your local
+work on top of new changes.
+
+```bash
+git checkout stable
+
+git submodule update --remote --merge
+
+# or
+git submodule update --remote --rebase
+```
+
+
 <!--========================================================================-->
 <!--    Large file related                                                  -->
 <!--========================================================================-->
