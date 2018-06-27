@@ -15,6 +15,13 @@ git log -n 3 --abbrev-commit
 git remote show origin
 ```
 
+### Create a Branch off a Branch in a Remote
+```
+git branch develop origin/develop
+
+git checkout develop
+```
+
 
 <!--========================================================================-->
 <!-- Working in your local repository                                       -->
