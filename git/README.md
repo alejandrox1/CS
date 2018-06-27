@@ -195,6 +195,10 @@ This will create a file named `.gitmodules` which will have an entry as such
 Note that you can go an modify this file to track a certain branch by adding
 `branch = dev`.
 
+All you have left to do is to save the changes
+```
+git push origin master
+```
 
 
 <!--========================================================================-->
