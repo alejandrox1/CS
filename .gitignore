@@ -3,6 +3,9 @@ containers/lxc
 containers/lxc_original
 *.simg
 
+# documentation
+documentation/sphinx/intro/doc/_build
+
 # HPP
 HPP/src
 HPP/remora
