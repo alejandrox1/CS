@@ -252,7 +252,7 @@ Alternatively, after cloning you can go into the submodule and do
 ```
 git submodule init
 
-git submodule fetch
+git submodule update
 ```
 
 
