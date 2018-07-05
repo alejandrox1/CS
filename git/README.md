@@ -163,7 +163,7 @@ git checkout -b <branch name>
 
 To push a local branch,
 ```
-git push -u origin master
+git push -u origin <branch name>
 ```
 
 ### Deleting branches
