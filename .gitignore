@@ -1,6 +1,5 @@
 # containers proj
-containers/lxc
-containers/lxc_original
+containers/lxc/lxc
 *.simg
 
 # documentation
