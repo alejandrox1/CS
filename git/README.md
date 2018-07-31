@@ -286,6 +286,14 @@ git submodule update --remote --merge
 git submodule update --remote --rebase
 ```
 
+<!--========================================================================--> 
+<!--    Clean commit histories                                              --> 
+<!--========================================================================-->
+* Accidentally `commit --amend`:
+  ```
+  git reset --soft HEAD@{1}
+  ```
+
 
 <!--========================================================================-->
 <!--    Large file related                                                  -->
